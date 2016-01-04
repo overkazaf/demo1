@@ -108,8 +108,12 @@ define(function(require) {
         if (!!name) {
             if (name.indexOf('noticeUpdate') >= 0) {
                 var group = tools.Storage.get(id);
-                console.log('group', group);
                 group.noticeUpdate();
+            } else if (name.indexOf('angle2pixel') >= 0) {
+                // angle2pixel
+                var val = document.getElementById(id).value;
+                
+                return val*2;
             }
         }
 

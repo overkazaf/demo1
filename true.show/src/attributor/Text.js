@@ -19,6 +19,7 @@
  */
 ;define(function (require){
 
+	var $ = require('jquery');
 	var AM = require('AttributeManager');
 	var AG = require('Group');
 	var Base = require('./Base');
@@ -63,17 +64,63 @@
 	Text.prototype.getForm = function () {
 		var groupId = this.groupId;
 
+		var form = document.getElementById(this.formid);
+		var aDl = form.getElementsByTagName('dl');
+		var ret = {};
+		tools.each(aDl, function (dl) {
+			var css = dl.getAttribute('data-css');
+			var unit = dl.getAttribute('data-unit');
+			var evalExp = dl.getAttribute('data-eval');
+			var dd = dl.getElementsByTagName('dd')[0];
+			var plugin = dd.getAttribute('data-plugin');
+			var dom;
+
+			unit = !!unit ? unit : '';
+			switch (plugin) {
+				case 'textarea':
+					dom = dd.getElementsByTagName(plugin)[0];
+					ret[css] = dom.value;
+					break;
+				case 'select':
+					dom = dd.getElementsByTagName(plugin)[0];
+					ret[css] = dom.value;
+					break;
+				case 'btngroup':
+					var cssArr = css.split(';');
+					dom = dd.getElementsByTagName('input');
+					tools.each(cssArr, function (prop, index){
+						if (dom[index].type === 'checkbox') {
+							ret[prop] = dom[index].checked ? dom[index].value : '';
+						} else if (dom[index].type === 'radio') {
+							if (dom[index].checked) {
+								ret[prop] = dom[index].value;
+							}
+						}
+						
+					});
+					break;
+				default:
+					dom = dd.getElementsByTagName('input')[0];
+					if (!!dom.value) {
+						var value = dom.value;
+						if (evalExp) {
+							value = eval('(' + evalExp + ')')
+						}
+						if (typeof ret[css] === 'undefined') {
+							ret[css] = value + unit;
+						} else {
+							ret[css] += ' ' + value + unit;
+						}
+					}
+			}
+		});
+
+		var content = ret.content;
 		// 这里主要是收集所有的属性值，到时候一块儿塞进styles属性中
 		return {
 			'groupId' : groupId,
-			'content' : $('#ta').val(),
-			'styles' : {
-				'color' : $('#color').val(),
-				'text-align' : $('input[name="text-align"]:checked').val(),
-				'font-weight' : $('input[name="font-weight"]:checked').val(),
-				'font-size' : $('#font-size').val() + 'px',
-				'font-family' : $('#select-font-family>option:selected').val()
-			}
+			'content' : content,
+			'styles' : ret
 		};
 	};
 

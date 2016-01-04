@@ -424,7 +424,6 @@ define(function(require) {
          */
         updateView: function(json) {
           var el = $('#'+json.groupId, appContext);
-          console.log(json);
           el.find('.cont-inner').text(json.content);
           this.viewer.updateElement(el, json.styles);
           this.changeStyles(json.groupId, json.styles, json.styles);

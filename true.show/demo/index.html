@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="renderer" content="webkit">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>PPT Marker</title>
+	<link rel="stylesheet" type="text/css" href="asset/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="asset/css/font-awesome-4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="asset/css/app.css">
+	<link rel="stylesheet" type="text/css" href="asset/css/animate.css">
+	</head>
+	<body>
+
+		<header>
+			<div class="top-left clearfix">
+				<h1 class="logo">WebPPT制作工具</h1>
+				<ul class="system-btns fl">
+					<li><span class="system-btns-warp" data-tips="撤销"><i class="fa fa-chevron-left fa-lg"></i></span></li>
+					<li><span class="system-btns-warp" data-tips="重做"><i class="fa fa-chevron-right fa-lg"></i></span></li>
+					<li class="split-line"></li>
+					<li><span id="rulerbtn" class="system-btns-warp" data-tips="标尺"><i class="fa fa-table fa-lg"></i></span></li>
+				</ul>
+			</div>
+			<div class="top-mid">
+				<ul class="plugin-btns">
+					<li>
+						<span plugin-type="text" class="plugin-btn" data-type="text"><i class="fa fa-font fa-lg"></i>文本</span></li>
+					<li>
+						<span plugin-type="photo" class="plugin-btn" data-type="photo"><i class="fa fa-photo fa-lg"></i>图片</span></li>
+					<li>
+						<span plugin-type="chart" class="plugin-btn" data-type="chart"><i class="fa fa-area-chart fa-lg"></i>图表</span></li>
+					<li>
+						<span plugin-type="form" class="plugin-btn" data-type="form"><i class="fa fa-file-text fa-lg"></i>表单</span></li>
+					<li>
+						<span plugin-type="button" class="plugin-btn" data-type="button"><i class="fa fa-square fa-lg"></i>按钮</span></li>
+					<li>
+						<span class="plugin-btn"><i class="fa fa-ellipsis-h fa-lg"></i>更多</span>
+						<ul class="plugin-more">
+							<li>
+								<span plugin-type="map" class="plugin-more-btn" data-type="map"><i class="fa fa-map fa-lg"></i>地图</span></li>
+							<li>
+								<span plugin-type="audio" class="plugin-more-btn" data-type="audio"><i class="fa fa-music fa-lg"></i>音频</span></li>
+							<li>
+								<span plugin-type="video" class="plugin-more-btn" data-type="video"><i class="fa fa-video-camera fa-lg"></i>视频</span></li>
+							<!-- <li>
+								<span class="plugin-more-btn" data-type="effects"><i class="fa fa-magic fa-spin fa-lg"></i>特效</span></li> -->
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="top-right">
+				<ul class="system-btns fl">
+					<li class="system-music-box">
+						<span class="system-music-warp clearfix"><i class="fa fa-music fa-lg"></i><b class="input">设置背景音乐</b></span>
+						<ul class="music-popup">
+							<li><a class="music-popup-item select-btn">选择背景音乐</a></li>
+							<li><label class="music-popup-item clearfix"><i class="icon-checkbox"><input type="checkbox" class="autoplay-btn"></i>自动播放</label></li>
+							<li><label class="music-popup-item clearfix"><i class="icon-checkbox"><input type="checkbox" class="loop-btn"></i>循环播放</label></li>
+						</ul>
+					</li>
+					<li class="split-line"></li>
+					<li><span class="system-btns-warp" data-tips="保存"><i class="fa fa-save fa-lg"></i></span></li>
+					<li><span class="system-btns-warp" data-tips="预览"><i class="fa fa-eye fa-lg"></i></span></li>
+					<li class="split-line"></li>
+					<li><span class="system-btns-warp" data-tips="设置"><i class="fa fa-cog fa-lg"></i></span></li>
+				</ul>
+				<ul class="plugin-btns fl">
+					<li><span class="plugin-btn"><i class="fa fa-th-large fa-lg"></i>更多功能</span></li>
+					<li><span class="plugin-btn"><i class="fa fa-user fa-lg"></i>个人中心</span></li>
+				</ul>
+			</div>
+		</header>
+		<div class="editor-main">
+			<div class="left-side tab-box">
+				<ul class="sub-nav">
+					<li class="sub-nav-item active tab-nav">页面</li>
+					<li class="sub-nav-item tab-nav">图层</li>
+				</ul>
+				<div class="pages-warp active tab-item">
+					<div class="pages-scroll-warp">
+						<ul id="pagesBox" class="pagelist"></ul>
+					</div>
+					<div class="new-page-btn-warp clearfix">
+						<span id="newPageBtn" class="new-page-btn"><i class="fa fa-add"></i> 添加页面</span>
+					</div>
+				</div>
+				<div class="pages-warp tab-item" >
+					<div class="layer-header layer-tools">
+						<span data-tips="复制" type="copy" class="layer-tools-btn"><i class="fa fa-copy"></i></span>
+						<span data-tips="隐藏" type="visible" class="layer-tools-btn"><i class="fa fa-eye"></i></span>
+						<span data-tips="删除" type="del" class="layer-tools-btn"><i class="fa fa-trash"></i></span>
+						<span data-tips="锁定" type="lock" class="layer-tools-btn"><i class="fa fa-unlock"></i></span>
+					</div>
+					<div class="pages-scroll-warp layer-scroll-warp">
+						<ul id="layersBox" class="pagelist">
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div plugin-type="canvas" class="main-view">
+				<div class="device-box device-iphone">
+					<div class="view-aside">
+						<div id="musicControl" class="marker-sounder" data-tips="暂停"><i class="fa fa-pause-circle"></i>音乐</div>
+					</div>
+					<div class="device-view">
+						<div class="ruler">
+							<div class="ruler-grid"></div>
+							<div class="ruler-bar v"></div>
+							<div class="ruler-bar h"></div>
+						</div>
+						<app-page>
+						</app-page>
+					</div>
+				</div>
+			</div>
+			<div id="confpanel" class="right-side tab-box">
+				<ul class="sub-nav">
+					<li id="panel-canvas" class="sub-nav-item active tab-nav visible">页面背景</li>
+					<li id="panel-text" class="sub-nav-item tab-nav">文本</li>
+					<li id="panel-photo" class="sub-nav-item tab-nav">图片</li>
+					<li id="panel-button" class="sub-nav-item tab-nav">按钮</li>
+					<li id="panel-map" class="sub-nav-item tab-nav">地图</li>
+					<li id="panel-chart" class="sub-nav-item tab-nav">图表</li>
+					<li id="panel-audio" class="sub-nav-item tab-nav">音频</li>
+					<li id="panel-video" class="sub-nav-item tab-nav">视频</li>
+					<!-- <li id="panel-effects" class="sub-nav-item tab-nav">特效</li> -->
+					<li id="panel-form" class="sub-nav-item tab-nav">表单</li>
+					<li id="panel-formconfig" class="sub-nav-item tab-nav">表单设置</li>
+					<li id="panel-style" class="sub-nav-item tab-nav">样式</li>
+					<li id="panel-position" class="sub-nav-item tab-nav">位置</li>
+					<li id="panel-animate" class="sub-nav-item tab-nav">动画</li>
+					<li id="panel-function" class="sub-nav-item tab-nav visible">功能</li>
+				</ul>
+				<div class="pages-warp active tab-item">
+					<div class="pages-scroll-warp">1</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">2</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">3</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">4</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">5</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">6</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">7</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">8</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">9</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">10</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">11</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">12</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">13</div>
+				</div>
+				<div class="pages-warp tab-item">
+					<div class="pages-scroll-warp">14</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="asset/js/require.js"></script>
+	<script type="text/javascript">
+
+	  require(['marker'],
+	  	function(marker){
+	  		'use strict';
+	  		var tempdata={
+					id:'paper1',
+					name:'测试结构',
+					layout:'liner',
+					sound:'asset/sound/llh.mp3',
+				 	pages:[
+				 		{
+				 			id:'p0',
+				 			name:'p0',
+				 			transform:'',
+				 			styles:'',
+				 			elements:[
+				 				{
+				 					id:'p0e1',
+					 				name:'p0e1',
+					 				value:'我是文本1111',
+					 				type:'text',
+					 				styles:{left:'30px',top:'30px',width:'100px',height:'50px','text-align':'center'},
+					 				animates:[
+										{
+				 							repeat:0,
+				 							duration:0,
+				 							class:'flip',
+				 							delay:0
+				 						}
+				 					],
+				 					events:[{"name":"click","actions":[{"type":"show","value":{"elems":[]},"delay":0}]}],
+				 					states:{
+				 						lock:false,
+				 						visible:true
+				 					}
+					 			},
+					 			{
+				 					id:'p0e2',
+					 				name:'p0e2',
+					 				value:'我是文本222',
+					 				type:'text',
+					 				styles:{left:'30px',top:'30px',width:'100px',height:'50px','text-align':'center'},
+					 				animates:[
+										{
+				 							repeat:0,
+				 							duration:0,
+				 							class:'flip',
+				 							delay:0
+				 						}
+				 					],
+				 					events:[{"name":"click","actions":[{"type":"show","value":{"elems":[]},"delay":0}]}],
+				 					states:{
+				 						lock:false,
+				 						visible:true
+				 					}
+					 			},
+					 			{
+				 					id:'p0e3',
+					 				name:'p0e3',
+					 				value:'我是文本333',
+					 				type:'text',
+					 				styles:{left:'30px',top:'30px',width:'100px',height:'50px','text-align':'center'},
+					 				animates:[
+										{
+				 							repeat:0,
+				 							duration:0,
+				 							class:'flip',
+				 							delay:0
+				 						}
+				 					],
+				 					events:[{"name":"click","actions":[{"type":"show","value":{"elems":[]},"delay":0}]}],
+				 					states:{
+				 						lock:false,
+				 						visible:true
+				 					}
+					 			}
+				 			]
+				 		},
+				 		{
+				 			id:'p1',
+				 			name:'p1'
+				 		}
+				 	]
+				};
+	  		var Marker=new marker(tempdata);
+
+	  		// 设置两个模块之间互相通信
+	  		Marker.getAM().setMarker(Marker);
+			$('.plugin-btn[plugin-type="text"]').trigger('click');
+	   	});
+	</script>
+</html>

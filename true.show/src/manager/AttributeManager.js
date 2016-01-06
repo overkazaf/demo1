@@ -8,6 +8,7 @@
  * @module manager/AttributeManager
  */
 ;define(function (require) {
+
 	var AttributeManager = function (options) {
 		this.id = options.id;
 		this.marker = null;
@@ -33,9 +34,21 @@
 	 * @param {[Group]} group [见模块manager/Group]
 	 */
 	AMScheduler.prototype.addGroup = function (group) {
-		this.groupList.push(group);
-		this.groupMap[group.id] = group;
-		group.supervisor = this;
+		if (!this.hasGroup(group)) {
+			this.groupList.push(group);
+			this.groupMap[group.id] = group;
+			group.supervisor = this;
+		}
+	}
+
+	AMScheduler.prototype.hasGroup = function (group) {
+		var flag = false;
+		this.iterGroups(function (g){
+			if(g.id == group.id) {
+				flag = true;
+			}
+		});
+		return flag;
 	}
 
 	/**
@@ -157,6 +170,7 @@
 	 * @return {[type]}      [description]
 	 */
 	AttributeManager.prototype.updateView = function (json) {
+		console.log('updateView', '>>' , json);
 		this.getMarker().updateView(json['text']);
 	};
 

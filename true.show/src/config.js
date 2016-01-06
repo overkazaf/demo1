@@ -62,9 +62,85 @@
 	// 				<li>动画</li>
 	// 				<li>功能</li>
 
-	// 默认配置项对象的配置
+
+	/* ======================  组件相关  ==================== */
+	// 定义新增组件的数据结构， 构造实例后要重写其id属性
+	config.ComponentTemplate = {
+		'text' : {
+            id: null,
+            name: '编辑内容',
+            value: '编辑内容',
+            type: 'text',
+            styles: {
+                left: '110px',
+                top: '10px',
+                width: '100px',
+                height: '50px',
+                'text-align': 'center'
+            },
+            animates: [{
+                repeat: 0,
+                duration: 0,
+                class: 'flip',
+                delay: 0
+            }],
+            events: [{
+                "name": "click",
+                "actions": [{
+                    "type": "show",
+                    "value": {
+                        "elems": []
+                    },
+                    "delay": 0
+                }]
+            }],
+            states: {
+                lock: false,
+                visible: true
+            }
+        },
+        'photo' : {
+            id: null,
+            name: '图片',
+            value: '图片',
+            type: 'photo',
+            styles: {
+                left: '30px',
+                top: '30px',
+                width: '100px',
+                height : '100px',
+                'text-align': 'center'
+            },
+            animates: [{
+                repeat: 0,
+                duration: 0,
+                class: 'flip',
+                delay: 0
+            }],
+            events: [{
+                "name": "click",
+                "actions": [{
+                    "type": "show",
+                    "value": {
+                        "elems": []
+                    },
+                    "delay": 0
+                }]
+            }],
+            states: {
+                lock: false,
+                visible: true
+            }
+        }
+	};
+
+
+	// ============配置相关=============== //
+	// 默认配置项对象的配置数据结构
 	config.Attributor = {};
 
+	/* 特有特性 */
+	
 	// 文本
 	config.Attributor.TEXT = {
 		id : tools.uuid(),
@@ -105,5 +181,32 @@
   		 	]
   		]
     };
+    
+    // 图像
+    config.Attributor.PHOTO = {
+    	id : tools.uuid(),
+  		tabId : 'panel-photo',
+  		type : 'photo',
+  		attributes : [
+  			[
+  				{label:"", name:"select-photo", css:'btn', value: "选择图片", values:null, plugin:'modal', unit:null}
+  		 	],
+  		 	[
+  		 		{label:"", name:"crop-photo", css:'crop', value: "裁剪图片", values:null, plugin:'crop', unit:null}
+  		 	]
+  		]
+    };
+    
+    // 按钮
+    config.Attributor.BUTTON = {};
+
+    // 
+    // 
+    // 
+    // 
+    
+
+    /* 公有特性 */
+
 	return config;
 });

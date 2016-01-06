@@ -1,8 +1,8 @@
 ;
 define(function(require) {
     'use strict';
-
-
+    var $ = require('jquery');
+    var Storage = require('./Storage');
     var nativeForEach = Array.prototype.forEach;
     var tools = {
         uuid: function(len, radix) {    
@@ -10,8 +10,8 @@ define(function(require) {
             var uuid = [],
                 i;    
             radix = radix || chars.length;    
-            if (len) {       // Compact form
-                      
+            if (len) {       
+                // Compact form      
                 for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];    
             } else {       // rfc4122, version 4 form
                       
@@ -44,26 +44,24 @@ define(function(require) {
         },
         clone: function(obj) {
             if (typeof(obj) != 'object' || obj == null || obj == undefined) return obj;
-            
+
             var result = obj.constructor == Array ? [] : {};
             for (var i in obj) {
                 result[i] = tools.clone(obj[i]);
             }
             return result;
         },
-        each: function (obj, cb, context) {
+        each: function(obj, cb, context) {
             if (!(obj && cb)) {
                 return;
             }
             if (obj.forEach && obj.forEach === nativeForEach) {
                 obj.forEach(cb, context);
-            }
-            else if (obj.length === +obj.length) {
+            } else if (obj.length === +obj.length) {
                 for (var i = 0, len = obj.length; i < len; i++) {
                     cb.call(context, obj[i], i, obj);
                 }
-            }
-            else {
+            } else {
                 for (var key in obj) {
                     if (obj.hasOwnProperty(key)) {
                         cb.call(context, obj[key], key, obj);
@@ -71,7 +69,7 @@ define(function(require) {
                 }
             }
         },
-        indexOf : function (el, arr, condition, value) {
+        indexOf: function(el, arr, condition, value) {
             var i;
             for (i = 0, l = arr.length; i < l; i++) {
                 if (!!condition) {
@@ -86,34 +84,91 @@ define(function(require) {
             }
 
             return -1;
-        },
-        Storage : {
-        	get : function (key) {
-        		return window.__cache__[key];
-        	}, 
-        	set : function (key, obj) {
-        		if (!window.__cache__[key]) {
-        			window.__cache__[key] = {};
-        		}
-        		window.__cache__[key] = obj;
-        	},
-        	remove : function (key) {
-        		delete window.__cache__[key];
-        	}
         }
     };
 
-    window.__cache__ = {};
-    window.callFN = function (name, id) {
-        if (!!name) {
-            if (name.indexOf('noticeUpdate') >= 0) {
-                var group = tools.Storage.get(id);
+    window.callFN = function(fnName, evt, groupId) {
+        evt.preventDefault();
+        var strategy = {
+            'noticeUpdate' : function () {
+                var group = Storage.get(groupId);
+                var list = group.getAll();
+
                 group.noticeUpdate();
-            } else if (name.indexOf('angle2pixel') >= 0) {
+
+                group.iterList(function(item, index) {
+                    // 重置配置项的数据结构
+                    var data = item.form2Data();
+                    // 覆盖后强行塞入
+                    var target = item.options;
+                    $.extend(true, target, data);
+
+                    list.splice(index, 1, item);
+                });
+
+                Storage.set(groupId, group);
+            },
+            'angle2pixel' : function (groupId) {
                 // angle2pixel
-                var val = document.getElementById(id).value;
+                // 这一函数是将角度值转换成一个坐标矩阵
+                var val = document.getElementById(groupId).value;
+                // 现在先返回假装计算一下的值
+                return val * 1.2;
+            },
+            'showModal' : function (groupId) {
+                var modal = Storage.get('__Modal__');
+                // 这里用AOP去注入事件，并在onHide的时候还原， 重用一个Modal实例
+                var __old_onConfirm = modal.options.onConfirm;
+                var __old_onHide = modal.options.onHide;
+
+                modal.options.onConfirm = null;
+                modal.options.onHide = null;
+
+                modal.options.onConfirm = function (modal) {
+                    var dom = modal.dom;
+                    if (!dom.find('li.active').length) {
+                        alert('请选择一张素材图片');
+                        return false;
+                    }
+
+                    var picUrl = dom.find('li.active>img').attr('src');
+                    var cropEl = Storage.get('__cropEl__');
+                    $('#' + groupId, $('pagesBox')[0]).find('.cont-inner>img').attr('src', picUrl);
+                    $('#' + groupId, $('app-page')[0]).find('.cont-inner>img').attr('src', picUrl);
+                    return true;
+                }
+
+                modal.options.onHide = function (modal) {
+                    modal.options.onConfirm = __old_onConfirm;
+                    modal.options.onHide = __old_onHide;
+                };
+                modal.modal('show');
+            },
+            'cropImage' : function (groupId) {
+                var coords = Storage.get('__selectedCoords__');
+                var cropEl = Storage.get('__cropEl__');
+                var modal = Storage.get('__Modal__');
+                var img = cropEl[0];
                 
-                return val*2;
+
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+
+                var rW = 220 / img.width;
+                var rH = 220 / img.height;
+                canvas.width = coords.w/rW;
+                canvas.height = coords.h/rH;                
+                context.drawImage(img, coords.x/rW, coords.y/rH, coords.w/rW, coords.h/rH, 0,0, coords.w/rW, coords.h/rH);
+
+                // 这里要启动一下服务器, 不然会让坑爹的crossOrigin害惨了
+                var picUrl = canvas.toDataURL("image/png");
+                $('#' + groupId, $('pagesBox')[0]).find('.cont-inner>img').attr('src', picUrl);
+                $('#' + groupId, $('app-page')[0]).find('.cont-inner>img').attr('src', picUrl);
+            }
+        };
+        if (!!fnName) {
+            if (fnName in strategy) {
+                strategy[fnName](groupId);
             }
         }
 

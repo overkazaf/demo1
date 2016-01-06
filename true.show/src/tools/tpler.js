@@ -44,8 +44,8 @@
 				case 'text':
 					html=obj.value;
 				break;
-				case 'img':
-					html='<img alt="'+obj.name+'" src="'+obj.src+'" style="width:'+obj.styles.width+';height:'+obj.styles.height+';border:0;"';
+				case 'photo':
+					html='<img alt="'+obj.name+'" src="'+obj.src+'" style="width:'+obj.styles.width+';height:'+obj.styles.height+';border:0;" />';
 				break;
 			}
 			return html;

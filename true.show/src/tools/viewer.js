@@ -4,6 +4,8 @@
 	var Dragger=require('./dragger');
 	var ruler=require('./ruler');
 	var tpler=require('./tpler');
+	var Storage=require('./Storage');
+
 	var ctmtpl='<div class="contextmenu viewer-contextmenu">\
 								<div type="del-layer" class="ctm-item plugin-ctm">删除图层</div>\
 								<div class="ctm-split-line"></div>\
@@ -60,13 +62,39 @@
 			var that=this;
 			$(document).on('click',this.opts.cls,function(event){
 				event.preventDefault();
+
 				$(that.opts.id).find(that.opts.cls).removeClass('active');
 				$(this).addClass('active');
 				that.updateElement($(this),{});
+
+				// 获取配置面板
+				var elementId = $(this).attr('id');
+
+				var AM = Storage.get('__AM__');
+				if (!!AM) {
+					var group = Storage.get(elementId);
+					if (!!group) {
+						console.log('group', '>>', group);
+						group.init();
+					}
+				}
+
+				return false;
 			});
 
 			this.resizer=new Resizer(null,null,function(t){
 				that.updateElement(t,{'width':t.width()+'px','height':t.height()+'px'});
+				
+				// FIXME : 下边的逻辑在每次改变容器大小时修正了图片的大小， 
+				// 应该在resize的过程中进行处理，暂时放在callback里一次刷新
+				var id = t.attr('id');
+				var opt = {
+					width : t.width(),
+					height : t.height()
+				};
+				t.find('.cont-inner>img').css(opt);
+				$('#' + id, $('#pagesBox')).find('.cont-inner>img').css(opt);
+
 			});
 			this.dragger=new Dragger(null,null,function(t){
 				var o=$(t).position();
@@ -177,7 +205,7 @@
 			}else{
 				$(el).appendTo(this.opts.id);
 			}
-			console.log('viewer-addel',el);
+			// console.log('viewer-addel',el);
 		},
 		getTarget:function(id){
 			return $(this.opts.id).find(id);

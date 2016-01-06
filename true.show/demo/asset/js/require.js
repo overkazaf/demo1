@@ -46,6 +46,7 @@ require.config({
         }
     ],
     paths : {
+    	'Jcrop' : 'jquery.Jcrop.min',
     	'AttributeManager' : '../../../src/manager/AttributeManager',
     	'Group' : '../../../src/manager/Group'
     }

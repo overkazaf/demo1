@@ -25,6 +25,7 @@
 			var that=this;
 			$(document).on('mousedown', this.cls, function(event) {
 				event.preventDefault();
+				event.stopPropagation();
 				that.dragger=$(this).parent();
 				if(that.dragger.hasClass('state-disable')==true) return;
 				that.resetOffset();

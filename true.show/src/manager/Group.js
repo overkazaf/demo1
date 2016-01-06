@@ -5,7 +5,6 @@
  * @module manager/GroupManager
  */
 ;define(function (require) {
-
 	var Group = function (options) {
 		// Group实例中的id应该与存在的元素id一一对应
 		this.options = options;
@@ -13,6 +12,7 @@
 		this.attrList = [];
 		this.attrMap = {};
 	};
+
 
 	// 对象方法
 	Group.prototype.add = function (attributor) {
@@ -28,6 +28,12 @@
 			return true;
 		}
 		return false;
+	};
+
+	Group.prototype.init = function () {
+		this.iterList(function (el, index, list) {
+			el.init();
+		});
 	};
 
 	/**
@@ -51,7 +57,7 @@
 	 */
 	Group.prototype.updateAll = function (jsonArray) {
 		var list = this.attrList;
-		list.forEach(function (el) {
+		list.forEach(function (el, index) {
 			el.update(jsonArray[index]);
 		});
 	};
@@ -84,8 +90,8 @@
 
 	Group.prototype.iterList = function (func, options) {
 		var list = this.getAll();
-		list.forEach(function (a, index){
-			func.call(a, a, options || {});
+		list.forEach(function (item, index, list){
+			func.call(item, item, index, list);
 		});
 	};
 
@@ -127,13 +133,19 @@
 		this.supervisor.noticeUpdate(forms);
 	};
 
+	/**
+	 *  获取所有的配置项表单， 实际上只要获取当前的配置项就可以了，局部更新
+	 *  所以在marker的更新逻辑处最好要使用一个策略
+	 */
+
 	Group.prototype.collectForms = function () {
 		var forms = {};
-		this.iterList(function (a, opt){
+		this.iterList(function (a, index, list){
 			forms[a.options.type] = a.getForm();
 		});
 		return forms;
 	};
+
 
 	return Group;
 });

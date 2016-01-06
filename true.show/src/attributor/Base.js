@@ -1,11 +1,11 @@
 /**
  * Base 特性配置类的基类，主要提供一些模板方法让子类重载或调用
  * @author John Nong(https://www.github.com/overkazaf)
- * @module attributor/AttributeGroup
+ * @module attributor/Base
  */
 ;
 define(function(require) {
-    var AM = require('AttributeManager');
+
     var tools = require('../tools/tools');
     var logger = require('../tools/loger');
 
@@ -19,7 +19,12 @@ define(function(require) {
     };
 
     Base.prototype.init = function() {
-
+    	/**
+    	 * 
+    	 * 这里是初始化单个配置面板的逻辑，
+    	 * 如果想处理多个， 在Group模块里调用iterList方法进行遍历调用
+    	 * 
+    	 */
         this.buildPanel();
 
         this.setupPluginList();
@@ -61,11 +66,16 @@ define(function(require) {
     Base.prototype.buildFormLine = function(line) {
 
         var html = [],
-            box = '';
+            box = '',
+            excepts = {
+            	'textarea' : 1,
+            	'modal' : 1,
+            	'crop' : 1,
+            };
 
         html.push('<dl id="' + line['name'] + '-box" data-css="' + line['css'] + '" data-unit="' + (!!line['unit'] ? line['unit'] : '') + '" data-eval="'+ (!!line['eval']?line['eval']:'') +'">');
 
-        if (line['plugin'] != 'textarea') {
+        if (! (line['plugin'] in excepts)) {
             box += '<dt>' + line['label'] + '</dt>';
         }
 
@@ -84,6 +94,11 @@ define(function(require) {
         return {};
     };
 
+    Base.prototype.form2Data = function() {
+
+        return {};
+    };
+
     Base.prototype.buildPanelPlugin = function(json) {
         var
             id = json.name,
@@ -95,6 +110,10 @@ define(function(require) {
             eventString = this.getEventString(json.plugin, this.groupId);
 
         switch (plugin) {
+        	case 'modal':
+        	case 'crop':
+        		html = '<button ' + eventString +' id="'+ id +'" class="btn btn-default">'+ value +'</button>';
+        		break;
             case 'textarea':
                 html = '<textarea ' + eventString + ' row="12" col="30" class="textarea-box" id="' + id + '">' + (!!value ? value : "") + '</textarea>';
                 break;
@@ -113,17 +132,23 @@ define(function(require) {
     Base.prototype.getEventString = function(plugin, groupId) {
         var html = '';
         switch (plugin) {
+        	case 'modal':
+                html = 'onclick="callFN(\'showModal\', event, \'' + groupId + '\');return false;"';
+                break;
+            case 'crop':
+                html = 'onclick="callFN(\'cropImage\', event, \'' + groupId + '\');return false;"';
+                break;
             case 'textarea':
-                html = 'onkeyup="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
+                html = 'onkeyup="callFN(\'noticeUpdate\', event,\'' + groupId + '\');"';
                 break;
             case 'select':
-                html = 'onchange="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
+                html = 'onchange="callFN(\'noticeUpdate\', event,\'' + groupId + '\');"';
                 break;
             case 'btngroup':
-                html = 'onclick="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
+                html = 'onclick="callFN(\'noticeUpdate\', event,\'' + groupId + '\');"';
                 break;
             default:
-                html = 'onblur="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
+                html = 'onblur="callFN(\'noticeUpdate\', event,\'' + groupId + '\');"';
         };
 
         return html;
@@ -175,7 +200,7 @@ define(function(require) {
 
         return {
             id: tools.uuid(),
-            pluginName: 'xxx',
+            pluginName: 'pluginName', // text, photo, button
         }
     }
 
@@ -183,6 +208,8 @@ define(function(require) {
         var list = this.pluginList;
 
         tools.each(list, function(plugin) {
+            // 这里会隐藏原表单的input，用plugin的view的替换， 
+            // 当plugin的值改变时trigger原表单的事件，通知上一层管理器更新view
             plugin.init();
         });
     };

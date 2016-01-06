@@ -8,6 +8,6 @@
 		Styles : require('../attributor/Styles'),
 		Position : require('../attributor/Position'),
 		Animation : require('../src/attributor/Animation'),
-		Function : require('../src/attributor/Function')
+		Feature : require('../src/attributor/Feature')
 	};
 });

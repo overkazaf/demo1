@@ -109,7 +109,7 @@
 					$(el).insertBefore(this.getTarget(target));
 				}
 			}else{
-				$(el).appendTo(this.currpager);
+				$(el).appendTo(this.currpager.find(this.opts.thumb));
 			}
 		},
 		getTarget:function(id){
@@ -170,7 +170,7 @@
 				that.currpager.removeClass(that.opts.activeCls);
 				$(this).addClass(that.opts.activeCls);
 				that.currpager=$(this);
-				that.changePage();
+				that.changePage(that.currpager.index());
 			});
 			$(document).on('click',that.opts.addbtn,function(event){
 				event.preventDefault();

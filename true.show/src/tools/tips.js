@@ -9,7 +9,7 @@
 	}
 	tipser.prototype={
 		init:function(){
-			logs.log('tips: ','success.');
+			// logs.log('tips: ','success.');
 			this.tipser=this.generateTipsWarp();
 			this.bindEvent();
 		},

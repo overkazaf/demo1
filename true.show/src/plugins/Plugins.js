@@ -3,6 +3,7 @@
 	return {
 		Text : require('./Text'),
 		Button : require('./Button'),
-		Photo : require('./Photo')
+		Photo : require('./Photo'),
+		Modal : require('./Modal')
 	};
 });

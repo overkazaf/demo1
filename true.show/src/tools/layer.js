@@ -170,6 +170,7 @@
 					$(el).insertBefore(this.getTarget(target));
 				}
 			}else{
+
 				$(el).appendTo(this.opts.id);
 			}
 		},
@@ -463,6 +464,9 @@
 		},
 		getActiveId:function(){
 			return $(this.opts.id).find('.'+this.opts.activeCls).attr('id');
+		},
+		getLastElementId:function(){
+			return $(this.opts.id).find(this.opts.item).last().attr('id');
 		},
 		sortLayer:function(id,type){
 			if(id=='') return;

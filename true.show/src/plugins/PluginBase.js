@@ -5,8 +5,9 @@
  */
 ;define(function (require) {
 	var pluginDict = {
-		'colorpicker' : './plugins/ColorPicker',
-		'dropdown' : './plugins/Dropdown'
+		'colorpicker' : './ColorPicker',
+		'dropdown' : './Dropdown',
+		'modal' : '../Plugins'
 	};
 
 	/**
@@ -15,10 +16,11 @@
 	 * @param {[type]} options    [description]
 	 */
 	var PluginBase = function (pluginName, options) {
-		if (!pluginName in pluginDict) {
+		if (! (pluginName in pluginDict)) {
 			throw new Error('Check your plugin name first!');
 		} 
 
+		console.log(pluginDict[pluginName]);
 		var Plugin = require(pluginDict[pluginName]);
 
 		this.instance = new Plugin(options);

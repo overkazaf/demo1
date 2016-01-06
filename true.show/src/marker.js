@@ -18,16 +18,19 @@ define(function(require) {
     var Tpler = require('./tools/tpler');
     var Viewer = require('./tools/viewer');
     var tools = require('./tools/tools');
-
     var tpler = require('./tools/tpler');
 
-    var appContext = $(document).find('app-page')[0];
+    // 存储模块
+    var Storage = require('./tools/Storage');
+
     var AttributeManager = require('AttributeManager');
-    var Group = require('Group');
-    var Text = require('./attributor/Text');
+    // var Group = require('Group');
+    // var Text = require('./attributor/Text');
 
 
-
+    // 用于容器中dom查询的上下文
+    var appContext = $(document).find('app-page')[0];
+    var pageContext = document.getElementById('pagesBox');
 
     var paperTpl = {
         id: tools.uuid(),
@@ -51,7 +54,7 @@ define(function(require) {
     function newLayer(id, type) {
         return {
             id: id || tools.uuid(),
-            name: '空白页面',
+            name: '空白图层',
             value: '',
             type: type || 'text',
             animates: [],
@@ -108,16 +111,15 @@ define(function(require) {
                     that.removeElement(id);
                 },
                 changeLayerCallback: function(id, css, styles) {
-                    console.log('changeCallBack', id, ' >> ', css, ' >> ', styles);
+                    // console.log('changeCallBack', id, ' >> ', css, ' >> ', styles);
                     // that.updateAttrModel({
                     //     id: id,
                     //     css: css,
                     //     styles: styles
                     // });
-
+                    // console.log('getting layer',that.getLayer(id));
+                    // that.getLayer(id).value = css.content;        
                     that.changeStyles(id, css, styles);
-                    var el = $('#' + id, appContext);
-                    $('.plugin-btn[plugin-type="'+el.attr('type')+'"]').trigger('click');
                 },
                 changeStatesCallback: function(id, type) {
                     that.changeStates(id, type);
@@ -204,68 +206,23 @@ define(function(require) {
             this.initAttributeManager();
         },
         initAttributeManager: function() {
-            // 测试用
-            var initopt = {
-                id: 'p0e3',
-                type: 'text',
-                styles: {
-                    left: '30px',
-                    top: '30px',
-                    width: '100px',
-                    height: '50px',
-                    'text-align': 'center'
-                },
-                animates: [{
-                    repeat: 0,
-                    duration: 0,
-                    class: 'flip',
-                    delay: 0
-                }],
-                events: [{
-                    "name": "click",
-                    "actions": [{
-                        "type": "show",
-                        "value": {
-                            "elems": []
-                        },
-                        "delay": 0
-                    }]
-                }],
-                states: {
-                    lock: false,
-                    visible: true
-                }
-            };
-            var AM = new AttributeManager(initopt);
-
-
-            var group = new Group({
-                id: 'p0e3'
+            // 1. 初始化构建对象
+            var AM = new AttributeManager({
+                id : tools.uuid()
             });
 
+            // 2. 把管理对象缓存起来
+            Storage.set('__AM__', AM);
 
-            var param = $.extend({}, {
-            	id : tools.uuid(),
-                groupId: 'p0e3'
-            }, config.Attributor.TEXT);
-            var TextPropEl = new Text(param).init();
-            // var StylesPropEl = new Styles(paramB).init();
-
-            group.add(TextPropEl);
-            // 把当前配置项写入缓存
-            tools.Storage.set(group.id, group);
-
-            AM.getInstance().addGroup(group);
-
+            // 3. 两个调度对象的指针设定
+            // FIXME: 现在对象的指向的关系有点乱，后边要改成交给一个中介者全局调度
             this.setAM(AM);
-        },
-        bindEvent: function() {
-
+            AM.setMarker(this);
         },
         changePage: function(page) {
             this.idx = page;
             this.viewer.init(this.data.pages[this.idx]);
-            this.layer.init(this.data.pages[this.idx].elements, 0);
+            this.layer.init(this.data.pages[this.idx].elements, page);
         },
         changeStyles: function(id, css, styles) {
             var el = this.getElement(id);
@@ -346,6 +303,14 @@ define(function(require) {
             }
             return null;
         },
+        getActiveElementId : function () {
+            // 全局获取焦点元素ID的方法
+            return this.layer.getActiveId();
+        },
+        getLastElementId : function () {
+            // 全局获取焦点元素ID的方法
+            return this.layer.getLastElementId();
+        },
         getPage: function(id) {
             var ps = this.data.pages,
                 i = 0,
@@ -402,14 +367,35 @@ define(function(require) {
             this.layer.addElement(copylayer, id, after);
             this.pages.addElement(copylayer, id, after);
         },
+        addNewElement : function (data) {
+
+            var clonedLayer = newLayer();
+            $.extend(true, clonedLayer, data);
+
+            this.data.pages[this.idx].elements.push(clonedLayer);
+            
+            
+
+            var id = this.getLastElementId();
+                id = !!id ? '#' + id : undefined;
+
+            this.viewer.addElement(clonedLayer, id, true);
+            this.layer.addElement(clonedLayer, id, true);
+            this.pages.addElement(clonedLayer, id, true);
+
+            // this.data.pages[this.pages.getActivePage()-1].elements.push(copylayer);
+        },
         delLayer: function(id) {
             this.getLayer(id);
             this.viewer.removeElement(id);
             this.layer.removeElement(id);
             this.pages.removeElement(id);
+
+            // 把配置信息从缓存对象中移除掉
+            Storage.remove(id);
         },
         /**
-         *  设置直接通信的AM模块实例
+         *  直接通信的AM模块实例的setter和getter方法
          */
         setAM: function(AM) {
             this.AM = AM;
@@ -423,9 +409,14 @@ define(function(require) {
          * @return {[type]} [description]
          */
         updateView: function(json) {
-          var el = $('#'+json.groupId, appContext);
-          el.find('.cont-inner').text(json.content);
-          this.viewer.updateElement(el, json.styles);
+          // 1. 判断当前焦点元素是否为锁定状态， 否则不更新视图
+          // 
+          // 2. 在不同的容器内更新元素，后边拆分开来
+          var viewEl = $('#'+json.groupId, appContext);
+          var pageEl = $('#'+json.groupId, pageContext);
+          pageEl.find('.cont-inner').text(json.content);
+          viewEl.find('.cont-inner').text(json.content);
+          this.viewer.updateElement(viewEl, json.styles);
           this.changeStyles(json.groupId, json.styles, json.styles);
           
         },

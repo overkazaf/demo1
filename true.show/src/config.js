@@ -196,6 +196,48 @@
   		 	]
   		]
     };
+
+    // 样式
+	config.Attributor.STYLES = {
+		id : tools.uuid(),
+  		tabId : 'panel-style',
+  		type : 'styles',
+  		attributes : [
+  			[
+  				{label:"背景颜色", name:"bgc", css:'background-color', value: "transparent", values:null, plugin:'colorpicker', unit:null}
+  		 	],
+  		 	[
+  				{label:"边框类型", css:"border-style", name:"border-style", value: null, values: [
+  					{label:'无', name:"border-style-none", value:'none', clazz:'', status:'selected'},
+  					{label:'实线', name:"border-style-solid",value:'solid', clazz:'', status:''},
+  					{label:'虚线', name:"border-style-dashed",value:'dashed', clazz:'', status:''},
+  					{label:'点线', name:"border-style-dotted",value:'dotted', clazz:'', status:''},
+  					{label:'双线', name:"border-style-double",value:'double', clazz:'', status:''}
+  				], plugin:'select', unit:null},
+  				{label:"边框宽度", css:"border-width", name:"border-width", value: "1", values: null, plugin:'slider', unit:'px'},
+  				{label:"边框颜色", name:"bdc", css:'border-color', value: "#000000", values:null, plugin:'colorpicker', unit:null}
+  		 	],
+  		 	[
+  				{label:"圆角半径", name:"bdr", css:'border-radius', value: "0", values:null, plugin:'slider', unit:'px'}
+  		 	],
+  		 	[
+  				{label:"透明度", name:"opacity", css:'opacity', value: "1", values:null, plugin:'slider', unit:'%'}
+  		 	],
+  		 	[
+  				{label:"旋转角度", name:"transform", css:'transform', value: "1", values:null, plugin:'slider', unit:'度'}
+  		 	],
+  		 	[
+  				{label:"阴影颜色", css:"box-shadow", name:"box-shadow-color", value: "", values: null, plugin:'colorpicker', unit:null},
+  				{label:"模糊", css:"box-shadow", name:"box-shadow-blur", value: "", values: null, plugin:'slider', unit:'px'},
+  				{label:"阴影距离", css:"box-shadow", name:"box-shadow-distance", value: "", values: null, plugin:'slider', unit:'px'},
+  				{label:"阴影角度", css:"box-shadow", name:"box-shadow-angle", value: "", values: null, plugin:'slider-angle', unit:'度'},
+  		 	],
+  		 	[
+  				{label:"宽度", name:"width", css:'width', value: "100", values:null, plugin:'text', unit:'px'},
+  				{label:"高度", name:"height", css:'height', value: "50", values:null, plugin:'text', unit:'px'}
+  		 	],
+  		]
+    };
     
     // 按钮
     config.Attributor.BUTTON = {};

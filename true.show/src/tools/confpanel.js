@@ -12,6 +12,9 @@ define(function(require) {
     var Text = require('../attributor/Text');
     var Photo = require('../attributor/Photo');
 
+
+    var Styles = require('../attributor/Styles');
+
     var Modal = require('../plugins/Modal');
 
     var constTypes = [
@@ -45,14 +48,22 @@ define(function(require) {
                 groupId: elementId
             };
 
+            var StylesPropParam = {
+                id: tools.uuid(),
+                groupId: elementId
+            };
+
             $.extend(true, TextPropParam, config.Attributor.TEXT);
+            $.extend(true, StylesPropParam, config.Attributor.STYLES);
             
             var TextPropEl = new Text(TextPropParam).init();
+            var StylesPropEl = new Styles(StylesPropParam).init();
             // var StyPropEl = new Styles(paramB).init();
             // var PosPropEl = new Position(paramB).init();
             // var AniPropEl = new Animation(paramB).init();
             // var FeaPropEl = new Feature(paramB).init();
             group.add(TextPropEl);
+            group.add(StylesPropEl);
 
             // or u can call group.init to batch initialize all the Attributor instances
             return group;
@@ -67,8 +78,17 @@ define(function(require) {
                 groupId: elementId
             };
 
+            var StylesPropParam = {
+                id: tools.uuid(),
+                groupId: elementId
+            };
+
             $.extend(true, PhotoPropParam, config.Attributor.PHOTO);
+            $.extend(true, StylesPropParam, config.Attributor.STYLES);
+            
+            
             var PhotoPropEl = new Photo(PhotoPropParam).init();
+            var StylesPropEl = new Styles(StylesPropParam).init();
             // var StyPropEl = new Styles(paramB).init();
             // var PosPropEl = new Position(paramB).init();
             // var AniPropEl = new Animation(paramB).init();

@@ -20,8 +20,6 @@
 ;define(function (require){
 
 	var $ = require('jquery');
-	var AM = require('AttributeManager');
-	var AG = require('Group');
 	var Base = require('./Base');
 	var tools = require('../tools/tools');
 	var config = require('../config');
@@ -124,6 +122,14 @@
 
 		ret['font-size'] = ret['font-size'] + 'px';
 
+		var el = $('#' + groupId, $('app-page')[0]);
+		
+		// 下边这些属性要在当前Group的Styles实例中进行合并
+		ret['left'] = el.css('left');
+		ret['top'] = el.css('top');
+		ret['width'] = el.css('width');
+		ret['height'] = el.css('height');
+		
 		var content = ret.content;
 		var resultObj = {
 			'groupId' : groupId,

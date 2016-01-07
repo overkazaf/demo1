@@ -226,7 +226,8 @@ define(function(require) {
             var pageData = this.data.pages[this.idx];
             var elements = pageData.elements;
             this.viewer.init(pageData);
-            this.layer.init(elements, page);
+            // 初始化， 并把页面的第一个层元素激活为焦点元素
+            this.layer.init(elements, 0);
         },
         changeStyles: function(id, css, styles) {
             var el = this.getElement(id);

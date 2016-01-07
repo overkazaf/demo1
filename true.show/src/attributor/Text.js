@@ -88,38 +88,55 @@
 					dom = dd.getElementsByTagName('input')[0];
 					if (!!dom.value) {
 						var value = dom.value + unit;
-						if (evalExp) {
-							value = eval('(' + evalExp + ')')
-							value += 'px';
-						}
+						// if (evalExp) {
+						// 	value = eval('(' + evalExp + ')');
+						// 	alert(value);
+						// 	value += 'px';
+						// }
 						if (typeof ret[css] === 'undefined') {
 							ret[css] = value;
 						} else {
 							ret[css] += ' ' + value;
 						}
 					} else {
+						var value = '0px';
 						if (typeof ret[css] === 'undefined') {
-							ret[css] = value + unit;
+							ret[css] = value;
 						} else {
-							ret[css] += ' ' + value + unit;
+							ret[css] += ' ' + value;
 						}
 					}
 			}
 		});
+		
+
+		
+
+		/* 修正角度 */
+		ret['text-shadow'] = (function (arr){
+			var ret = [arr[1] + 'px', arr[0]];
+			var vector = tools.polar2Axes(parseInt(arr[2]), parseInt(arr[3]), 4);
+
+			ret.unshift(vector.y + 'px');
+			ret.unshift(vector.x + 'px');
+			return ret.join(' ');
+		})(ret['text-shadow'].split(' '));
+
+		ret['font-size'] = ret['font-size'] + 'px';
 
 		var content = ret.content;
-		// 这里主要是收集所有的属性值，到时候一块儿塞进styles属性中
-		return {
+		var resultObj = {
 			'groupId' : groupId,
 			'content' : content,
 			'styles' : ret
 		};
+
+		// 这里主要是收集所有的属性值，到时候一块儿塞进styles属性中
+		return resultObj;
 	};
 
 	/**
 	 * [form2Data 表单数据->配置对象数据结构，见config.Attributor.Text]
-	 * 
-	 * 
 	 * @return {[type]} [description]
 	 */
 	Text.prototype.form2Data = function () {
@@ -152,6 +169,7 @@
 					ret[css] = dom.value;
 					break;
 				case 'btngroup':
+
 					var cssArr = css.split(';');
 					dom = dd.getElementsByTagName('input');
 					tools.each(cssArr, function (prop, index){
@@ -162,7 +180,6 @@
 								ret[prop] = dom[index].value;
 							}
 						}
-						
 					});
 					break;
 				default:
@@ -183,14 +200,69 @@
 
 		tools.each(attributes, function (attrGroup, i){
 			tools.each(attrGroup, function (attr, j) {
-				if (attr['css'] in ret) {
-					var plugin = attr['plugin'];
+				var sp = attr['css'].split(';');
+				if (attr['css'] in ret || sp[0] in ret || sp[1] in ret || sp[2] in ret) {
+					var plugin = attr['plugin'] || attr['values']['plugin'];
+
 					switch (plugin) {
 						case 'btngroup':
-
+							// 根据ret里的值更新values里的值
+							// FIXME:太矬了， 这个版本开发完成重写一份
+							var vs = attr['values'];
+							for (var x in vs) {
+								var item = vs[x];
+								if (item.type == 'radio') {
+									if (item.value == ret[sp[0]]) {
+										item.status = 'checked';
+									} else {
+										item.status = '';
+									}
+								} else {
+									if (item.value == ret[sp[0]] || item.value == ret[sp[1]] || item.value == ret[sp[2]]) {
+										item.status = 'checked';
+									} else {
+										item.status = '';
+									}
+								}
+							}
+							break;
+						case 'select':
+							var val = ret[attr['css']];
+							var vs = attr['values'];
+							for (var opt in vs) {
+								if (vs[opt].value == val) {
+									vs[opt].status = 'selected';
+								} else {
+									vs[opt].status = '';
+								}
+							}
 							break;
 						default : 
-							attr['value'] = ret[attr['css']];
+							if (attr['css'] == 'text-shadow') {
+								var v = ret[attr['css']];
+								var k = attr['name'];
+								var vs = v.split(' ');
+								var c = '';
+
+								switch (k) {
+									case 'text-shadow-color': 
+										c = vs[0];
+										break;
+									case 'text-shadow-blur': 
+										c = vs[1];
+										break;
+									case 'text-shadow-distance': 
+										c = vs[2]
+										break;
+									case 'text-shadow-angle': 
+										c = vs[3];
+										break;
+								};
+
+								attr['value'] = c;
+							} else {
+								attr['value'] = ret[attr['css']];
+							}
 					}
 				}
 			});
@@ -200,7 +272,7 @@
 	};
 
 	/**
-	 * [setupPluginList 初始化配置项的插件列表]
+	 * [setupPluginList 初始化插件列表]
 	 * @return {[type]} [description]
 	 */
 	// Text.prototype.setupPluginList = function () {

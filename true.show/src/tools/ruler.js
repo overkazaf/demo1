@@ -59,7 +59,9 @@
 				that.ori=that.getOrientation(that.curelem);
 			});
 			$(document).on('mouseup',function(event){
-				event.preventDefault();
+				if (this.type && this.type != 'range') {
+					event.preventDefault();
+				}
 				if(that.state=='line'&&that.curelem!=null){
 					if(that.curelem.data('px')<0){
 						that.removeLine();
@@ -72,7 +74,15 @@
 				that.ori=null;
 			});
 			$(document).on('mousemove', function(event) {
-				event.preventDefault();
+				if (this.type && this.type != 'range'){
+					event.preventDefault();
+				} else {
+					var target = event.target;
+					if (target.type && target.type == 'range') {
+						$(target).next('output').text($(target).val() + $(target).attr('data-unit'));
+					}
+				}
+
 				/* Act on the event */
 				if(that.curelem!=null&&that.state!=null){
 					that.moveAction(event);

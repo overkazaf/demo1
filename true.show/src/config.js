@@ -152,10 +152,10 @@
   		 	],
   		 	[
   				{label:"文本颜色", css:"color", name:"color", value: "", values: null, plugin:'colorpicker', unit:null},
-  				{label:"字号", css:"font-size", name:"font-size", value: "", values: null, plugin:'slider', unit:'px'},
+  				{label:"字号", css:"font-size", name:"font-size", value: "", values: null, plugin:'slider-fontsize', unit:'px'},
   				{label:"字体", css:"font-family", name:"font-family", value: null, values: [
-  					{label:'默认字体', name:"font-family", value:'宋体', clazz:'icon-font', status:'selected'},
-  					{label:'黑体', name:"font-family",value:'黑体', clazz:'icon-font', status:''},
+  					{label:'黑体', name:"font-family", value:'黑体', clazz:'icon-font', status:'selected'},
+  					{label:'宋体', name:"font-family",value:'宋体', clazz:'icon-font', status:''},
   					{label:'微软雅黑', name:"font-family",value:'Microsoft Yahei', clazz:'icon-font', status:''},
   					{label:'仿宋', name:"font-family",value:'仿宋', clazz:'icon-font', status:''}
   				], plugin:'select', unit:null}
@@ -171,13 +171,13 @@
   					{label:'居中', name:"text-center", type:"radio",value:'center', clazz:'c icon-text-center', status:'checked'},
   					{label:'右对齐', name:"text-right", type:"radio",value:'right', clazz:'r icon-text-right', status:''},
   				], plugin:'btngroup', unit:null},
-  				{label:"行距", css:"line-height", name:"line-height", value: "", values: null, plugin:'slider', unit:''}
+  				{label:"行距", css:"line-height", name:"line-height", value: "", values: null, plugin:'slider-lineheight', unit:''}
   		 	],
   		 	[
   				{label:"阴影颜色", css:"text-shadow", name:"text-shadow-color", value: "", values: null, plugin:'colorpicker', unit:null},
-  				{label:"阴影距离", css:"text-shadow", name:"text-shadow-distance", value: "", values: null, plugin:'slider', unit:'px'},
   				{label:"模糊", css:"text-shadow", name:"text-shadow-blur", value: "", values: null, plugin:'slider', unit:'px'},
-  				{label:"阴影角度", css:"text-shadow", name:"text-shadow-angle", value: "", values: null, plugin:'knob', unit:'度', eval:"callFN('angle2pixel', 'text-shadow-angle')"},
+  				{label:"阴影距离", css:"text-shadow", name:"text-shadow-distance", value: "", values: null, plugin:'slider', unit:'px'},
+  				{label:"阴影角度", css:"text-shadow", name:"text-shadow-angle", value: "", values: null, plugin:'slider-angle', unit:'度'},
   		 	]
   		]
     };

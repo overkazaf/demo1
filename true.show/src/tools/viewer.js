@@ -62,23 +62,26 @@
 			var that=this;
 			$(document).on('click',this.opts.cls,function(event){
 				event.preventDefault();
-
 				$(that.opts.id).find(that.opts.cls).removeClass('active');
 				$(this).addClass('active');
 				that.updateElement($(this),{});
 
-				// 获取配置面板
-				var elementId = $(this).attr('id');
 
+				var elementId = $(this).attr('id');
 				var AM = Storage.get('__AM__');
+				// 获取配置面板
+				if ($(this)[0].tagName.toLowerCase() == 'plugin-warp') {
+					var type = $(this).attr('type');
+					// swap tab
+					AM.getMarker().cper.swaptab(type);
+				}
+				
 				if (!!AM) {
 					var group = Storage.get(elementId);
 					if (!!group) {
-						console.log('group', '>>', group);
 						group.init();
 					}
 				}
-
 				return false;
 			});
 

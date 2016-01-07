@@ -2,6 +2,7 @@
 	'use strict';
 	var $=require('jquery');
 	var tools=require('./tools');
+	var logger=require('./loger');
 	var tpler=require('./tpler');
 	var tpl='<li id="{{id}}" class="page-item {{active}}">\
 						<div class="layer-cont clearfix">\
@@ -239,6 +240,7 @@
 			that.resetOffset();
 			$(this.opts.id).on('click',that.opts.item,function(event){
 				event.preventDefault();
+
 				if(that.currpager.attr('id')==$(this).attr('id')) return;
 				that.currpager.removeClass(that.opts.activeCls);
 				$(this).addClass(that.opts.activeCls);
@@ -453,6 +455,7 @@
 		},
 		setActiveElement:function(id){
 			if(this.currpager!=null) this.currpager.removeClass(this.opts.activeCls);
+			if(!id)return;
 			var dom=$(this.opts.id).find('#'+id),
 					states=dom.attr('states');
 			dom.addClass(this.opts.activeCls);

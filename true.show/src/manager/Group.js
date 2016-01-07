@@ -36,6 +36,12 @@
 		});
 	};
 
+	Group.prototype.destory = function () {
+		this.iterList(function (el, index, list) {
+			el.destory();
+		});
+	};
+
 	/**
 	 * [update 更新配置项指定]
 	 * @param  {[type]} json [description]

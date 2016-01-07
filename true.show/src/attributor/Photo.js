@@ -151,7 +151,7 @@
 			if (plug == 'crop') {
 				var crop = new Crop({
 					dom : dd
-				}).init();
+				});
 				list.push(crop);
 			}
 		});
@@ -162,7 +162,16 @@
 	 * @return {[type]} [description]
 	 */
 	Photo.prototype.initPlugins = function () {
-		
+		var list = this.pluginList;
+		tools.each(list, function (plugin, index){
+			if (plugin.init) {
+				try {
+					plugin.init();
+				} catch(ex) {
+					console && console.error && console.error(ex);
+				}
+			}
+		});
 	};
 
 	/**
@@ -170,7 +179,16 @@
 	 * @return {[type]}         [description]
 	 */
 	Photo.prototype.destory = function () {
-		Base.destory.call(this);
+		var list = this.pluginList;
+		tools.each(list, function (plugin, index){
+			if (plugin.api && plugin.api.destory) {
+				try {
+					plugin.api.destroy();
+				} catch(ex) {
+					console && console.error && console.error(ex);
+				}
+			}
+		});
 	};
 
 	tools.inherits(Photo, Base);

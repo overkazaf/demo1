@@ -84,36 +84,63 @@ define(function(require) {
             }
 
             return -1;
+        },
+        // 极坐标系转直角坐标系
+        polar2Axes : function (distance, alpha, fixed) {
+            var ret = {
+                x : distance * Math.cos(alpha * (2 * Math.PI / 360)),
+                y : distance * Math.sin(alpha * (2 * Math.PI / 360))
+            };
+            if(!!fixed) {
+                ret.x = new Number(ret.x).toFixed(fixed);
+                ret.y = new Number(ret.y).toFixed(fixed);
+            }
+            return ret;
+        },
+        // 直角坐标系转极坐标系
+        axes2Polar : function (x, y, fixed) {
+            var ret = {
+                dis : Math.sqrt(x*x + y*y),
+                angle : y == 0 ? 0 : Math.atan(x/y) * 360/(2 * Math.PI)
+            };
+            if(!!fixed) {
+                ret.dis = new Number(ret.dis).toFixed(fixed);
+            }
+            return ret;
         }
     };
 
-    window.callFN = function(fnName, evt, groupId) {
-        evt.preventDefault();
+    var timeout;
+    window.callFN = function(fnName, groupId) {
         var strategy = {
-            'noticeUpdate' : function () {
-                var group = Storage.get(groupId);
-                var list = group.getAll();
+            'noticeUpdate' : function (groupId) {
+                if(timeout)clearTimeout(timeout);
+                timeout = null;
+                timeout = setTimeout(function (){
+                    var group = Storage.get(groupId);
+                    var list = group.getAll();
 
-                group.noticeUpdate();
+                    group.noticeUpdate();
 
-                group.iterList(function(item, index) {
-                    // 重置配置项的数据结构
-                    var data = item.form2Data();
-                    // 覆盖后强行塞入
-                    var target = item.options;
-                    $.extend(true, target, data);
+                    group.iterList(function(item, index) {
+                        // 重置配置项的数据结构
+                        var data = item.form2Data();
+                        // 覆盖后强行塞入
+                        var target = item.options;
+                        $.extend(true, target, data);
 
-                    list.splice(index, 1, item);
-                });
+                        list.splice(index, 1, item);
+                    });
 
-                Storage.set(groupId, group);
+                    Storage.set(groupId, group);
+                }, 50)
             },
             'angle2pixel' : function (groupId) {
                 // angle2pixel
                 // 这一函数是将角度值转换成一个坐标矩阵
                 var val = document.getElementById(groupId).value;
                 // 现在先返回假装计算一下的值
-                return val * 1.2;
+                return +val * 1.2;
             },
             'showModal' : function (groupId) {
                 var modal = Storage.get('__Modal__');
@@ -133,16 +160,39 @@ define(function(require) {
 
                     var picUrl = dom.find('li.active>img').attr('src');
                     var cropEl = Storage.get('__cropEl__');
+
+                    // 更新dom
                     $('#' + groupId, $('pagesBox')[0]).find('.cont-inner>img').attr('src', picUrl);
                     $('#' + groupId, $('app-page')[0]).find('.cont-inner>img').attr('src', picUrl);
+
+                    // 重新刷新Crop域
+                    Storage.set('__currentImage__', picUrl);
+
+                    // 更新marker里的缓存数据结构
+                    var marker = Storage.get('__AM__').getMarker();
+                    var elements = marker.data.pages[marker.idx].elements;
+                    elements.forEach(function (item, index){
+                        if(item.id == groupId){
+                            var modEl = tools.clone(item);
+                            modEl.src = picUrl;
+                            elements.splice(index, 1, modEl);
+                        }
+                    });
+
+                    var group = Storage.get(groupId);
+                    group.destory();
+                    group.init();
                     return true;
                 }
+
 
                 modal.options.onHide = function (modal) {
                     modal.options.onConfirm = __old_onConfirm;
                     modal.options.onHide = __old_onHide;
                 };
                 modal.modal('show');
+
+                return false;
             },
             'cropImage' : function (groupId) {
                 var coords = Storage.get('__selectedCoords__');
@@ -157,13 +207,40 @@ define(function(require) {
                 var rW = 220 / img.width;
                 var rH = 220 / img.height;
                 canvas.width = coords.w/rW;
-                canvas.height = coords.h/rH;                
-                context.drawImage(img, coords.x/rW, coords.y/rH, coords.w/rW, coords.h/rH, 0,0, coords.w/rW, coords.h/rH);
+                canvas.height = coords.h/rH;      
 
-                // 这里要启动一下服务器, 不然会让坑爹的crossOrigin害惨了
+                context.drawImage(
+                    img, 
+                    coords.x/rW, 
+                    coords.y/rH, 
+                    coords.w/rW, 
+                    coords.h/rH, 
+                    0, 
+                    0, 
+                    coords.w/rW, 
+                    coords.h/rH
+                );
+
+
+                // 这里要启动一下服务器, 不然会被坑爹的crossOrigin害惨了
                 var picUrl = canvas.toDataURL("image/png");
+
+                // 更新dom
                 $('#' + groupId, $('pagesBox')[0]).find('.cont-inner>img').attr('src', picUrl);
                 $('#' + groupId, $('app-page')[0]).find('.cont-inner>img').attr('src', picUrl);
+
+
+                // 更新marker里的缓存数据结构
+                var marker = Storage.get('__AM__').getMarker();
+                var elements = marker.data.pages[marker.idx].elements;
+                elements.forEach(function (item, index){
+                    if(item.id == groupId){
+                        var modEl = tools.clone(item);
+                        modEl.src = picUrl;
+                        elements.splice(index, 1, modEl);
+                    }
+                });
+                return false;
             }
         };
         if (!!fnName) {

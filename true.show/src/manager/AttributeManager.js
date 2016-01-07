@@ -170,7 +170,7 @@
 	 * @return {[type]}      [description]
 	 */
 	AttributeManager.prototype.updateView = function (json) {
-		console.log('updateView', '>>' , json);
+		// console.log('updateView', '>>' , json);
 		this.getMarker().updateView(json['text']);
 	};
 

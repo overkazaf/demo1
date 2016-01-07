@@ -170,6 +170,7 @@
 				that.currpager.removeClass(that.opts.activeCls);
 				$(this).addClass(that.opts.activeCls);
 				that.currpager=$(this);
+				console.log('current', that.currpager.index());
 				that.changePage(that.currpager.index());
 			});
 			$(document).on('click',that.opts.addbtn,function(event){
@@ -238,6 +239,7 @@
 			});
 			$(document).on('click',this.opts.ctmcls,function(event){
 				event.preventDefault();
+
 				if($(this).hasClass('disable')){
 					that.ctm.remove();
 					return;

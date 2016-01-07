@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="asset/css/animate.css">
     <link rel="stylesheet" type="text/css" href="asset/css/modal-theme.css">
     <link rel="stylesheet" type="text/css" href="asset/css/jquery.Jcrop.min.css">
+    <link rel="stylesheet" type="text/css" href="asset/css/workaround.css">
 </head>
 <body>
     <header>
@@ -201,40 +202,40 @@ require(['marker'],
                 transform: '',
                 styles: '',
                 elements: [
-                // {
-                //     id: 'p0e1',
-                //     name: 'p0e1',
-                //     value: '编辑内容',
-                //     type: 'text',
-                //     styles: {
-                //         left: '30px',
-                //         top: '30px',
-                //         width: '100px',
-                //         height: '50px',
-                //         'text-align': 'center'
-                //     },
-                //     animates: [{
-                //         repeat: 0,
-                //         duration: 0,
-                //         class: 'flip',
-                //         delay: 0
-                //     }],
-                //     events: [{
-                //         "name": "click",
-                //         "actions": [{
-                //             "type": "show",
-                //             "value": {
-                //                 "elems": []
-                //             },
-                //             "delay": 0
-                //         }]
-                //     }
-                //     ],
-                //     states: {
-                //         lock: false,
-                //         visible: true
-                //     }
-                // }
+                {
+                    id: 'p0e1',
+                    name: 'p0e1',
+                    value: '编辑内容',
+                    type: 'text',
+                    styles: {
+                        left: '30px',
+                        top: '30px',
+                        width: '100px',
+                        height: '50px',
+                        'text-align': 'center'
+                    },
+                    animates: [{
+                        repeat: 0,
+                        duration: 0,
+                        class: 'flip',
+                        delay: 0
+                    }],
+                    events: [{
+                        "name": "click",
+                        "actions": [{
+                            "type": "show",
+                            "value": {
+                                "elems": []
+                            },
+                            "delay": 0
+                        }]
+                    }
+                    ],
+                    states: {
+                        lock: false,
+                        visible: true
+                    }
+                }
                 ]
             }
             // , {
@@ -247,7 +248,8 @@ require(['marker'],
 
         // 设置两个模块之间互相通信
         Marker.getAM().setMarker(Marker);
-        $('.plugin-btn[plugin-type="text"]').trigger('click');
+        $('.plugin-btn[plugin-type="canvas"]').trigger('click');
+        
     });
 </script>
 

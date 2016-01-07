@@ -84,14 +84,14 @@ define(function(require) {
             layer: null
         };
         // $(document).on('dblclick', function(event) {
-        // 	//event.preventDefault();
-        // 	// var x=event.pageX,y=event.pageY;
-        // 	 Act on the event 
-        // 	// var r=that.ruler.getNearest({left:x,top:y,width:50,height:50});
-        // 	// logs.log('getNearest',r);
+        //  //event.preventDefault();
+        //  // var x=event.pageX,y=event.pageY;
+        //   Act on the event 
+        //  // var r=that.ruler.getNearest({left:x,top:y,width:50,height:50});
+        //  // logs.log('getNearest',r);
         // });
 
-        this.AM = null; // 负责特性配置的模块
+        this.AM = null; // 负责特性配置的管理模块
 
         this.init();
     }
@@ -206,9 +206,9 @@ define(function(require) {
             this.initAttributeManager();
         },
         initAttributeManager: function() {
-            // 1. 初始化构建对象
+            // 1. 初始化构建属性管理对象
             var AM = new AttributeManager({
-                id : tools.uuid()
+                id: tools.uuid()
             });
 
             // 2. 把管理对象缓存起来
@@ -220,9 +220,13 @@ define(function(require) {
             AM.setMarker(this);
         },
         changePage: function(page) {
+            // FIXME : 这里有bug， 切换页面时候的初始化工作
             this.idx = page;
-            this.viewer.init(this.data.pages[this.idx]);
-            this.layer.init(this.data.pages[this.idx].elements, page);
+
+            var pageData = this.data.pages[this.idx];
+            var elements = pageData.elements;
+            this.viewer.init(pageData);
+            this.layer.init(elements, page);
         },
         changeStyles: function(id, css, styles) {
             var el = this.getElement(id);
@@ -303,11 +307,11 @@ define(function(require) {
             }
             return null;
         },
-        getActiveElementId : function () {
+        getActiveElementId: function() {
             // 全局获取焦点元素ID的方法
             return this.layer.getActiveId();
         },
-        getLastElementId : function () {
+        getLastElementId: function() {
             // 全局获取焦点元素ID的方法
             return this.layer.getLastElementId();
         },
@@ -367,17 +371,17 @@ define(function(require) {
             this.layer.addElement(copylayer, id, after);
             this.pages.addElement(copylayer, id, after);
         },
-        addNewElement : function (data) {
+        addNewElement: function(data) {
 
             var clonedLayer = newLayer();
             $.extend(true, clonedLayer, data);
 
             this.data.pages[this.idx].elements.push(clonedLayer);
-            
-            
+
+
 
             var id = this.getLastElementId();
-                id = !!id ? '#' + id : undefined;
+            id = !!id ? '#' + id : undefined;
 
             this.viewer.addElement(clonedLayer, id, true);
             this.layer.addElement(clonedLayer, id, true);
@@ -409,16 +413,32 @@ define(function(require) {
          * @return {[type]} [description]
          */
         updateView: function(json) {
-          // 1. 判断当前焦点元素是否为锁定状态， 否则不更新视图
-          // 
-          // 2. 在不同的容器内更新元素，后边拆分开来
-          var viewEl = $('#'+json.groupId, appContext);
-          var pageEl = $('#'+json.groupId, pageContext);
-          pageEl.find('.cont-inner').text(json.content);
-          viewEl.find('.cont-inner').text(json.content);
-          this.viewer.updateElement(viewEl, json.styles);
-          this.changeStyles(json.groupId, json.styles, json.styles);
-          
+            // 1. 判断当前焦点元素是为空存在或为锁定状态， 否则不更新视图
+            
+            logs.log('active', this.getActiveElementId());            
+
+            // 2. 在不同的容器内更新元素，后边拆分开来
+            var viewEl = $('#' + json.groupId, appContext);
+            var pageEl = $('#' + json.groupId, pageContext);
+            pageEl.find('.cont-inner').text(json.content);
+            viewEl.find('.cont-inner').text(json.content);
+
+            if (viewEl.length && pageEl.length) {
+                this.viewer.updateElement(viewEl, json.styles);
+                this.changeStyles(json.groupId, json.styles, json.styles);
+
+                // 找el， 更新结构
+                var elements = this.data.pages[this.idx].elements;
+                elements.forEach(function(el, index) {
+                    if (el.id == json.groupId) {
+                        var clonedEl = tools.clone(el);
+                        clonedEl.value = json.content;
+                        elements.splice(index, 1, clonedEl);
+                    }
+
+                });
+            }
+
         },
         updateAttrModel: function(json) {
             return this.getAM().updateAttrModel(json);

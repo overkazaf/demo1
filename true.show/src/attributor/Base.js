@@ -43,6 +43,13 @@ define(function(require) {
         var index = $tab.index();
 
         $tabContainer.eq(index).html(formHtml);
+        $('#' + this.formid).on('submit', function (event) {
+        	event.preventDefault();
+        	return false;
+        });
+        $tabContainer.eq(index).find('select').each(function () {
+        	$(this).find('option:selected').val();
+        })
 
     };
 
@@ -73,13 +80,13 @@ define(function(require) {
             	'crop' : 1,
             };
 
-        html.push('<dl id="' + line['name'] + '-box" data-css="' + line['css'] + '" data-unit="' + (!!line['unit'] ? line['unit'] : '') + '" data-eval="'+ (!!line['eval']?line['eval']:'') +'">');
+        html.push('<dl id="' + line['name'] + '-box" data-css="' + line['css'] + '" data-unit="' + '" data-eval="'+ (!!line['eval']?line['eval']:'') +'">');
 
         if (! (line['plugin'] in excepts)) {
             box += '<dt>' + line['label'] + '</dt>';
         }
 
-        box += '<dd data-plugin="' + line['plugin'] + '">' + this.buildPanelPlugin(line, this.groupId) + (!!line['unit'] ? '&nbsp;&nbsp;'+line['unit'] : '') +'</dd>'
+        box += '<dd data-plugin="' + line['plugin'] + '">' + this.buildPanelPlugin(line, this.groupId) +'</dd>';
 
 
         html.push(box);
@@ -106,6 +113,8 @@ define(function(require) {
             value = json.value,
             values = json.values,
             plugin = json.plugin,
+            unit = json.unit,
+            unit = !!unit ? unit : "",
             html,
             eventString = this.getEventString(json.plugin, this.groupId);
 
@@ -123,8 +132,23 @@ define(function(require) {
             case 'select':
                 html = this.panelPluginStrategies['select'](name, value, values, eventString);
                 break;
+            case 'colorpicker':
+                html = '<input type="color" ' + eventString + ' id="' + id + '" name="' + name + '" value="' + (!!value ? value : "#000000") + '" />'
+                break;
+            case 'slider-fontsize':
+            	html = '<input type="range" data-unit="'+ unit +'" min="12" max="80" step="1" defaultValue="12" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):12) +'" /><output name="result">'+(!!value?parseInt(value):12) + unit +'</output>'
+                break;
+            case 'slider-lineheight':
+            	html = '<input type="range" data-unit="'+ unit +'" min=".1" max="5" step=".1" defaultValue=".1" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
+                break;
+            case 'slider':
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="40" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
+                break;
+            case 'slider-angle':
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="360" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
+                break;
             default:
-                html = '<input ' + eventString + ' type="' + plugin + '" id="' + id + '" name="' + name + '" value="' + (!!value ? value : "") + '" />'
+                html = '<input ' + eventString + ' type="number" id="' + id + '" name="' + name + '" value="' + (!!value ? value : "") + '" />'
         }
         return html;
     };
@@ -133,22 +157,31 @@ define(function(require) {
         var html = '';
         switch (plugin) {
         	case 'modal':
-                html = 'onclick="callFN(\'showModal\', event, \'' + groupId + '\');return false;"';
+                html = 'onclick="callFN(\'showModal\', \'' + groupId + '\');"';
                 break;
             case 'crop':
-                html = 'onclick="callFN(\'cropImage\', event, \'' + groupId + '\');return false;"';
+                html = 'onclick="callFN(\'cropImage\', \'' + groupId + '\');"';
                 break;
             case 'textarea':
-                html = 'onkeyup="callFN(\'noticeUpdate\', event,\'' + groupId + '\');"';
+                html = 'onkeyup="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
                 break;
             case 'select':
-                html = 'onchange="callFN(\'noticeUpdate\', event,\'' + groupId + '\');"';
+                html = 'onchange="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
                 break;
             case 'btngroup':
-                html = 'onclick="callFN(\'noticeUpdate\', event,\'' + groupId + '\');"';
+                html = 'onclick="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
+                break;
+            case 'colorpicker':
+            	// html = 'onblur="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
+            	// break;
+           	case 'slider-lineheight':
+           	case 'slider-fontsize':
+           	case 'slider':
+           	case 'slider-angle':
+                html = 'onchange="callFN(\'noticeUpdate\', \'' + groupId + '\');"';
                 break;
             default:
-                html = 'onblur="callFN(\'noticeUpdate\', event,\'' + groupId + '\');"';
+                html = 'onblur="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
         };
 
         return html;
@@ -165,11 +198,12 @@ define(function(require) {
             return html;
         },
         'select': function(name, value, values, evtString) {
+
             var html = [];
             html.push('<select ' + evtString + ' id="select-' + name + '">');
             for (var i = 0, l = values.length; i < l; i++) {
                 var val = values[i];
-                html.push('<option value="' + val['value'] + '" ' + val['status'] + '">' + val['label'] + '</option>');
+                html.push('<option value="' + val['value'] + '" ' + (!!val['status']?'selected="selected"':'') + '">' + val['label'] + '</option>');
             }
             html.push('</select>');
             return html.join('');

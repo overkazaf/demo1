@@ -127,8 +127,8 @@
 		// 下边这些属性要在当前Group的Styles实例中进行合并
 		ret['left'] = el.css('left');
 		ret['top'] = el.css('top');
-		ret['width'] = el.css('width');
-		ret['height'] = el.css('height');
+		//ret['width'] = el.css('width');
+		//ret['height'] = el.css('height');
 		
 		var content = ret.content;
 		var resultObj = {

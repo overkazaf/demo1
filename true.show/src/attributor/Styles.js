@@ -36,6 +36,13 @@
 	 */
 	Styles.prototype.init = function (context) {
 		Base.prototype.init.call(this, context);
+
+		var $form = $('#' + this.formid);
+		var $el = $('#' + this.groupId, $('app-page')[0]);
+		$form.find('input[name="width"]').val($el.width());
+		$form.find('input[name="height"]').val($el.height());
+		// console.log($el.css('transform'));
+
 		return this;
 	};
 
@@ -98,8 +105,11 @@
 			}
 		});
 		
-
-		
+	
+		ret['transform'] = 'rotate(' + ret['transform'] + 'deg)';
+		ret['opacity'] = ret['opacity'] / 100;
+		ret['border-radius'] = ret['border-radius'] + 'px';
+		ret['border-width'] = ret['border-width'] + 'px';
 
 		/* 修正角度 */
 		ret['box-shadow'] = (function (arr){
@@ -110,8 +120,6 @@
 			ret.unshift(vector.x + 'px');
 			return ret.join(' ');
 		})(ret['box-shadow'].split(' '));
-
-		ret['font-size'] = ret['font-size'] + 'px';
 
 		var el = $('#' + groupId, $('app-page')[0]);
 		
@@ -128,6 +136,7 @@
 			'styles' : ret
 		};
 
+		console.log('stylesResult', resultObj);
 		// 这里主要是收集所有的属性值，到时候一块儿塞进styles属性中
 		return resultObj;
 	};
@@ -235,23 +244,23 @@
 							}
 							break;
 						default : 
-							if (attr['css'] == 'text-shadow') {
+							if (attr['css'] == 'box-shadow') {
 								var v = ret[attr['css']];
 								var k = attr['name'];
 								var vs = v.split(' ');
 								var c = '';
 
 								switch (k) {
-									case 'text-shadow-color': 
+									case 'box-shadow-color': 
 										c = vs[0];
 										break;
-									case 'text-shadow-blur': 
+									case 'box-shadow-blur': 
 										c = vs[1];
 										break;
-									case 'text-shadow-distance': 
+									case 'box-shadow-distance': 
 										c = vs[2]
 										break;
-									case 'text-shadow-angle': 
+									case 'box-shadow-angle': 
 										c = vs[3];
 										break;
 								};

@@ -180,7 +180,7 @@ define(function(require) {
                     });
 
                     var group = Storage.get(groupId);
-                    group.destory();
+                    // group.destory();
                     group.init();
                     return true;
                 }

@@ -107,6 +107,7 @@
 					break;
 				default:
 					dom = dd.getElementsByTagName('input')[0];
+					if (!dom) return;
 					if (!!dom.value) {
 						var value = dom.value + unit;
 						if (evalExp) {

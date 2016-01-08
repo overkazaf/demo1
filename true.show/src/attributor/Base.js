@@ -49,7 +49,7 @@ define(function(require) {
         });
         $tabContainer.eq(index).find('select').each(function () {
         	$(this).find('option:selected').val();
-        })
+        });
 
     };
 
@@ -80,7 +80,7 @@ define(function(require) {
             	'crop' : 1,
             };
 
-        html.push('<dl id="' + line['name'] + '-box" data-css="' + line['css'] + '" data-unit="' + '" data-eval="'+ (!!line['eval']?line['eval']:'') +'">');
+        html.push('<dl id="' + line['name'] + '-box" data-css="' + line['css'] + '" data-unit="'  + '" data-eval="'+ (!!line['eval']?line['eval']:'') +'">');
 
         if (! (line['plugin'] in excepts)) {
             box += '<dt>' + line['label'] + '</dt>';
@@ -138,6 +138,9 @@ define(function(require) {
             case 'slider-fontsize':
             	html = '<input type="range" data-unit="'+ unit +'" min="12" max="80" step="1" defaultValue="12" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):12) +'" /><output name="result">'+(!!value?parseInt(value):12) + unit +'</output>'
                 break;
+            case 'slider-opacity':
+            	html = '<input type="range" data-unit="'+ unit +'" min="0" max="100" step="1" defaultValue="100" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):12) +'" /><output name="result">'+(!!value?parseInt(value):100) + unit +'</output>'
+                break;
             case 'slider-lineheight':
             	html = '<input type="range" data-unit="'+ unit +'" min=".1" max="5" step=".1" defaultValue=".1" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
                 break;
@@ -176,8 +179,9 @@ define(function(require) {
             	// break;
            	case 'slider-lineheight':
            	case 'slider-fontsize':
-           	case 'slider':
+           	case 'slider-opacity':
            	case 'slider-angle':
+           	case 'slider':
                 html = 'onchange="callFN(\'noticeUpdate\', \'' + groupId + '\');"';
                 break;
             default:
@@ -193,7 +197,7 @@ define(function(require) {
             for (var i = 0, l = values.length; i < l; i++) {
                 var val = values[i];
                 html += '<input ' + evtString + ' name="' + name + '" type="' + val['type'] + '" id="btngroup-' + val['name'] + '" value="' + val['value'] + '" ' + val['status'] + ' />';
-                html += '<label for="btngroup-' + val['name'] + '" class="' + val['clazz'] + '"></label>';
+                html += '<label for="btngroup-' + val['name'] + '" class="' + val['clazz'] + '">'+ (!!values[i].showLabel?values[i].label:'') +'</label>';
             }
             return html;
         },

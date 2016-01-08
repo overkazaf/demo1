@@ -62,12 +62,14 @@
 			var that=this;
 			$(document).on('click',this.opts.cls,function(event){
 				event.preventDefault();
+				if ($(this).hasClass('active')) return;
 				$(that.opts.id).find(that.opts.cls).removeClass('active');
 				$(this).addClass('active');
 				that.updateElement($(this),{});
 
 
 				var elementId = $(this).attr('id');
+
 				var AM = Storage.get('__AM__');
 				// 获取配置面板
 				if ($(this)[0].tagName.toLowerCase() == 'plugin-warp') {
@@ -97,6 +99,12 @@
 				};
 				t.find('.cont-inner>img').css(opt);
 				$('#' + id, $('#pagesBox')).find('.cont-inner>img').css(opt);
+
+				// 重新initgroup
+				var group = Storage.get(id);
+				if (group) {
+					group.init();
+				}
 
 			});
 			this.dragger=new Dragger(null,null,function(t){

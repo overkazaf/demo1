@@ -168,16 +168,16 @@
   				], plugin:'btngroup', unit:null},
 				{label:"对齐方式", name:"text-align", css:'text-align;text-align;text-align', value: null, values: [
   					{label:'左对齐', name:"text-left", type:"radio", value:'left', clazz:'l icon-text-left', status:''},
-  					{label:'居中', name:"text-center", type:"radio",value:'center', clazz:'c icon-text-center', status:'checked'},
+  					{label:'居中', name:"text-center", type:"radio",value:'center', clazz:'c icon-text-center', status:''},
   					{label:'右对齐', name:"text-right", type:"radio",value:'right', clazz:'r icon-text-right', status:''},
   				], plugin:'btngroup', unit:null},
   				{label:"行距", css:"line-height", name:"line-height", value: "", values: null, plugin:'slider-lineheight', unit:''}
   		 	],
   		 	[
-  				{label:"阴影颜色", css:"text-shadow", name:"text-shadow-color", value: "", values: null, plugin:'colorpicker', unit:null},
-  				{label:"模糊", css:"text-shadow", name:"text-shadow-blur", value: "", values: null, plugin:'slider', unit:'px'},
-  				{label:"阴影距离", css:"text-shadow", name:"text-shadow-distance", value: "", values: null, plugin:'slider', unit:'px'},
-  				{label:"阴影角度", css:"text-shadow", name:"text-shadow-angle", value: "", values: null, plugin:'slider-angle', unit:'度'},
+  				{label:"阴影颜色", css:"text-shadow", name:"text-shadow-color", value: "#000000", values: null, plugin:'colorpicker', unit:null},
+  				{label:"模糊", css:"text-shadow", name:"text-shadow-blur", value: "0", values: null, plugin:'slider', unit:'px'},
+  				{label:"阴影距离", css:"text-shadow", name:"text-shadow-distance", value: "0", values: null, plugin:'slider', unit:'px'},
+  				{label:"阴影角度", css:"text-shadow", name:"text-shadow-angle", value: "0", values: null, plugin:'slider-angle', unit:'度'},
   		 	]
   		]
     };
@@ -204,7 +204,7 @@
   		type : 'styles',
   		attributes : [
   			[
-  				{label:"背景颜色", name:"bgc", css:'background-color', value: "transparent", values:null, plugin:'colorpicker', unit:null}
+  				{label:"背景颜色", name:"bgc", css:'background-color', value: "#ffffff", values:null, plugin:'colorpicker', unit:null}
   		 	],
   		 	[
   				{label:"边框类型", css:"border-style", name:"border-style", value: null, values: [
@@ -214,28 +214,59 @@
   					{label:'点线', name:"border-style-dotted",value:'dotted', clazz:'', status:''},
   					{label:'双线', name:"border-style-double",value:'double', clazz:'', status:''}
   				], plugin:'select', unit:null},
-  				{label:"边框宽度", css:"border-width", name:"border-width", value: "1", values: null, plugin:'slider', unit:'px'},
+  				{label:"边框宽度", css:"border-width", name:"border-width", value: "0", values: null, plugin:'slider', unit:'px'},
   				{label:"边框颜色", name:"bdc", css:'border-color', value: "#000000", values:null, plugin:'colorpicker', unit:null}
   		 	],
   		 	[
   				{label:"圆角半径", name:"bdr", css:'border-radius', value: "0", values:null, plugin:'slider', unit:'px'}
   		 	],
   		 	[
-  				{label:"透明度", name:"opacity", css:'opacity', value: "1", values:null, plugin:'slider', unit:'%'}
+  				{label:"透明度", name:"opacity", css:'opacity', value: "100", values:null, plugin:'slider-opacity', unit:'%'}
   		 	],
   		 	[
-  				{label:"旋转角度", name:"transform", css:'transform', value: "1", values:null, plugin:'slider', unit:'度'}
+  				{label:"旋转角度", name:"transform", css:'transform', value: "0", values:null, plugin:'slider-angle', unit:'度'}
   		 	],
   		 	[
-  				{label:"阴影颜色", css:"box-shadow", name:"box-shadow-color", value: "", values: null, plugin:'colorpicker', unit:null},
-  				{label:"模糊", css:"box-shadow", name:"box-shadow-blur", value: "", values: null, plugin:'slider', unit:'px'},
-  				{label:"阴影距离", css:"box-shadow", name:"box-shadow-distance", value: "", values: null, plugin:'slider', unit:'px'},
-  				{label:"阴影角度", css:"box-shadow", name:"box-shadow-angle", value: "", values: null, plugin:'slider-angle', unit:'度'},
+  				{label:"阴影颜色", css:"box-shadow", name:"box-shadow-color", value: "#000000", values: null, plugin:'colorpicker', unit:null},
+  				{label:"模糊", css:"box-shadow", name:"box-shadow-blur", value: "0", values: null, plugin:'slider', unit:'px'},
+  				{label:"阴影距离", css:"box-shadow", name:"box-shadow-distance", value: "0", values: null, plugin:'slider', unit:'px'},
+  				{label:"阴影角度", css:"box-shadow", name:"box-shadow-angle", value: "0", values: null, plugin:'slider-angle', unit:'度'},
   		 	],
   		 	[
   				{label:"宽度", name:"width", css:'width', value: "100", values:null, plugin:'text', unit:'px'},
   				{label:"高度", name:"height", css:'height', value: "50", values:null, plugin:'text', unit:'px'}
   		 	],
+  		]
+    };
+
+    // 位置
+    config.Attributor.POSITION = {
+    	id : tools.uuid(),
+  		tabId : 'panel-position',
+  		type : 'position',
+  		attributes : [
+  			[
+  				{label:"水平位置", name:"pos-align", css:'pos-align;pos-align;pos-align', value: null, values: [
+  					{label:'左对齐', name:"pos-align-left", type:"radio", value:'left', clazz:'icon-pos-left', status:''},
+  					{label:'水平居中', name:"pos-align-center",type:"radio",value:'center', clazz:'icon-pos-center', status:''},
+  					{label:'右对齐', name:"pos-align-right",type:"radio",value:'right', clazz:'icon-pos-right', status:''}
+  				], plugin:'btngroup', unit:null},
+  				{label:"垂直位置", name:"pos-valign", css:'pos-valign;pos-valign;pos-valign', value: null, values: [
+  					{label:'顶对齐', name:"pos-valign-top", type:"radio", value:'top', clazz:'icon-pos-top', status:''},
+  					{label:'垂直居中', name:"pos-valign-middle",type:"radio",value:'middle', clazz:'icon-pos-middle', status:''},
+  					{label:'底对齐', name:"pos-valign-bottom",type:"radio",value:'bottom', clazz:'icon-pos-bottom', status:''}
+  				], plugin:'btngroup', unit:null}
+  		 	],
+  		 	[
+  		 		{label:"顶层位置", name:"level", css:'lv-up;lv-down', value: null, values: [
+  					{label:'上移', name:"lv-up", showLabel:true,type:"radio", value:'up', clazz:'icon-lv-up', status:''},
+  					{label:'下移', name:"lv-down",showLabel:true,type:"radio",value:'down', clazz:'icon-lv-down', status:''}
+  				], plugin:'btngroup', unit:null},
+  				{label:"", name:"level", css:'lv-uppp;lv-downnn', value: null, values: [
+  					{label:'置顶', name:"lv-uppp",showLabel:true,type:"radio",value:'uppp', clazz:'icon-lv-uppp', status:''},
+  					{label:'置底', name:"lv-downnn",showLabel:true,type:"radio",value:'downnn', clazz:'icon-lv-downnn', status:''}
+  				], plugin:'btngroup', unit:null}
+  		 	]
   		]
     };
     

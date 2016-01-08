@@ -228,6 +228,7 @@ define(function(require) {
             this.viewer.init(pageData);
             // 初始化， 并把页面的第一个层元素激活为焦点元素
             this.layer.init(elements, 0);
+            $('#' + this.getActiveElementId(), appContext).trigger('click');
         },
         changeStyles: function(id, css, styles) {
             var el = this.getElement(id);
@@ -260,9 +261,9 @@ define(function(require) {
         },
         sortLayers: function(ids) {
             var newLayers = [],
-                i = 0,
-                l = ids.length;
-            for (; i < l; i++) {
+                l = ids.length,
+                i = l-1;
+            for (; i >= 0; i--) {
                 var p = this.getLayer(ids[i]);
                 if (p != null) {
                     newLayers.push(p);
@@ -414,11 +415,18 @@ define(function(require) {
          * @return {[type]} [description]
          */
         updateView: function(json) {
-            // 1. 判断当前焦点元素是为空存在或为锁定状态， 否则不更新视图
-            
-            logs.log('active', this.getActiveElementId());            
+            // 1. 判断当前焦点元素是为空存在或为锁定状态， 否则不更新视图           
+            var activeEl = $('#' + json['styles'].groupId, appContext);
+            var currentType = activeEl.attr('type');
+            if(!currentType) return;
 
-            // 2. 在不同的容器内更新元素，后边拆分开来
+            // 2. 合并属性
+            $.extend(true, json[currentType].styles, json['styles'].styles);
+            //$.extend(true, json[currentType].styles, json['position'].styles);
+            //$.extend(true, json[currentType].styles, json['animation'].styles);
+
+            var json = json[currentType];
+            // 3. 在不同的容器内更新元素，后边拆分开来
             var viewEl = $('#' + json.groupId, appContext);
             var pageEl = $('#' + json.groupId, pageContext);
             pageEl.find('.cont-inner').text(json.content);

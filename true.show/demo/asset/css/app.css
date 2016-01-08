@@ -374,6 +374,7 @@ header {
     cursor: pointer;
     float: left;
     font-size: 12px;
+    min-width: 56px;
     height: 34px;
     line-height: 34px;
     opacity: 0.5;
@@ -1297,7 +1298,18 @@ plugin-warp.state-visible {
 .form-control .icon-underline,
 .form-control .icon-text-left,
 .form-control .icon-text-center,
-.form-control .icon-text-right {
+.form-control .icon-text-right,
+.form-control .icon-pos-left,
+.form-control .icon-pos-center,
+.form-control .icon-pos-right,
+.form-control .icon-pos-top,
+.form-control .icon-pos-middle,
+.form-control .icon-pos-bottom,
+.form-control .icon-lv-up,
+.form-control .icon-lv-down,
+.form-control .icon-lv-uppp,
+.form-control .icon-lv-downnn
+ {
     box-sizing: border-box;
     cursor: pointer;
     margin-top: 8px;
@@ -1318,9 +1330,25 @@ plugin-warp.state-visible {
     box-shadow: 0 2px 0 rgba(106,106,106,.5),0 1px 0 #757575 inset;
 }
 
+.form-control .icon-lv-up,
+.form-control .icon-lv-down,
+.form-control .icon-lv-uppp,
+.form-control .icon-lv-downnn {
+    width: 60px;
+    text-indent: 24px;
+    color: #fff;
+}
+
 .form-control input[type=checkbox]:checked + label,
 .form-control input[type=radio]:checked + label {
   background-color: #333;
+}
+
+.form-control input[type=checkbox]:disabled + label,
+.form-control input[type=radio]:disabled + label {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    cursor: not-allowed;
 }
 
 .form-control .icon-bold {
@@ -1345,6 +1373,46 @@ plugin-warp.state-visible {
 
 .form-control .icon-text-right {
   background: url(../img/right.png) center no-repeat;
+}
+
+.form-control .icon-pos-left {
+  background: url(../img/x-left.png) center no-repeat;
+}
+
+.form-control .icon-pos-center {
+  background: url(../img/x-center.png) center no-repeat;
+}
+
+.form-control .icon-pos-right {
+  background: url(../img/x-right.png) center no-repeat;
+}
+
+.form-control .icon-pos-top {
+  background: url(../img/y-top.png) center no-repeat;
+}
+
+.form-control .icon-pos-middle {
+  background: url(../img/y-center.png) center no-repeat;
+}
+
+.form-control .icon-pos-bottom {
+  background: url(../img/y-bottom.png) center no-repeat;
+}
+
+.form-control .icon-lv-up {
+  background: url(../img/y-up.png) center no-repeat;
+}
+
+.form-control .icon-lv-down {
+  background: url(../img/y-down.png) center no-repeat;
+}
+
+.form-control .icon-lv-uppp {
+  background: url(../img/y-up.png) center no-repeat;
+}
+
+.form-control .icon-lv-downnn {
+  background: url(../img/y-down.png) center no-repeat;
 }
 
 

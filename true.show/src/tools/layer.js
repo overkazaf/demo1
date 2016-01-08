@@ -422,6 +422,56 @@
 				}
 			});
 		},
+		changeLevel : function (id, cmd) {
+			// 0. 操作合法性放在前一步做
+			// 1. 找到命中的id
+			// 2. 在数据结构中移动
+			// 3. reset一下dom在document中的位置
+			var idGroup = [],
+				target = -1,
+				layerGroup = $(this.opts.id).find(this.opts.item);
+			
+			$(this.opts.id).find(this.opts.item).each(function(index, item){
+				if (this.id == id) target = index;
+				idGroup.push(this.id);
+			});
+
+			switch (cmd){
+				case 'up':
+					if(target > 0) {
+						var item = idGroup.splice(target,1);
+						idGroup.splice(target-1,0, item[0]);
+
+						layerGroup.eq(target).insertBefore(layerGroup.eq(target-1));
+					}
+					break;
+				case 'down':
+					if(target < idGroup.length-1) {
+						var item = idGroup.splice(target,1);
+						idGroup.splice(target+1, 0, item[0]);
+
+						layerGroup.eq(target).insertAfter(layerGroup.eq(target+1));
+					}
+					break;
+				case 'uppp':
+					if(target > 0) {
+						var item = idGroup.splice(target,1);
+						idGroup.unshift(item[0]);
+
+						layerGroup.eq(target).insertBefore(layerGroup.first());
+					}
+					break;
+				case 'downnn':
+					if(target < idGroup.length-1) {
+						var item = idGroup.splice(target,1);
+						idGroup.push(item[0]);
+
+						layerGroup.eq(target).insertAfter(layerGroup.last());
+					}
+					break;
+			}
+			this.opts.sortIndexCallback(idGroup);
+		},
 		reset:function(){
 			var that=this;
 			if(this.draggable==true&&this.dragger!=null&&this._temp!=null){

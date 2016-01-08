@@ -32,16 +32,21 @@ input[type="range"] + output {
     color: #999;
 }
 
+input[type="color"] {
+    border: none;
+    outline: none;
+}
+
 ::-webkit-color-swatch-wrapper {
-    border: 1px solid #999;
+    border: none;
     background-image: -webkit-gradient(linear, 0 0, 100% 0, from(red), color-stop(15%, orange), color-stop(30%, yellow), color-stop(50%, green), color-stop(65%, darkcyan), color-stop(80%, blue), to(purple));
 }
 
 ::-webkit-color-swatch {
     height: 25px;
     position: relative;
-    left: 40px;
-    top: -7px;
+    left: 45px;
+    top: -6px;
 }
 
 
@@ -65,13 +70,13 @@ select
    color                    : #000099;
    cursor                   : pointer;
 }
-select opxion
+select option
 {
     font-size               : 1em;
     padding                 : 0.2em 0.4em 0.2em 0.4em;
 }
-select  opxion[selected]{ font-weight:bold}
-select  opxion:nth-child(even) { background-color:#09e; }
+select  option[selected]{ font-weight:bold}
+select  option:nth-child(even) { background-color:#09e; }
 select:hover
 {
     color                   : #101010;

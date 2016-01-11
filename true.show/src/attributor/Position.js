@@ -190,6 +190,7 @@
 		var elWidth = $el.outerWidth();
 		var elHeight = $el.outerHeight();
 		var changePosition = {'left':1,'center':1,'right':1,'top':1,'middle':1,'bottom':1};
+		var layerRet;
 
 		$form.on('click', 'input', function () {
 			// 1. 移动dom
@@ -231,10 +232,27 @@
 				$el.css(position);
 			} else {
 				var AM = Storage.get('__AM__');
-				AM.getMarker().layer.changeLevel(groupId, cmd);
+				layerRet = AM.getMarker().layer.changeLevel(groupId, cmd);
 			}
 
 			// 2. 更新按钮的状态
+			// if (layerRet) {
+			// 	if (layerRet['cmd'] == 'uppp' || layerRet['cmd'] == 'downnn') {
+			// 		$form.find('#btngroup-lv-' + layerRet['cmd']).attr('disabled', 'disabled');
+			// 	} else {
+			// 		$form.find('#btngroup-lv-' + layerRet['cmd']).removeAttr('disabled');
+					
+			// 		if (layerRet['target'] == 0) {
+			// 			$form.find('#btngroup-lv-up').attr('disabled', 'disabled');
+			// 			$form.find('#btngroup-lv-uppp').attr('disabled', 'disabled');
+			// 		}
+
+			// 		if (layerRet['target'] == layerRet['idGroup'].length-1) {
+			// 			$form.find('#btngroup-lv-down').attr('disabled', 'disabled');
+			// 			$form.find('#btngroup-lv-downnn').attr('disabled', 'disabled');
+			// 		}
+			// 	}
+			// }
 			// 3. 合并数据结构，写入缓存
 		});
 	};

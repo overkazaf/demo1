@@ -152,7 +152,7 @@
   		 	],
   		 	[
   				{label:"文本颜色", css:"color", name:"color", value: "", values: null, plugin:'colorpicker', unit:null},
-  				{label:"字号", css:"font-size", name:"font-size", value: "", values: null, plugin:'slider-fontsize', unit:'px'},
+  				{label:"字号", css:"font-size", name:"font-size", value: "14", values: null, plugin:'slider-fontsize', unit:'px'},
   				{label:"字体", css:"font-family", name:"font-family", value: null, values: [
   					{label:'黑体', name:"font-family", value:'黑体', clazz:'icon-font', status:'selected'},
   					{label:'宋体', name:"font-family",value:'宋体', clazz:'icon-font', status:''},
@@ -168,7 +168,7 @@
   				], plugin:'btngroup', unit:null},
 				{label:"对齐方式", name:"text-align", css:'text-align;text-align;text-align', value: null, values: [
   					{label:'左对齐', name:"text-left", type:"radio", value:'left', clazz:'l icon-text-left', status:''},
-  					{label:'居中', name:"text-center", type:"radio",value:'center', clazz:'c icon-text-center', status:''},
+  					{label:'居中', name:"text-center", type:"radio",value:'center', clazz:'c icon-text-center', status:'checked'},
   					{label:'右对齐', name:"text-right", type:"radio",value:'right', clazz:'r icon-text-right', status:''},
   				], plugin:'btngroup', unit:null},
   				{label:"行距", css:"line-height", name:"line-height", value: "", values: null, plugin:'slider-lineheight', unit:''}
@@ -266,6 +266,19 @@
   					{label:'置顶', name:"lv-uppp",showLabel:true,type:"radio",value:'uppp', clazz:'icon-lv-uppp', status:''},
   					{label:'置底', name:"lv-downnn",showLabel:true,type:"radio",value:'downnn', clazz:'icon-lv-downnn', status:''}
   				], plugin:'btngroup', unit:null}
+  		 	]
+  		]
+    };
+
+    // 动画
+    config.Attributor.ANIMATION = {
+    	id : tools.uuid(),
+  		tabId : 'panel-animate',
+  		type : 'animate',
+  		attributes : [
+  			[
+  			{label:"", name:"add-animation", css:'btn', value: "<i class='fa fa-plus'></i> 添加动画", values:null, plugin:'accordion', unit:null},
+  			{label:"", name:"play-animation", css:'btn', value: "<i class='fa fa-play'></i> 播放动画", values:null, plugin:'accordion', unit:null}
   		 	]
   		]
     };

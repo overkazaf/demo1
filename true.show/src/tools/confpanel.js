@@ -12,6 +12,7 @@ define(function(require) {
     var Text = require('../attributor/Text');
     var Photo = require('../attributor/Photo');
     var Position = require('../attributor/Position');
+    var Animation = require('../attributor/Animation');
 
 
     var Styles = require('../attributor/Styles');
@@ -59,18 +60,26 @@ define(function(require) {
                 groupId: elementId
             };
 
+			var AnimationPropParam = {
+                id: tools.uuid(),
+                groupId: elementId
+            };
+
             $.extend(true, TextPropParam, config.Attributor.TEXT);
             $.extend(true, StylesPropParam, config.Attributor.STYLES);
             $.extend(true, PositionPropParam, config.Attributor.POSITION);
+            $.extend(true, AnimationPropParam, config.Attributor.ANIMATION);
             
             var TextPropEl = new Text(TextPropParam).init();
             var StylesPropEl = new Styles(StylesPropParam).init();
             var PositionPropEl = new Position(PositionPropParam).init();
+            var AnimationPropEl = new Animation(AnimationPropParam).init();
 
 
             group.add(TextPropEl);
             group.add(StylesPropEl);
             group.add(PositionPropEl);
+            group.add(AnimationPropEl);
 
             // or u can call group.init to batch initialize all the Attributor instances
             return group;
@@ -95,18 +104,26 @@ define(function(require) {
                 groupId: elementId
             };
 
+			var AnimationPropParam = {
+                id: tools.uuid(),
+                groupId: elementId
+            };
+
             $.extend(true, PhotoPropParam, config.Attributor.PHOTO);
             $.extend(true, StylesPropParam, config.Attributor.STYLES);
             $.extend(true, PositionPropParam, config.Attributor.POSITION);
+            $.extend(true, AnimationPropParam, config.Attributor.ANIMATION);
             
             var PhotoPropEl = new Photo(PhotoPropParam).init();
             var StylesPropEl = new Styles(StylesPropParam).init();
             var PositionPropEl = new Position(PositionPropParam).init();
+			var AnimationPropEl = new Animation(AnimationPropParam).init();
 
 
             group.add(PhotoPropEl);
             group.add(StylesPropEl);
             group.add(PositionPropEl);
+            group.add(AnimationPropEl);
             return group;
     	}
     };

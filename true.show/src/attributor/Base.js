@@ -77,7 +77,7 @@ define(function(require) {
             excepts = {
             	'textarea' : 1,
             	'modal' : 1,
-            	'crop' : 1,
+            	'crop' : 1
             };
 
         html.push('<dl id="' + line['name'] + '-box" data-css="' + line['css'] + '" data-unit="'  + '" data-eval="'+ (!!line['eval']?line['eval']:'') +'">');
@@ -123,6 +123,9 @@ define(function(require) {
         	case 'crop':
         		html = '<button ' + eventString +' id="'+ id +'" class="btn btn-default">'+ value +'</button>';
         		break;
+        	case 'accordion':
+        		html = '<button ' + eventString +' id="'+ id +'" class="btn btn-default btn-accordion">'+ value +'</button>';
+        		break;
             case 'textarea':
                 html = '<textarea ' + eventString + ' row="12" col="30" class="textarea-box" id="' + id + '">' + (!!value ? value : "") + '</textarea>';
                 break;
@@ -149,6 +152,15 @@ define(function(require) {
                 break;
             case 'slider-angle':
                 html = '<input type="range" data-unit="'+ unit +'" min="0" max="360" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
+                break;
+            case 'slider-during':
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
+                break;
+            case 'slider-delay':
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="180" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
+                break;
+            case 'slider-repeat':
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
                 break;
             default:
                 html = '<input ' + eventString + ' type="number" id="' + id + '" name="' + name + '" value="' + (!!value ? value : "") + '" />'
@@ -229,6 +241,16 @@ define(function(require) {
             list.push(plugin);
         });
     };
+
+    Base.prototype.getPluginById = function (id) {
+    	var list = this.pluginList;
+    	tools.each(list, function (plugin) {
+    		if (plugin.id == id) {
+    			return plugin
+    		}
+    	});
+    	return null;
+    }
 
     Base.prototype.getPluginDomArray = function() {
         return [];

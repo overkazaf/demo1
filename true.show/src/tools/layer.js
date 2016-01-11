@@ -166,9 +166,9 @@
 			var el=this.generateItem(data);
 			if(target!=undefined){
 				if(after==true){
-					$(el).insertAfter(this.getTarget(target));
-				}else{
 					$(el).insertBefore(this.getTarget(target));
+				}else{
+					$(el).insertAfter(this.getTarget(target));
 				}
 			}else{
 
@@ -471,6 +471,11 @@
 					break;
 			}
 			this.opts.sortIndexCallback(idGroup);
+			return {
+				cmd : cmd,
+				target : target,
+				idGroup : idGroup
+			};
 		},
 		reset:function(){
 			var that=this;

@@ -387,7 +387,7 @@ header {
 
 .sub-nav-item.active {
     border-top: solid 1px #757575;
-    background-color: #595959 !important;
+    background-color: #4b4b4b !important;
     border-bottom: 0 !important;
     opacity: 1 !important;
 }
@@ -444,6 +444,7 @@ header {
     position: absolute;
     top: 0;
     width: 100%;
+    overflow: auto;
     display: none;
 }
 
@@ -1417,7 +1418,7 @@ plugin-warp.state-visible {
 
 
 /* 配置项里的默认按钮样式 */
-.form-control .btn.btn-default {
+.btn.btn-default {
     display: inline-block;
     padding: 5px 8px;
     background: -webkit-linear-gradient(top,#656566,#555);
@@ -1431,11 +1432,131 @@ plugin-warp.state-visible {
     color: #ccc;
 }
 
+.form-control .btn.btn-accordion {
+    display: inline-block;
+    width: 120px;
+    padding: 8px;
+}
+
 .form-control .cropper {
     margin:20px;
 }
 .form-control .cropper img{
     width:100%;
     height:100%;
+}
+
+/* ui-accordion */
+.ui-accordion:first-child{
+    margin-top: 35px;
+}
+.ui-accordion .accordion-header{
+    width: 100%;
+    padding: 15px 0 15px 20px;
+    cursor: pointer;
+    border-top: 1px solid #656565;
+    border-bottom: 1px solid #333;
+    position: relative;
+}
+
+.ui-accordion .accordion-header .accordion-caret,
+.ui-accordion .accordion-header .accordion-trash
+{
+    color: #fff;    
+}
+
+.ui-accordion .accordion-header .accordion-title {
+    color: #fff;
+    margin-left: 20px;
+}
+
+.ui-accordion .accordion-header .accordion-trash {
+    float:right;
+    margin-right:30px;
+}
+
+.ui-accordion .accordion-content{
+    display: none;
+    padding:5px;
+}
+
+.ui-accordion .accordion-content dl{
+    width: 100%;
+}
+.ui-accordion .accordion-content dl dt,
+.ui-accordion .accordion-content dl dd {
+    display: table-cell;
+    vertical-align: middle;
+    color: #fff;
+    font-size: 12px;
+    line-height: 32px;
+}
+
+.ui-accordion .accordion-content dl dt {
+    width: 10em !important;
+    text-indent: 10px;
+}
+
+.ui-accordion .accordion-content dl dd {
+    width: 70%;
+}
+
+.ui-accordion hr.editor-panel-text{
+    border-top-color: #333;
+}
+
+.ui-tab .ui-tablist {
+    width: 100%;
+}
+
+.ui-tab .ui-tablist .ui-tablist-item{
+    width:30%;
+    float:left;
+    text-align: center;
+}
+
+.ui-tab .ui-tablist .ui-tablist-item.active button{
+    opacity: .5;
+    border: 1px solid #222;
+    box-shadow: 0 2px 0 rgba(106,106,106,.5);
+    color: #ddd;
+    background: #333;
+}
+
+.ui-tab .ui-tab-content {
+    padding: 10px;
+}
+.ui-tab .ui-tab-content .effect-list {
+    width: 100%;
+}
+
+.ui-tab .ui-tab-content .effect-list .effect-list-item{
+    width: 23%;
+    margin-left: 2%;
+    margin-top: 20px;
+    float: left;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+
+.ui-tab .ui-tab-content .effect-list .effect-list-item .anim-item {
+    width: 92%;
+    height: 56px;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    border: 2px solid #666;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px #222;
+    cursor: pointer;
+    background : url(../img/tw-logo.jpg) left top no-repeat;
+    background-size: cover;
+}
+
+.ui-tab .ui-tab-content .effect-list .effect-list-item .anim-item:hover,
+.ui-tab .ui-tab-content .effect-list .effect-list-item .anim-item.active {
+    border-color: #f70;
 }
 

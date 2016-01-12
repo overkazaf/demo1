@@ -39,27 +39,6 @@
 		return this;
 	};
 
-	/**
-	 * [render description]
-	 * @param  {[Object]} data [当前焦点对象的数据结构]
-	 * @return {[type]}         [description]
-	 */
-	Position.prototype.render = function (data) {
-
-
-		return this;
-	};
-
-	/**
-	 * [updateElement 更新元素的操作，传递给AM模块统一分配]
-	 * @param  {[type]} t    [description]
-	 * @param  {[type]} data [description]
-	 * @return {[type]}      [description]
-	 */
-	Position.prototype.updateElement = function (t, data) {
-
-		return this;
-	};
 
 	Position.prototype.getForm = function () {
 		/**

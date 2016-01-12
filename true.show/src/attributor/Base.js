@@ -26,9 +26,7 @@ define(function(require) {
     	 * 
     	 */
         this.buildPanel();
-
         this.setupPluginList();
-
         this.initPlugins();
     };
 
@@ -50,7 +48,6 @@ define(function(require) {
         $tabContainer.eq(index).find('select').each(function () {
         	$(this).find('option:selected').val();
         });
-
     };
 
     Base.prototype.buildForm = function(attrs) {
@@ -70,7 +67,7 @@ define(function(require) {
         return html.join('');
     }
 
-    Base.prototype.buildFormLine = function(line) {
+    Base.prototype.buildFormLine = function(line, groupId) {
 
         var html = [],
             box = '',
@@ -86,7 +83,7 @@ define(function(require) {
             box += '<dt>' + line['label'] + '</dt>';
         }
 
-        box += '<dd data-plugin="' + line['plugin'] + '">' + this.buildPanelPlugin(line, this.groupId) +'</dd>';
+        box += '<dd data-plugin="' + line['plugin'] + '">' + this.buildPanelPlugin(line, this.groupId||groupId) +'</dd>';
 
 
         html.push(box);
@@ -153,11 +150,11 @@ define(function(require) {
             case 'slider-angle':
                 html = '<input type="range" data-unit="'+ unit +'" min="0" max="360" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
                 break;
-            case 'slider-during':
+            case 'slider-duration':
                 html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
                 break;
             case 'slider-delay':
-                html = '<input type="range" data-unit="'+ unit +'" min="0" max="180" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="180" step="0.1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
                 break;
             case 'slider-repeat':
                 html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
@@ -236,10 +233,14 @@ define(function(require) {
         var domArray = this.getPluginDomArray();
 
         tools.each(domArray, function(dom) {
-            var options = that.getPlugOptions(dom);
-            var plugin = new PluginBase(options.pluginName, options)
-            list.push(plugin);
+            if (!!dom) {
+            	var options = that.getPlugOptions(dom);
+	            var plugin = new PluginBase(options.pluginName, options)
+	            list.push(plugin);
+            }
         });
+
+        return this;
     };
 
     Base.prototype.getPluginById = function (id) {
@@ -266,11 +267,14 @@ define(function(require) {
 
     Base.prototype.initPlugins = function() {
         var list = this.pluginList;
-
+        var that = this;
         tools.each(list, function(plugin) {
             // 这里会隐藏原表单的input，用plugin的view的替换， 
             // 当plugin的值改变时trigger原表单的事件，通知上一层管理器更新view
-            plugin.init();
+            if (!!plugin && !!plugin.options) {
+            	plugin.options.formid = that.formid;
+            	plugin.init && plugin.init();
+            }
         });
     };
 
@@ -278,7 +282,7 @@ define(function(require) {
         var list = this.pluginList;
 
         tools.each(list, function(plugin) {
-            plugin.destroy();
+            !!plugin && plugin.destroy();
         });
     };
 

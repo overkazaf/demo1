@@ -230,6 +230,14 @@ define(function(require) {
             this.layer.init(elements, 0);
             $('#' + this.getActiveElementId(), appContext).trigger('click');
         },
+        changeAnimates : function (id, animates) {
+            var el = this.getElement(id);
+            if (el != null) {
+                el.animates = animates;
+            }
+            this.pages.setAnimates(id, JSON.stringify(animates));
+            this.layer.setActiveElement(id);
+        },
         changeStyles: function(id, css, styles) {
             var el = this.getElement(id);
             if (el != null) {
@@ -421,11 +429,12 @@ define(function(require) {
             if(!currentType) return;
 
             // 2. 合并属性
-            $.extend(true, json[currentType].styles, json['styles'].styles);
-            //$.extend(true, json[currentType].styles, json['position'].styles);
-            //$.extend(true, json[currentType].styles, json['animation'].styles);
-
+            $.extend(true, json[currentType].styles || (json[currentType].styles = {}), json['styles'].styles);
+            $.extend(true, json[currentType].animates || (json[currentType].animates = []), json['animate'].animates);
+            //$.extend(true, json[currentType].events || (json[currentType].events = {}), json['event'].events);
+            
             var json = json[currentType];
+
             // 3. 在不同的容器内更新元素，后边拆分开来
             var viewEl = $('#' + json.groupId, appContext);
             var pageEl = $('#' + json.groupId, pageContext);
@@ -435,7 +444,7 @@ define(function(require) {
             if (viewEl.length && pageEl.length) {
                 this.viewer.updateElement(viewEl, json.styles);
                 this.changeStyles(json.groupId, json.styles, json.styles);
-
+                this.changeAnimates(json.groupId, json.animates);
                 // 找el， 更新结构
                 var elements = this.data.pages[this.idx].elements;
                 elements.forEach(function(el, index) {

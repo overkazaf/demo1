@@ -125,6 +125,13 @@
 				styles: styles
 			}).css(css);
 		},
+		setAnimates:function(id,animates){
+			var obj=this.currpager.find('#'+id);
+			obj.attr({
+				animates: animates
+			});
+			console.log('animates', obj);
+		},
 		remove:function(page){
 			var that=this;
 			var newActivePage=-1;

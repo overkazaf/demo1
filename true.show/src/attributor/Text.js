@@ -29,6 +29,7 @@
 		Base.call(this, options);
 	};
 
+
 	/**
 	 * [init description]
 	 * @param  {[type]} context [Text实例从属的容器]
@@ -37,6 +38,18 @@
 	Text.prototype.init = function (context) {
 		Base.prototype.init.call(this, context);
 		return this;
+	};
+
+
+	Text.prototype.resetPluginList = function () {
+		var list = this.pluginList;
+		var that = this;
+		tools.each(list, function (plugin) {
+			// 这里要重置一下formid， 因为重新render时form被强行写后再次生成了
+			plugin.options.formid = that.formid;
+			// plugin.options.sliders = 
+			plugin.init();
+		});
 	};
 
 

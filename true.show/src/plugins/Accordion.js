@@ -5,6 +5,7 @@
  */
 ;
 define(function(require) {
+	var $ = require('jquery');
     var tools = require('../tools/tools');
     var Base = require('../attributor/Base');
 
@@ -34,6 +35,36 @@ define(function(require) {
         '<div class="ui-tab-content animate-special">{{SPECIAL}}</div>',
         '</div>'
     ].join('');
+
+    var guid = 1;
+    var __defaults = {
+		seq : guid++,
+		activeId : tools.uuid(),
+		sliders : [{
+	        label: '持续时间',
+	        value: 1,
+	        css: 'duration',
+	        name: 'anim-during',
+	        plugin: 'slider-during',
+	        unit: 's'
+	    }, {
+	        label: '延迟时间',
+	        value: 0,
+	        css: 'delay',
+	        name: 'anim-delay',
+	        plugin: 'slider-delay',
+	        unit: 's'
+	    }, {
+	        label: '重复次数',
+	        value: 1,
+	        css: 'repeat',
+	        name: 'anim-repeat',
+	        plugin: 'slider-repeat',
+	        unit: '次'
+	    }],
+	    tabIndex: 0,
+	    animClazz:'',
+	};
 
     var Accordion = function(options) {
         this.id = tools.uuid();
@@ -82,6 +113,7 @@ define(function(require) {
 
     Accordion.prototype.bindTemplateEvent = function() {
         var subTabId = this.subTabId;
+        var groupId = this.options.activeId;
         var $form = $('#' + this.formid);
         var $tab = $('#' + subTabId, $form[0]);
         var $activeEl = $('#' + this.options.activeId, $('app-page')[0]);
@@ -91,7 +123,7 @@ define(function(require) {
             $tab.find('.ui-tab-content').hide().eq(index).show();
         });
 
-        $('.ui-tablist-item:first', $('#'+this.domUUID)[0]).trigger('click');
+        $('.ui-tablist-item', $('#'+this.domUUID)[0]).eq(this.options.tabIndex || 0).trigger('click');
         this.accordion('collapse');
 
         var timeout;
@@ -107,7 +139,7 @@ define(function(require) {
             }
         });
 
-       
+        
         $('.effect-list-item').on('mouseout', function(ev) {
             var $target = $(this).find('.anim-item');
             if ($target.attr('data-class')) {
@@ -123,19 +155,33 @@ define(function(require) {
         	$('.anim-item').each(function (){
         		$(this).removeClass('animated').removeClass($(this).attr('data-class'));
         	})
-        	$(this).toggleClass('active').closest('li').siblings().find('.anim-item').removeClass('active');
+        	$(this).find('.anim-item').addClass('active');
+        	$(this).addClass('active').siblings().find('.anim-item').removeClass('active');
+
         	var $subtitle = $(this).closest('.ui-accordion').find('.accordion-subtitle');
         	
-        	$activeEl[0].className = 'active';
+        	$activeEl.removeClass().addClass('active');
         	var $animItem = $(this).find('.anim-item');
         	if ($(this).hasClass('active')) {
         		$subtitle.html($animItem.attr('data-name'))
-        		$activeEl.addClass($animItem.attr('data-class')).addClass('animated');
+        		$activeEl.addClass($animItem.attr('data-class') + ' animated');
         	} else {
         		$subtitle.html('无动画');
-        		$activeEl.removeClass($animItem.attr('data-class')).removeClass('animated');
+        		$activeEl.removeClass($animItem.attr('data-class') + ' animated');
         	}
+
+        	setTimeout(function () {
+        		$activeEl.removeClass($animItem.attr('data-class') + ' animated');
+        	}, 2000);
+
+        	window.callFN('noticeUpdate', groupId);
         });
+
+        if (this.options.animClazz) {
+        	var $AnimClazz = $('[data-class="'+this.options.animClazz+'"]', $tab[0]);
+        	$AnimClazz.addClass('active');
+        	this.dom.find('.accordion-subtitle').html($AnimClazz.attr('data-name'));
+        }
     };
 
     Accordion.prototype.accordion = function (cmd) {
@@ -156,9 +202,9 @@ define(function(require) {
     var sliders = [{
         label: '持续时间',
         value: 1,
-        css: 'during',
-        name: 'anim-during',
-        plugin: 'slider-during',
+        css: 'duration',
+        name: 'anim-duration',
+        plugin: 'slider-duration',
         unit: 's'
     }, {
         label: '延迟时间',
@@ -174,11 +220,14 @@ define(function(require) {
         name: 'anim-repeat',
         plugin: 'slider-repeat',
         unit: '次'
-    }, ];
+    }];
     Accordion.prototype.getSliders = function() {
         var html = [];
+        var optSliders = this.options.sliders;
+        var groupId = this.options.activeId;
         for (var i = 0, l = sliders.length; i < l; i++) {
-            html.push(Base.prototype.buildFormLine(sliders[i]));
+        	$.extend(true, sliders[i], optSliders[i]);
+            html.push(Base.prototype.buildFormLine.call(this.supervisor, sliders[i], groupId));
         }
         return html.join('');
     };

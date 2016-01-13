@@ -241,7 +241,7 @@
 			$(this.opts.id).on('click',that.opts.item,function(event){
 				event.preventDefault();
 
-				if(that.currpager.attr('id')==$(this).attr('id')) return;
+				if(!that.currpager || that.currpager.attr('id')==$(this).attr('id')) return;
 				that.currpager.removeClass(that.opts.activeCls);
 				$(this).addClass(that.opts.activeCls);
 				that.currpager=$(this);
@@ -421,6 +421,12 @@
 					}
 				}
 			});
+		},
+		getCounts : function () {
+			return $(this.opts.id).find(this.opts.item).length;
+		},
+		getIndex : function (id) {
+			return $(this.opts.id).find('#' + id).index();
 		},
 		changeLevel : function (id, cmd) {
 			// 0. 操作合法性放在前一步做

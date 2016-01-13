@@ -114,6 +114,7 @@ define(function(require) {
     window.callFN = function(fnName, groupId) {
         var strategy = {
             'noticeUpdate' : function (groupId) {
+                console.log('callFN', groupId);
                 if(timeout)clearTimeout(timeout);
                 timeout = null;
                 timeout = setTimeout(function (){

@@ -34,16 +34,21 @@
 	 * @param  {[type]} context [Styles实例从属的容器]
 	 * @return {[type]}         [description]
 	 */
-	Styles.prototype.init = function (context) {
-		Base.prototype.init.call(this, context);
+	Styles.prototype.init = function (callback) {
+		Base.prototype.init.call(this);
+		callback && callback.call(this);
+		return this;
+	};
 
+	Styles.prototype.clone = function () {
+		return new Styles(this.options);
+	};
+
+	Styles.prototype.setupPluginList = function () {
 		var $form = $('#' + this.formid);
 		var $el = $('#' + this.groupId, $('app-page')[0]);
 		$form.find('input[name="width"]').val($el.width());
 		$form.find('input[name="height"]').val($el.height());
-		// console.log($el.css('transform'));
-
-		return this;
 	};
 
 
@@ -105,7 +110,7 @@
 			}
 		});
 		
-	
+		
 		ret['transform'] = 'rotate(' + ret['transform'] + 'deg)';
 		ret['opacity'] = ret['opacity'] / 100;
 		ret['border-radius'] = ret['border-radius'] + 'px';
@@ -136,7 +141,6 @@
 			'styles' : ret
 		};
 
-		console.log('stylesResult', resultObj);
 		// 这里主要是收集所有的属性值，到时候一块儿塞进styles属性中
 		return resultObj;
 	};

@@ -38,12 +38,15 @@ define(function(require) {
      * @param  {[type]} context [Animation]
      * @return {[type]}         [description]
      */
-    Animation.prototype.init = function(context) {
-    	
-        Base.prototype.init.call(this, context);
+    Animation.prototype.init = function(callback) {
+        Base.prototype.init.call(this);
+        callback && callback.call(this);
         return this;
     };
 
+    Animation.prototype.clone = function () {
+		return new Animation(this.options);
+	};
 
     /**
      * [setupPluginList 设置插件列表]
@@ -74,9 +77,9 @@ define(function(require) {
     };
 
      Animation.prototype.initPlugins = function() {
+     	var $form = $('#' + this.formid);
         var list = this.pluginList;
         var that = this;
-        console.log('AnimationList', list);
         tools.each(list, function(plugin) {
             // 这里会隐藏原表单的input，用plugin的view的替换， 
             // 当plugin的值改变时trigger原表单的事件，通知上一层管理器更新view
@@ -85,6 +88,12 @@ define(function(require) {
             	plugin.init && plugin.init();
             }
         });
+
+        if (list.length == 0) {
+        	$form.find('#play-animation').addClass('btn-disabled');
+        } else {
+        	$form.find('#play-animation').removeClass('btn-disabled');
+        }
     };
 
     Animation.prototype.playAnimation = function() {
@@ -220,7 +229,10 @@ define(function(require) {
         });
         accordion.supervisor = this;
         accordion.init();
+        
+        $('#play-animation').removeClass('btn-disabled');
         this.pluginList.push(accordion);
+
     }
 
     Animation.prototype.getForm = function() {
@@ -285,6 +297,7 @@ define(function(require) {
 
     Animation.prototype.confirmDelete = function(id) {
         var list = this.pluginList;
+        var $form = $('#' + this.formid);
         tools.each(list, function(plugin, index) {
             if (plugin.id == id) {
                 list.splice(index, 1);
@@ -293,6 +306,10 @@ define(function(require) {
         tools.each(this.pluginList, function(plugin, index) {
             plugin.dom.find('.accordion-seq').html(index + 1);
         });
+
+        if (list.length === 0) {
+        	$form.find('#play-animation').addClass('btn-disabled');
+        }
     };
 
     tools.inherits(Animation, Base)

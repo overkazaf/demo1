@@ -1165,12 +1165,11 @@ plugin-warp.active .ui-resizable-handle {
 }
 
 .cont-inner {
-    -moz-user-select: none; 
+    -moz-user-select: none;
     -webkit-user-select: none;
-    -ms-user-select:none; 
-    user-select:none;
-    -o-user-select:none;
-    
+    -ms-user-select: none;
+    user-select: none;
+    -o-user-select: none;
     display: table-cell;
     vertical-align: middle;
     width: 100%;
@@ -1277,6 +1276,7 @@ plugin-warp.state-visible {
 .form-control .textarea-box:focus {
     border-color: #f70;
 }
+
 .form-control input[type=number] {
     border-radius: 5px;
     width: 100px;
@@ -1291,8 +1291,8 @@ plugin-warp.state-visible {
 
 .form-control input[type=checkbox],
 .form-control input[type=radio] {
-  visibility: hidden;
-  z-index: 1;
+    visibility: hidden;
+    z-index: 1;
 }
 
 .form-control .icon-bold,
@@ -1310,8 +1310,7 @@ plugin-warp.state-visible {
 .form-control .icon-lv-up,
 .form-control .icon-lv-down,
 .form-control .icon-lv-uppp,
-.form-control .icon-lv-downnn
- {
+.form-control .icon-lv-downnn {
     box-sizing: border-box;
     cursor: pointer;
     margin-top: 8px;
@@ -1329,7 +1328,7 @@ plugin-warp.state-visible {
     text-align: center;
     background-position: center;
     background-repeat: no-repeat;
-    box-shadow: 0 2px 0 rgba(106,106,106,.5),0 1px 0 #757575 inset;
+    box-shadow: 0 2px 0 rgba(106, 106, 106, .5), 0 1px 0 #757575 inset;
 }
 
 .form-control .icon-lv-up,
@@ -1343,7 +1342,7 @@ plugin-warp.state-visible {
 
 .form-control input[type=checkbox]:checked + label,
 .form-control input[type=radio]:checked + label {
-  background-color: #333;
+    background-color: #333;
 }
 
 .form-control input[type=checkbox]:disabled + label,
@@ -1354,76 +1353,77 @@ plugin-warp.state-visible {
 }
 
 .form-control .icon-bold {
-  background: url(../img/b.png) center no-repeat;
+    background: url(../img/b.png) center no-repeat;
 }
 
 .form-control .icon-italic {
-  background: url(../img/i.png) center no-repeat;
+    background: url(../img/i.png) center no-repeat;
 }
 
 .form-control .icon-underline {
-  background: url(../img/u.png) center no-repeat;
+    background: url(../img/u.png) center no-repeat;
 }
 
 .form-control .icon-text-left {
-  background: url(../img/left.png) center no-repeat;
+    background: url(../img/left.png) center no-repeat;
 }
 
 .form-control .icon-text-center {
-  background: url(../img/center.png) center no-repeat;
+    background: url(../img/center.png) center no-repeat;
 }
 
 .form-control .icon-text-right {
-  background: url(../img/right.png) center no-repeat;
+    background: url(../img/right.png) center no-repeat;
 }
 
 .form-control .icon-pos-left {
-  background: url(../img/x-left.png) center no-repeat;
+    background: url(../img/x-left.png) center no-repeat;
 }
 
 .form-control .icon-pos-center {
-  background: url(../img/x-center.png) center no-repeat;
+    background: url(../img/x-center.png) center no-repeat;
 }
 
 .form-control .icon-pos-right {
-  background: url(../img/x-right.png) center no-repeat;
+    background: url(../img/x-right.png) center no-repeat;
 }
 
 .form-control .icon-pos-top {
-  background: url(../img/y-top.png) center no-repeat;
+    background: url(../img/y-top.png) center no-repeat;
 }
 
 .form-control .icon-pos-middle {
-  background: url(../img/y-center.png) center no-repeat;
+    background: url(../img/y-center.png) center no-repeat;
 }
 
 .form-control .icon-pos-bottom {
-  background: url(../img/y-bottom.png) center no-repeat;
+    background: url(../img/y-bottom.png) center no-repeat;
 }
 
 .form-control .icon-lv-up {
-  background: url(../img/y-up.png) center no-repeat;
+    background: url(../img/y-up.png) center no-repeat;
 }
 
 .form-control .icon-lv-down {
-  background: url(../img/y-down.png) center no-repeat;
+    background: url(../img/y-down.png) center no-repeat;
 }
 
 .form-control .icon-lv-uppp {
-  background: url(../img/y-up.png) center no-repeat;
+    background: url(../img/y-up.png) center no-repeat;
 }
 
 .form-control .icon-lv-downnn {
-  background: url(../img/y-down.png) center no-repeat;
+    background: url(../img/y-down.png) center no-repeat;
 }
 
 
 /* 配置项里的默认按钮样式 */
+
 .btn.btn-default {
     display: inline-block;
     padding: 5px 8px;
-    background: -webkit-linear-gradient(top,#656566,#555);
-    background: -o-linear-gradient(top,#656566,#555);
+    background: -webkit-linear-gradient(top, #656566, #555);
+    background: -o-linear-gradient(top, #656566, #555);
     border: 1px solid #000;
     font-size: 12px;
     text-align: center;
@@ -1439,19 +1439,27 @@ plugin-warp.state-visible {
     padding: 8px;
 }
 
-.form-control .cropper {
-    margin:20px;
-}
-.form-control .cropper img{
-    width:100%;
-    height:100%;
+.form-control #play-animation.btn-disabled {
+    background: #4b4b4b !important;
 }
 
+.form-control .cropper {
+    margin: 20px;
+}
+
+.form-control .cropper img {
+    width: 100%;
+    height: 100%;
+}
+
+
 /* ui-accordion */
-.ui-accordion:first-child{
+
+.ui-accordion:first-child {
     margin-top: 35px;
 }
-.ui-accordion .accordion-header{
+
+.ui-accordion .accordion-header {
     width: 100%;
     padding: 15px 0 15px 20px;
     cursor: pointer;
@@ -1461,9 +1469,8 @@ plugin-warp.state-visible {
 }
 
 .ui-accordion .accordion-header .accordion-caret,
-.ui-accordion .accordion-header .accordion-trash
-{
-    color: #fff;    
+.ui-accordion .accordion-header .accordion-trash {
+    color: #fff;
 }
 
 .ui-accordion .accordion-header .accordion-title {
@@ -1472,18 +1479,19 @@ plugin-warp.state-visible {
 }
 
 .ui-accordion .accordion-header .accordion-trash {
-    float:right;
-    margin-right:30px;
+    float: right;
+    margin-right: 30px;
 }
 
-.ui-accordion .accordion-content{
+.ui-accordion .accordion-content {
     display: none;
-    padding:5px;
+    padding: 5px;
 }
 
-.ui-accordion .accordion-content dl{
+.ui-accordion .accordion-content dl {
     width: 100%;
 }
+
 .ui-accordion .accordion-content dl dt,
 .ui-accordion .accordion-content dl dd {
     display: table-cell;
@@ -1502,7 +1510,7 @@ plugin-warp.state-visible {
     width: 70%;
 }
 
-.ui-accordion hr.editor-panel-text{
+.ui-accordion hr.editor-panel-text {
     border-top-color: #333;
 }
 
@@ -1510,16 +1518,16 @@ plugin-warp.state-visible {
     width: 100%;
 }
 
-.ui-tab .ui-tablist .ui-tablist-item{
-    width:30%;
-    float:left;
+.ui-tab .ui-tablist .ui-tablist-item {
+    width: 30%;
+    float: left;
     text-align: center;
 }
 
-.ui-tab .ui-tablist .ui-tablist-item.active button{
+.ui-tab .ui-tablist .ui-tablist-item.active button {
     opacity: .5;
     border: 1px solid #222;
-    box-shadow: 0 2px 0 rgba(106,106,106,.5);
+    box-shadow: 0 2px 0 rgba(106, 106, 106, .5);
     color: #ddd;
     background: #333;
 }
@@ -1527,11 +1535,12 @@ plugin-warp.state-visible {
 .ui-tab .ui-tab-content {
     padding: 10px;
 }
+
 .ui-tab .ui-tab-content .effect-list {
     width: 100%;
 }
 
-.ui-tab .ui-tab-content .effect-list .effect-list-item{
+.ui-tab .ui-tab-content .effect-list .effect-list-item {
     width: 23%;
     margin-left: 2%;
     margin-top: 20px;
@@ -1542,7 +1551,6 @@ plugin-warp.state-visible {
     font-size: 12px;
 }
 
-
 .ui-tab .ui-tab-content .effect-list .effect-list-item .anim-item {
     width: 92%;
     height: 56px;
@@ -1552,7 +1560,7 @@ plugin-warp.state-visible {
     border-radius: 5px;
     box-shadow: 1px 1px 10px #222;
     cursor: pointer;
-    background : url(../img/tw-logo.jpg) left top no-repeat;
+    background: url(../img/tw-logo.jpg) left top no-repeat;
     background-size: cover;
 }
 
@@ -1560,4 +1568,3 @@ plugin-warp.state-visible {
 .ui-tab .ui-tab-content .effect-list .effect-list-item .anim-item.active {
     border-color: #f70;
 }
-

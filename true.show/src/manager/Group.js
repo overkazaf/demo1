@@ -5,6 +5,8 @@
  * @module manager/GroupManager
  */
 ;define(function (require) {
+	var $ = require('jquery');
+
 	var Group = function (options) {
 		// Group实例中的id应该与存在的元素id一一对应
 		this.options = options;
@@ -43,7 +45,7 @@
 	};
 
 	/**
-	 * [update 更新配置项指定]
+	 * [update 更新指定配置项]
 	 * @param  {[type]} json [description]
 	 * @return {[type]}      [description]
 	 */
@@ -53,6 +55,38 @@
 			return el.update(json);
 		}
 		return el === null;
+	};
+
+
+
+	/**
+     * [cloneGroup 根据给定的新groupId生成克隆]
+	 * @param  {[type]} group [源配置组]
+	 * @param  {[type]} newId [新的id]
+	 * @return {[type]}       [description]
+	 */
+	Group.prototype.cloneGroup = function (group, newId) {
+		var newGroup = $.extend(true, {}, group);
+		newGroup.constructor = Group;
+		newGroup.prototype = Group;
+		newGroup.id = newId;
+
+		var list = newGroup.attrList;
+		console.log(list);
+		$.each(list, function (index, attributor) {
+			var clonedObj = attributor.clone.call(attributor);
+
+			var item = $.extend(true, clonedObj, attributor);
+
+			item.groupId = newId;
+			item.options.groupId = newId;
+			list.splice(index, 1, item);
+			newGroup.attrMap[attributor.id] = item;
+		});
+
+		newGroup.init();
+
+		return newGroup;
 	};
 
 

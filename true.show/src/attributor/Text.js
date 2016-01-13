@@ -29,14 +29,14 @@
 		Base.call(this, options);
 	};
 
-
 	/**
 	 * [init description]
 	 * @param  {[type]} context [Text实例从属的容器]
 	 * @return {[type]}         [description]
 	 */
-	Text.prototype.init = function (context) {
-		Base.prototype.init.call(this, context);
+	Text.prototype.init = function (callback) {
+		Base.prototype.init.call(this);
+		callback && callback.call(this);
 		return this;
 	};
 
@@ -52,6 +52,9 @@
 		});
 	};
 
+	Text.prototype.clone = function () {
+		return $.extend(true, new Text(this.options), this);
+	};
 
 	Text.prototype.getForm = function () {
 		/**
@@ -59,7 +62,9 @@
 		 * @type {[type]}
 		 */
 		var groupId = this.groupId;
-
+		var $tab = $('#' + this.options.tabId);
+        var $tabContainer = $tab.closest('.tab-box').find('.tab-item');
+		this.formid = this.formid || $tabContainer.find('.form-control').attr('id');
 		var form = document.getElementById(this.formid);
 		var aDl = form.getElementsByTagName('dl');
 		var ret = {};
@@ -142,7 +147,8 @@
 		ret['top'] = el.css('top');
 		//ret['width'] = el.css('width');
 		//ret['height'] = el.css('height');
-		
+
+		console.log('groupID', groupId, '>>', 'content', content);
 		var content = ret.content;
 		var resultObj = {
 			'groupId' : groupId,

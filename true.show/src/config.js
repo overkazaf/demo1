@@ -154,10 +154,23 @@
   				{label:"文本颜色", css:"color", name:"color", value: "", values: null, plugin:'colorpicker', unit:null},
   				{label:"字号", css:"font-size", name:"font-size", value: "14", values: null, plugin:'slider-fontsize', unit:'px'},
   				{label:"字体", css:"font-family", name:"font-family", value: null, values: [
-  					{label:'黑体', name:"font-family", value:'黑体', clazz:'icon-font', status:'selected'},
+  					{label:'黑体', name:"font-family", value:'Heiti', clazz:'icon-font', status:'selected'},
   					{label:'宋体', name:"font-family",value:'宋体', clazz:'icon-font', status:''},
   					{label:'微软雅黑', name:"font-family",value:'Microsoft Yahei', clazz:'icon-font', status:''},
-  					{label:'仿宋', name:"font-family",value:'仿宋', clazz:'icon-font', status:''}
+  					{label:'仿宋', name:"font-family",value:'仿宋', clazz:'icon-font', status:''},
+  					{label:'Tahoma', name:"font-family",value:'Tahoma', clazz:'icon-font', status:''},
+  					{label:'initial', name:"font-family",value:'initial', clazz:'icon-font', status:''},
+  					{label:'Verdana', name:"font-family",value:'Verdana', clazz:'icon-font', status:''},
+  					{label:'Lucida Console', name:"font-family",value:'Lucida Console', clazz:'icon-font', status:''},
+  					{label:'Arial Black', name:"font-family",value:'Arial Black', clazz:'icon-font', status:''},
+  					{label:'Lucida Sans Unicode', name:"font-family",value:'Lucida Sans Unicode', clazz:'icon-font', status:''},
+  					{label:'Helvetica', name:"font-family",value:'Helvetica', clazz:'icon-font', status:''},
+  					{label:'Impact', name:"font-family",value:'Impact', clazz:'icon-font', status:''},
+  					{label:'Arial', name:"font-family",value:'Arial', clazz:'icon-font', status:''},
+  					{label:'Times New Roman', name:"font-family",value:'Times New Roman', clazz:'icon-font', status:''},
+  					{label:'Georgia', name:"font-family",value:'Georgia', clazz:'icon-font', status:''},
+  					{label:'Palatino Linotype', name:"font-family",value:'Palatino Linotype', clazz:'icon-font', status:''},
+  					{label:'Book Antiqua', name:"font-family",value:'Book Antiqua', clazz:'icon-font', status:''}
   				], plugin:'select', unit:null}
   		 	],
   		 	[
@@ -227,7 +240,7 @@
   				{label:"旋转角度", name:"transform", css:'transform', value: "0", values:null, plugin:'slider-angle', unit:'度'}
   		 	],
   		 	[
-  				{label:"阴影颜色", css:"box-shadow", name:"box-shadow-color", value: "#000000", values: null, plugin:'colorpicker', unit:null},
+  				{label:"阴影颜色", css:"box-shadow", name:"box-shadow-color", value: "#ffffff", values: null, plugin:'colorpicker', unit:null},
   				{label:"模糊", css:"box-shadow", name:"box-shadow-blur", value: "0", values: null, plugin:'slider', unit:'px'},
   				{label:"阴影距离", css:"box-shadow", name:"box-shadow-distance", value: "0", values: null, plugin:'slider', unit:'px'},
   				{label:"阴影角度", css:"box-shadow", name:"box-shadow-angle", value: "0", values: null, plugin:'slider-angle', unit:'度'},
@@ -248,7 +261,7 @@
   			[
   				{label:"水平位置", name:"pos-align", css:'pos-align;pos-align;pos-align', value: null, values: [
   					{label:'左对齐', name:"pos-align-left", type:"radio", value:'left', clazz:'icon-pos-left', status:''},
-  					{label:'水平居中', name:"pos-align-center",type:"radio",value:'center', clazz:'icon-pos-center', status:''},
+  					{label:'水平居中', name:"pos-align-center",type:"radio",value:'center', clazz:'icon-pos-center', status:'checked'},
   					{label:'右对齐', name:"pos-align-right",type:"radio",value:'right', clazz:'icon-pos-right', status:''}
   				], plugin:'btngroup', unit:null},
   				{label:"垂直位置", name:"pos-valign", css:'pos-valign;pos-valign;pos-valign', value: null, values: [

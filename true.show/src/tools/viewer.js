@@ -62,15 +62,16 @@
 			var that=this;
 			$(document).on('click',this.opts.cls,function(event){
 				event.preventDefault();
-				if ($(this).hasClass('active')) return;
+				event.stopImmediatePropagation();
+
+				//if ($(this).hasClass('active')) return;
 				$(that.opts.id).find(that.opts.cls).removeClass('active');
 				$(this).addClass('active');
 				that.updateElement($(this),{});
 
-
+				var AM = Storage.get('__AM__');
 				var elementId = $(this).attr('id');
 
-				var AM = Storage.get('__AM__');
 				// 获取配置面板
 				if ($(this)[0].tagName.toLowerCase() == 'plugin-warp') {
 					var type = $(this).attr('type');
@@ -81,6 +82,7 @@
 				if (!!AM) {
 					var group = Storage.get(elementId);
 					if (!!group) {
+						console.log(group.id);
 						group.init();
 					}
 				}
@@ -110,6 +112,11 @@
 			this.dragger=new Dragger(null,null,function(t){
 				var o=$(t).position();
 				that.updateElement(t,{'left':o.left+'px','top':o.top+'px'});
+
+				var id = t.attr('id');
+				var group = Storage.get(id);
+				var pos = group.attrList[2];
+				!!pos && pos.updateButtonGroup(id, 'left');
 			});
 			this.ruler=new ruler('#rulerbtn','.ruler');
 

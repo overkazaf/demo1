@@ -39,8 +39,8 @@ define(function(require) {
     }
 
     var composeGroup = {
-    	'text' : function (elementId) {
-    		// 新增一个配置组
+        'text': function(elementId) {
+            // 新增一个配置组
             var group = new Group({
                 id: elementId
             });
@@ -60,7 +60,7 @@ define(function(require) {
                 groupId: elementId
             };
 
-			var AnimationPropParam = {
+            var AnimationPropParam = {
                 id: tools.uuid(),
                 groupId: elementId
             };
@@ -69,7 +69,7 @@ define(function(require) {
             $.extend(true, StylesPropParam, config.Attributor.STYLES);
             $.extend(true, PositionPropParam, config.Attributor.POSITION);
             $.extend(true, AnimationPropParam, config.Attributor.ANIMATION);
-            
+
             var TextPropEl = new Text(TextPropParam).init();
             var StylesPropEl = new Styles(StylesPropParam).init();
             var PositionPropEl = new Position(PositionPropParam).init();
@@ -83,9 +83,9 @@ define(function(require) {
 
             // or u can call group.init to batch initialize all the Attributor instances
             return group;
-    	},
-    	'photo' : function (elementId) {
-    		// 新增一个配置组
+        },
+        'photo': function(elementId) {
+            // 新增一个配置组
             var group = new Group({
                 id: elementId
             });
@@ -104,7 +104,7 @@ define(function(require) {
                 groupId: elementId
             };
 
-			var AnimationPropParam = {
+            var AnimationPropParam = {
                 id: tools.uuid(),
                 groupId: elementId
             };
@@ -113,11 +113,11 @@ define(function(require) {
             $.extend(true, StylesPropParam, config.Attributor.STYLES);
             $.extend(true, PositionPropParam, config.Attributor.POSITION);
             $.extend(true, AnimationPropParam, config.Attributor.ANIMATION);
-            
+
             var PhotoPropEl = new Photo(PhotoPropParam).init();
             var StylesPropEl = new Styles(StylesPropParam).init();
             var PositionPropEl = new Position(PositionPropParam).init();
-			var AnimationPropEl = new Animation(AnimationPropParam).init();
+            var AnimationPropEl = new Animation(AnimationPropParam).init();
 
 
             group.add(PhotoPropEl);
@@ -125,7 +125,7 @@ define(function(require) {
             group.add(PositionPropEl);
             group.add(AnimationPropEl);
             return group;
-    	}
+        }
     };
 
     function confPanel(id, cls, callback, opts) {
@@ -148,117 +148,117 @@ define(function(require) {
 
                 /* Act on the event */
                 var t = $(this).attr('plugin-type');
-                if (t != 'canvas') {
-                    that.swaptab(t);
 
-                    switch (t) {
-                    	case 'photo':
-                    		if (!Storage.get('__Modal__')) {
-                    			// 测试图片
-                    			var picTpl = [];
+                that.swaptab(t);
 
-                    			+function () {
-                    				var basePath = 'asset/img/piclib/'
-                    				picTpl.push('<ul class="clearfix pic-ul" style="width:100%;">');
-	                    			for (var i = 0; i < 11; i++) {
-	                    				picTpl.push('<li><img width="90%" height="130" src="'+ basePath + (i)  +'.jpg"></li>');
-	                    			}
-	                    			picTpl.push('</ul>');
-                    			}();
+                switch (t) {
+                	case 'canvas':
+                		break;
+                    case 'photo':
+                        if (!Storage.get('__Modal__')) {
+                            // 测试图片
+                            var picTpl = [];
 
-
-
-                    			var modal = new Modal({
-                    				title : '素材选择',
-	                    			template : picTpl.join(''),
-	                    			onInit : function (md) {
-	                    				var $ul = md.dom.find('.pic-ul');
-	                    				$ul.on('click', 'li', function(){
-	                    					$(this).toggleClass('active').siblings().removeClass('active');
-	                    				});
-	                    			},
-	                    			onDragging : function (md) {
-	                    				//console.log(md);
-	                    			},
-	                    			onConfirm : function (md) {
-	                    				var dom = md.dom;
-	                    				if(!dom.find('li.active').length) {
-	                    					alert('请选择一张素材图片');
-	                    					return false;
-	                    				}
-	                    				var picUrl = dom.find('li.active').find('img').attr('src');
+                            + function() {
+                                var basePath = 'asset/img/piclib/'
+                                picTpl.push('<ul class="clearfix pic-ul" style="width:100%;">');
+                                for (var i = 0; i < 11; i++) {
+                                    picTpl.push('<li><img width="90%" height="130" src="' + basePath + (i) + '.jpg"></li>');
+                                }
+                                picTpl.push('</ul>');
+                            }();
 
 
-	                    				var AM = Storage.get('__AM__');
-					                	var elementId;
 
-					                    // Step A. 新增component
-					                    // A1. new一个粗来，首先要克隆配置项
-					                	var templateJson = tools.clone(config.ComponentTemplate[t]);
-					                	// A2. 重新生成一个随机id
-					                	templateJson.id = elementId = tools.uuid();
-					                	templateJson.src = picUrl;
-					                	templateJson.type = 'photo';
-					                	Storage.set('__currentImage__', picUrl);
-
-					                	// A3. 分别加入到pages、layer和view中
-					                	//    这个由marker具体负责操作，数据结构给过去就好了
-					                	AM.getMarker().addNewElement(templateJson);
-
-
-					                	// Step B. 激活焦点元素
-					                	AM.getMarker().viewer.setActiveElement(elementId);
-
-					                    // Step C. 渲染配置面板
-					                    // C1. 生成新的配置组
-					                    var group = composeGroup[t](elementId);
-
-					                	// C2. 把当前配置项写入缓存
-							            Storage.set(group.id, group);
-
-					                    // C3. 尝试在AM实例中增加该组
-					                    AM.getInstance().addGroup(group);
-
-					                    return true;
-	                    			}
-	                    		});
-
-	                    		Storage.set('__Modal__', modal);
-                    		}
-
-                    		var modal = Storage.get('__Modal__');
-                    		modal.modal('show');
-                    		
-                    		break;
-                    	default : 
-                    		var AM = Storage.get('__AM__');
-		                	var elementId;
-
-		                    // Step A. 新增component
-		                    // A1. new一个粗来，首先要克隆配置项
-		                	var templateJson = tools.clone(config.ComponentTemplate[t]);
-		                	// A2. 重新生成一个随机id
-		                	templateJson.id = elementId = tools.uuid();
-
-		                	// A3. 分别加入到pages、layer和view中
-		                	//    这个由marker具体负责操作，数据结构给过去就好了
-		                	AM.getMarker().addNewElement(templateJson);
+                            var modal = new Modal({
+                                title: '素材选择',
+                                template: picTpl.join(''),
+                                onInit: function(md) {
+                                    var $ul = md.dom.find('.pic-ul');
+                                    $ul.on('click', 'li', function() {
+                                        $(this).toggleClass('active').siblings().removeClass('active');
+                                    });
+                                },
+                                onDragging: function(md) {
+                                    //console.log(md);
+                                },
+                                onConfirm: function(md) {
+                                    var dom = md.dom;
+                                    if (!dom.find('li.active').length) {
+                                        alert('请选择一张素材图片');
+                                        return false;
+                                    }
+                                    var picUrl = dom.find('li.active').find('img').attr('src');
 
 
-		                	// Step B. 激活焦点元素
-		                	AM.getMarker().viewer.setActiveElement(elementId);
+                                    var AM = Storage.get('__AM__');
+                                    var elementId;
 
-		                    // Step C. 渲染配置面板
-		                    // C1. 生成新的配置组
-		                    var group = composeGroup[t](elementId);
+                                    // Step A. 新增component
+                                    // A1. new一个粗来，首先要克隆配置项
+                                    var templateJson = tools.clone(config.ComponentTemplate[t]);
+                                    // A2. 重新生成一个随机id
+                                    templateJson.id = elementId = tools.uuid();
+                                    templateJson.src = picUrl;
+                                    templateJson.type = 'photo';
+                                    Storage.set('__currentImage__', picUrl);
 
-		                	// C2. 把当前配置项写入缓存
-				            Storage.set(group.id, group);
+                                    // A3. 分别加入到pages、layer和view中
+                                    //    这个由marker具体负责操作，数据结构给过去就好了
+                                    AM.getMarker().addNewElement(templateJson);
 
-		                    // C3. 尝试在AM实例中增加该组
-		                    AM.getInstance().addGroup(group);
-                    }
 
+                                    // Step B. 激活焦点元素
+                                    AM.getMarker().viewer.setActiveElement(elementId);
+
+                                    // Step C. 渲染配置面板
+                                    // C1. 生成新的配置组
+                                    var group = composeGroup[t](elementId);
+
+                                    // C2. 把当前配置项写入缓存
+                                    Storage.set(group.id, group);
+
+                                    // C3. 尝试在AM实例中增加该组
+                                    AM.getInstance().addGroup(group);
+
+                                    return true;
+                                }
+                            });
+
+                            Storage.set('__Modal__', modal);
+                        }
+
+                        var modal = Storage.get('__Modal__');
+                        modal.modal('show');
+
+                        break;
+                    default:
+                        var AM = Storage.get('__AM__');
+                        var elementId;
+
+                        // Step A. 新增component
+                        // A1. new一个粗来，首先要克隆配置项
+                        var templateJson = tools.clone(config.ComponentTemplate[t]);
+                        // A2. 重新生成一个随机id
+                        templateJson.id = elementId = tools.uuid();
+
+                        // A3. 分别加入到pages、layer和view中
+                        //    这个由marker具体负责操作，数据结构给过去就好了
+                        AM.getMarker().addNewElement(templateJson);
+
+
+                        // Step B. 激活焦点元素
+                        AM.getMarker().viewer.setActiveElement(elementId);
+
+                        // Step C. 渲染配置面板
+                        // C1. 生成新的配置组
+                        var group = composeGroup[t](elementId);
+
+                        // C2. 把当前配置项写入缓存
+                        Storage.set(group.id, group);
+
+                        // C3. 尝试在AM实例中增加该组
+                        AM.getInstance().addGroup(group);
                 }
             });
         },

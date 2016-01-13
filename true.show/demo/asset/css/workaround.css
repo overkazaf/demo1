@@ -61,7 +61,7 @@ select
    -moz-border-radius       : 0.2em;
    -webkit-border-radius    : 0.2em;
    border-radius            : 0.2em;
-   box-shadow               : inset 0 0 3px #09e;
+   box-shadow               : inset 0 0 3px #222;
    -webkit-appearance       : none;
    -moz-appearance          : none;
    appearance               : none;
@@ -80,7 +80,7 @@ select  option:nth-child(even) { background-color:#09e; }
 select:hover
 {
     color                   : #101010;
-    border                  : 2px solid #222;
+    border                  : 2px solid #f70;
 }    
 select:focus {box-shadow: 0 0 2px 1px #f70;}
 
@@ -94,7 +94,7 @@ select
    text-align               : left;
    vertical-align           : middle;
    box-shadow               : inset 0 0 3px #09e;
-   border                   : 1px solid #ccc;
+   border                   : 2px solid #222;
    -moz-border-radius       : 6px;
    -webkit-border-radius    : 6px;
    border-radius            : 6px;

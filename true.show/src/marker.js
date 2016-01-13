@@ -24,7 +24,7 @@ define(function(require) {
     var Storage = require('./tools/Storage');
 
     var AttributeManager = require('AttributeManager');
-    // var Group = require('Group');
+    var Group = require('Group');
     // var Text = require('./attributor/Text');
 
 
@@ -356,7 +356,16 @@ define(function(require) {
         pasteLayer: function(id, after) {
             var copylayer = newLayer();
             $.extend(true, copylayer, this.copyer.layer);
-            copylayer.id = tools.uuid();
+            var newid = tools.uuid();
+            copylayer.id = newid;
+
+            // 拷贝新的配置项
+            var group = Storage.get(id);
+
+            var newGroup = Group.prototype.cloneGroup(group, newid);
+            Storage.set(newid, newGroup);
+            
+
             var els = this.data.pages[this.idx].elements,
                 i = 0,
                 l = els.length;
@@ -423,6 +432,7 @@ define(function(require) {
          * @return {[type]} [description]
          */
         updateView: function(json) {
+           console.log('updateView >>>>>>', json);
             // 1. 判断当前焦点元素是为空存在或为锁定状态， 否则不更新视图           
             var activeEl = $('#' + json['styles'].groupId, appContext);
             var currentType = activeEl.attr('type');
@@ -444,6 +454,7 @@ define(function(require) {
             if (viewEl.length && pageEl.length) {
                 this.viewer.updateElement(viewEl, json.styles);
                 this.changeStyles(json.groupId, json.styles, json.styles);
+                
                 this.changeAnimates(json.groupId, json.animates);
                 // 找el， 更新结构
                 var elements = this.data.pages[this.idx].elements;

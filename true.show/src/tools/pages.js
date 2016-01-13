@@ -130,7 +130,6 @@
 			obj.attr({
 				animates: animates
 			});
-			console.log('animates', obj);
 		},
 		remove:function(page){
 			var that=this;

@@ -41,6 +41,8 @@
 				that.draggable=false;
 				that.dragger=null;
 			});
+
+			
 			$(document).on('mousemove', function(event){
 				if(that.draggable==true) that.move(event);
 			});

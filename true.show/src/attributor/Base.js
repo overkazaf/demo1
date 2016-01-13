@@ -18,6 +18,11 @@ define(function(require) {
         return this;
     };
 
+    Base.prototype.updateMapping = function (newId) {
+    	this.options.groupId = newId;
+    	this.groupId = newId;
+    };
+
     Base.prototype.init = function() {
     	/**
     	 * 
@@ -40,20 +45,21 @@ define(function(require) {
         var $tabContainer = $tab.closest('.tab-box').find('.tab-item');
         var index = $tab.index();
 
-        $tabContainer.eq(index).html(formHtml);
+        var $container = $tabContainer.eq(index);
+        $container.html(formHtml);
+
+        this.formid = $container.find('.form-control').attr('id');
         $('#' + this.formid).on('submit', function (event) {
         	event.preventDefault();
         	return false;
         });
-        $tabContainer.eq(index).find('select').each(function () {
-        	$(this).find('option:selected').val();
-        });
+        // $tabContainer.eq(index).find('select').each(function () {
+        // 	$(this).find('option:selected').val();
+        // });
     };
 
     Base.prototype.buildForm = function(attrs) {
         var formId = 'form_' + tools.uuid();
-
-        this.formid = formId;
         var html = ['<form id="' + formId + '" class="form-control">'];
         for (var i = 0, l = attrs.length; i < l; i++) {
             var group = attrs[i];

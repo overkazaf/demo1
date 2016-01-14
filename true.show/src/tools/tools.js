@@ -10,12 +10,12 @@ define(function(require) {
             var uuid = [],
                 i;    
             radix = radix || chars.length;    
-            if (len) {       
+            if (len) {      
                 // Compact form      
                 for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];    
             } else {       // rfc4122, version 4 form
                       
-                var r;       // rfc4122 requires these characters
+                var r; // rfc4122 requires these characters
                       
                 uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';      
                 uuid[14] = '4';       // Fill in random data.  At i==19 set the high bits of clock sequence as
@@ -86,24 +86,24 @@ define(function(require) {
             return -1;
         },
         // 极坐标系转直角坐标系
-        polar2Axes : function (distance, alpha, fixed) {
+        polar2Axes: function(distance, alpha, fixed) {
             var ret = {
-                x : distance * Math.cos(alpha * (2 * Math.PI / 360)),
-                y : distance * Math.sin(alpha * (2 * Math.PI / 360))
+                x: distance * Math.cos(alpha * (2 * Math.PI / 360)),
+                y: distance * Math.sin(alpha * (2 * Math.PI / 360))
             };
-            if(!!fixed) {
+            if (!!fixed) {
                 ret.x = new Number(ret.x).toFixed(fixed);
                 ret.y = new Number(ret.y).toFixed(fixed);
             }
             return ret;
         },
         // 直角坐标系转极坐标系
-        axes2Polar : function (x, y, fixed) {
+        axes2Polar: function(x, y, fixed) {
             var ret = {
-                dis : Math.sqrt(x*x + y*y),
-                angle : y == 0 ? 0 : Math.atan(x/y) * 360/(2 * Math.PI)
+                dis: Math.sqrt(x * x + y * y),
+                angle: y == 0 ? 0 : Math.atan(x / y) * 360 / (2 * Math.PI)
             };
-            if(!!fixed) {
+            if (!!fixed) {
                 ret.dis = new Number(ret.dis).toFixed(fixed);
             }
             return ret;
@@ -113,11 +113,10 @@ define(function(require) {
     var timeout;
     window.callFN = function(fnName, groupId) {
         var strategy = {
-            'noticeUpdate' : function (groupId) {
-                console.log('callFN', groupId);
-                if(timeout)clearTimeout(timeout);
+            'noticeUpdate': function(groupId) {
+                if (timeout) clearTimeout(timeout);
                 timeout = null;
-                timeout = setTimeout(function (){
+                timeout = setTimeout(function() {
                     var group = Storage.get(groupId);
                     var list = group.getAll();
 
@@ -136,14 +135,14 @@ define(function(require) {
                     Storage.set(groupId, group);
                 }, 50)
             },
-            'angle2pixel' : function (groupId) {
+            'angle2pixel': function(groupId) {
                 // angle2pixel
                 // 这一函数是将角度值转换成一个坐标矩阵
                 var val = document.getElementById(groupId).value;
                 // 现在先返回假装计算一下的值
                 return +val * 1.2;
             },
-            'showModal' : function (groupId) {
+            'showModal': function(groupId) {
                 var modal = Storage.get('__Modal__');
                 // 这里用AOP去注入事件，并在onHide的时候还原， 重用一个Modal实例
                 var __old_onConfirm = modal.options.onConfirm;
@@ -152,7 +151,7 @@ define(function(require) {
                 modal.options.onConfirm = null;
                 modal.options.onHide = null;
 
-                modal.options.onConfirm = function (modal) {
+                modal.options.onConfirm = function(modal) {
                     var dom = modal.dom;
                     if (!dom.find('li.active').length) {
                         alert('请选择一张素材图片');
@@ -172,8 +171,8 @@ define(function(require) {
                     // 更新marker里的缓存数据结构
                     var marker = Storage.get('__AM__').getMarker();
                     var elements = marker.data.pages[marker.idx].elements;
-                    elements.forEach(function (item, index){
-                        if(item.id == groupId){
+                    elements.forEach(function(item, index) {
+                        if (item.id == groupId) {
                             var modEl = tools.clone(item);
                             modEl.src = picUrl;
                             elements.splice(index, 1, modEl);
@@ -187,7 +186,7 @@ define(function(require) {
                 }
 
 
-                modal.options.onHide = function (modal) {
+                modal.options.onHide = function(modal) {
                     modal.options.onConfirm = __old_onConfirm;
                     modal.options.onHide = __old_onHide;
                 };
@@ -195,31 +194,31 @@ define(function(require) {
 
                 return false;
             },
-            'cropImage' : function (groupId) {
+            'cropImage': function(groupId) {
                 var coords = Storage.get('__selectedCoords__');
                 var cropEl = Storage.get('__cropEl__');
                 var modal = Storage.get('__Modal__');
                 var img = cropEl[0];
-                
+
 
                 var canvas = document.createElement('canvas');
                 var context = canvas.getContext('2d');
 
                 var rW = 220 / img.width;
                 var rH = 220 / img.height;
-                canvas.width = coords.w/rW;
-                canvas.height = coords.h/rH;      
+                canvas.width = coords.w / rW;
+                canvas.height = coords.h / rH;
 
                 context.drawImage(
-                    img, 
-                    coords.x/rW, 
-                    coords.y/rH, 
-                    coords.w/rW, 
-                    coords.h/rH, 
-                    0, 
-                    0, 
-                    coords.w/rW, 
-                    coords.h/rH
+                    img,
+                    coords.x / rW,
+                    coords.y / rH,
+                    coords.w / rW,
+                    coords.h / rH,
+                    0,
+                    0,
+                    coords.w / rW,
+                    coords.h / rH
                 );
 
 
@@ -234,8 +233,8 @@ define(function(require) {
                 // 更新marker里的缓存数据结构
                 var marker = Storage.get('__AM__').getMarker();
                 var elements = marker.data.pages[marker.idx].elements;
-                elements.forEach(function (item, index){
-                    if(item.id == groupId){
+                elements.forEach(function(item, index) {
+                    if (item.id == groupId) {
                         var modEl = tools.clone(item);
                         modEl.src = picUrl;
                         elements.splice(index, 1, modEl);

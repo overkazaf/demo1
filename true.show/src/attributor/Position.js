@@ -31,8 +31,6 @@ define(function(require) {
         this.constructor = Position;
     };
 
-    Position.prototype.constructor = Position;
-
     /**
      * [init description]
      * @return {[type]}         [description]
@@ -170,8 +168,6 @@ define(function(require) {
         var $el = $('#' + groupId, appContext);
         var appWidth = $(appContext).width();
         var appHeight = $(appContext).height();
-        var elWidth = $el.outerWidth();
-        var elHeight = $el.outerHeight();
         var layerRet;
 
         $form.on('submit', function(ev) {
@@ -198,12 +194,12 @@ define(function(require) {
                             break;
                         case 'center':
                             posX = {
-                                left: (appWidth - elWidth) / 2
+                                left: (appWidth - $el.outerWidth()) / 2
                             };
                             break;
                         case 'right':
                             posX = {
-                                left: appWidth - elWidth
+                                left: appWidth - $el.outerWidth()
                             };
                             break;
                     }
@@ -220,12 +216,12 @@ define(function(require) {
                             break;
                         case 'middle':
                             posY = {
-                                top: (appHeight - elHeight) / 2
+                                top: (appHeight - $el.outerHeight()) / 2
                             };
                             break;
                         case 'bottom':
                             posY = {
-                                top: appHeight - elHeight
+                                top: appHeight - $el.outerHeight()
                             };
                             break;
                     }

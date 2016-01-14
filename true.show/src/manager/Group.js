@@ -72,8 +72,10 @@ define(function(require) {
         newGroup.id = newId;
 
         var list = newGroup.attrList;
+        var list2 = group.attrList;
         $.each(list, function(index, attributor) {
             var item = $.extend(true, {}, attributor);
+            console.log('item', item);
             item.groupId = newId;
             item.options.groupId = newId;
             list.splice(index, 1, item);

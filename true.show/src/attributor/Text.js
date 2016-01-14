@@ -30,8 +30,6 @@
 		this.constructor = Text;
 	};
 
-	Text.prototype.constructor = Text;
-
 	/**
 	 * [init description]
 	 * @param  {[type]} context [Text实例从属的容器]
@@ -147,7 +145,6 @@
 		//ret['width'] = el.css('width');
 		//ret['height'] = el.css('height');
 
-		console.log('groupID', groupId, '>>', 'content', content);
 		var content = ret.content;
 		var resultObj = {
 			'groupId' : groupId,

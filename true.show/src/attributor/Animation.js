@@ -32,8 +32,6 @@ define(function(require) {
         this.constructor = Animation;
     };
 
-    Animation.prototype.constructor = Animation;
-
     /**
      * [init description]
      * @param  {[type]} context [Animation]

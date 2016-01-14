@@ -205,6 +205,7 @@ define(function(require) {
         css: 'duration',
         name: 'anim-duration',
         plugin: 'slider-duration',
+        status: 'disabled',
         unit: 's'
     }, {
         label: '延迟时间',
@@ -212,6 +213,7 @@ define(function(require) {
         css: 'delay',
         name: 'anim-delay',
         plugin: 'slider-delay',
+        status:'',
         unit: 's'
     }, {
         label: '重复次数',
@@ -219,6 +221,7 @@ define(function(require) {
         css: 'repeat',
         name: 'anim-repeat',
         plugin: 'slider-repeat',
+        status:'',
         unit: '次'
     }];
     Accordion.prototype.getSliders = function() {

@@ -28,7 +28,10 @@ define(function(require) {
 
     var Position = function(options) {
         Base.call(this, options);
+        this.constructor = Position;
     };
+
+    Position.prototype.constructor = Position;
 
     /**
      * [init description]
@@ -39,10 +42,6 @@ define(function(require) {
         callback && callback.call(this);
         return this;
     };
-
-    Position.prototype.clone = function () {
-		return new Position(this.options);
-	};
 
     Position.prototype.getForm = function() {
         /**
@@ -129,8 +128,8 @@ define(function(require) {
         var dl = $('#' + formid).find('dl');
         tools.each(dl, function(el) {
             var dd = $(el).find('dd');
-            var plug = dd.attr('data-plugin');
-            if (plug == 'crop') {
+            var pluginName = dd.attr('data-plugin');
+            if (pluginName == 'crop') {
                 var crop = new Crop({
                     dom: dd
                 });
@@ -173,32 +172,24 @@ define(function(require) {
         var appHeight = $(appContext).height();
         var elWidth = $el.outerWidth();
         var elHeight = $el.outerHeight();
-        var changePosition = {
-            'left': 1,
-            'center': 1,
-            'right': 1,
-            'top': 1,
-            'middle': 1,
-            'bottom': 1
-        };
         var layerRet;
-        
-        $form.on('submit', function (ev){
-        	ev.preventDefault();
-        	return false;
+
+        $form.on('submit', function(ev) {
+            ev.preventDefault();
+            return false;
         });
 
         $form.on('click', 'input', function() {
-            // 1. 移动dom
             var cmd = this.value;
-            if (cmd in changePosition) {
+            if (this.name != 'level') {
+            	// 处理对齐命令
                 var posX = {};
                 var posY = {};
                 var position = {};
-                var command;
 
-                $form.find('input:checked').each(function() {
-                    command = this.value;
+                // 水平对齐
+                $form.find('input[name="pos-align"]:checked').each(function() {
+                    var command = this.value;
                     switch (command) {
                         case 'left':
                             posX = {
@@ -215,6 +206,13 @@ define(function(require) {
                                 left: appWidth - elWidth
                             };
                             break;
+                    }
+                });
+
+                // 垂直对齐
+				$form.find('input[name="pos-valign"]:checked').each(function() {
+                    var command = this.value;
+                    switch (command) {
                         case 'top':
                             posY = {
                                 top: 0
@@ -230,51 +228,50 @@ define(function(require) {
                                 top: appHeight - elHeight
                             };
                             break;
-                        default:
-                            // do nothing
                     }
                 });
 
                 $.extend(true, position, posX);
                 $.extend(true, position, posY);
 
-                $el.css(position);
+                // 这里要重新抓取dom元素，因为$el在改变层的时候被更新了， $el将拿不到元素
+                $('#' + groupId, appContext).css(position);
             } else {
+            	// 处理层级修改命令
                 var AM = Storage.get('__AM__');
                 layerRet = AM.getMarker().layer.changeLevel(groupId, cmd);
+                that.updateButtonGroup(groupId, cmd);
             }
-
-            that.updateButtonGroup(groupId, cmd);
         });
 
-        this.updateCommandButtonState(null);
-
-        // 因为坑爹的checked属性，如果有必要，需强行给新增加的元素刷新checked属性
-        // PS: 初始化时候文本是水平居中的
-        // var radioBtnGroup = this.getButtonGroup('radioBtnGroup');
-        // radioBtnGroup['center'].prop('checked', true);
+        // 初始化位置状态， 该居中的自己选中
+        this.updateButtonGroup(null, null);
     };
 
-    Position.prototype.updateButtonGroup = function (groupId, cmd) {
-    	// 1. 更新按钮的状态
+    Position.prototype.updateButtonGroup = function(groupId, cmd) {
+        // 1. 更新按钮的状态
         var ret = this.updateCommandButtonState(cmd);
 
         // 2. 合并数据结构，写入缓存
-       	if (!!ret) {
-       		this.updateButtonOptions(groupId, ret);
-       	}
+        if (!!ret) {
+            this.updateButtonOptions(groupId, ret);
+        }
     };
 
-
-    Position.prototype.getButtonGroup = function (type) {
-    	var $form = $('#' + this.formid);
-    	var radioBtnGroup = {
-        	'left' : $form.find('#btngroup-pos-align-left'),
-        	'center' : $form.find('#btngroup-pos-align-center'),
-        	'right' : $form.find('#btngroup-pos-align-right'),
-        	'top' : $form.find('#btngroup-pos-valign-top'),
-        	'middle' : $form.find('#btngroup-pos-valign-middle'),
-        	'bottom' : $form.find('#btngroup-pos-valign-bottom')
+    /**
+     * [getButtonGroup 获取按钮组的jQuery对象]
+     * @param  {[type]} type [description]
+     * @return {[type]}      [description]
+     */
+    Position.prototype.getButtonGroup = function(type) {
+        var $form = $('#' + this.formid);
+        var radioBtnGroup = {
+            'left': $form.find('#btngroup-pos-align-left'),
+            'center': $form.find('#btngroup-pos-align-center'),
+            'right': $form.find('#btngroup-pos-align-right'),
+            'top': $form.find('#btngroup-pos-valign-top'),
+            'middle': $form.find('#btngroup-pos-valign-middle'),
+            'bottom': $form.find('#btngroup-pos-valign-bottom')
         };
 
         var btnGroup = {
@@ -285,88 +282,96 @@ define(function(require) {
         };
 
         var buttonGroup = {
-        	'radioBtnGroup' : radioBtnGroup,
-        	'btnGroup' : btnGroup
+            'radioBtnGroup': radioBtnGroup,
+            'btnGroup': btnGroup
         };
 
         return buttonGroup[type];
     };
 
-
-    Position.prototype.updateButtonOptions = function (groupId, ret) {
-    	var group = Storage.get(groupId);
-    	var pos = group['attrList'][2];
-    	var attr = pos['options'].attributes;
-    	var array = attr[0];
-    	for (var i = 0, l = array.length; i < l; i++) {
-    		var item = array[i];
-    		var values = item['values'];
-    		for (var j = 0, ml = values.length; j < ml; j++) {
-    			values[j].status = ret[values[j].value];
-    		}
-    	}
+    /**
+     * [updateButtonOptions 更新按钮的数据结构]
+     * @param  {[type]} groupId [description]
+     * @param  {[type]} ret     [description]
+     * @return {[type]}         [description]
+     */
+    Position.prototype.updateButtonOptions = function(groupId, ret) {
+        var group = Storage.get(groupId);
+        if (group) {
+            var pos = group['attrList'][2];
+            var attr = pos['options'].attributes;
+            var array = attr[0];
+            for (var i = 0, l = array.length; i < l; i++) {
+                var item = array[i];
+                var values = item['values'];
+                for (var j = 0, ml = values.length; j < ml; j++) {
+                    values[j].status = ret[values[j].value];
+                }
+            }
+        }
     }
 
+    /**
+     * [updateCommandButtonState 根据给定的命令操作更新按钮状态]
+     * @param  {[type]} cmd [命令名称]
+     * @return {[type]}     [description]
+     */
     Position.prototype.updateCommandButtonState = function(cmd) {
-        var elementId = this.groupId;
-        var $form = $('#' + this.formid);
-        var appContext = $('.device-view')[0];
-        var groupId = this.options.groupId;
-        var $el = $('#' + groupId, appContext);
-        var appWidth = $(appContext).width();
-        var appHeight = $(appContext).height();
-        var elWidth = $el.outerWidth();
-        var elHeight = $el.outerHeight();
+        var 
+        	elementId = this.groupId,
+        	$form = $('#' + this.formid),
+        	appContext = $('.device-view')[0],
+        	groupId = this.options.groupId,
+        	$el = $('#' + groupId, appContext),
+        	appWidth = $(appContext).width(),
+        	appHeight = $(appContext).height(),
+        	elWidth = $el.outerWidth(),
+        	elHeight = $el.outerHeight(),
+        	layerObj = Storage.get('__AM__').getMarker().layer,
+        	btnGroup = this.getButtonGroup('btnGroup'),
+        	changeAligment = {
+	            'left': 1,
+	            'center': 1,
+	            'right': 1,
+	            'top': 1,
+	            'middle': 1,
+	            'bottom': 1
+	        },
+	        result = {
+	        	'left' : '',
+	        	'center' : '',
+	        	'right' : '',
+	        	'top' : '',
+	        	'middle' : '',
+	        	'bottom' : ''
+	        };
 
-        var changePosition = {
-            'left': 1,
-            'center': 1,
-            'right': 1,
-            'top': 1,
-            'middle': 1,
-            'bottom': 1
-        };
-        var layerObj = Storage.get('__AM__').getMarker().layer;
-        
-        var radioBtnGroup = this.getButtonGroup('radioBtnGroup');
-        var btnGroup = this.getButtonGroup('btnGroup');
-        
-        for (var radioName in radioBtnGroup) {
-        	radioBtnGroup[radioName].prop('checked', false);
+
+        // 重置层级操作的按钮状态
+        for (var btnName in btnGroup) {
+            btnGroup[btnName].prop('disabled', false);
         }
-       
-        // reset states
-        if (layerObj.getCounts() == 1) {
-            for (var btnName in btnGroup) {
-                btnGroup[btnName].prop('disabled', false);
-            }
-        } else {
-            for (var btnName in btnGroup) {
-                btnGroup[btnName].prop('disabled', false);
-            }
-        }
-
-        var ret = {
-        	'left' : '',
-        	'center' : '',
-        	'right' : '',
-        	'top' : '',
-        	'middle' : '',
-        	'bottom' : ''
-        };
-
-
 
         if (layerObj.getIndex(elementId) == 0) {
+        	// 第一层的元素不能上移
             btnGroup['uppp'].prop('disabled', true);
             btnGroup['up'].prop('disabled', true);
         }
 
         if (layerObj.getCounts() == layerObj.getIndex(elementId) + 1) {
+        	// 最后一层的元素不能下移
             btnGroup['downnn'].prop('disabled', true);
             btnGroup['down'].prop('disabled', true);
         }
-        if (cmd in changePosition) {
+
+        if (cmd in changeAligment) {
+        	// 处理对齐命令执行后的数据结构更新
+        	var radioBtnGroup = this.getButtonGroup('radioBtnGroup');
+	        for (var radioName in radioBtnGroup) {
+	        	radioBtnGroup[radioName].prop('checked', false);
+	        }
+
+	        // 元素范围
         	var range = {
         		x : parseInt($el.css('left')),
         		y : parseInt($el.css('top')),
@@ -377,36 +382,38 @@ define(function(require) {
 
         	if (Math.abs(range.x) < DEVIATION) {
         		radioBtnGroup['left'].prop('checked', true);
-        		ret['left'] = 'checked';
+        		result['left'] = 'checked';
         	}
 
         	if (Math.abs(range.x + range.w - appWidth) < DEVIATION) {
         		radioBtnGroup['right'].prop('checked', true);
-        		ret['right'] = 'checked';
+        		result['right'] = 'checked';
         	}
 
         	if (Math.abs(range.x - (appWidth - range.w)/2) < DEVIATION) {
         		radioBtnGroup['center'].prop('checked', true);
-        		ret['center'] = 'checked';
+        		result['center'] = 'checked';
         	}
 
         	if (Math.abs(range.y) < DEVIATION) {
         		radioBtnGroup['top'].prop('checked', true);
-        		ret['top'] = 'checked';
+        		result['top'] = 'checked';
         	}
 
         	if (Math.abs(range.y + range.h - appHeight) < DEVIATION) {
         		radioBtnGroup['bottom'].prop('checked', true);
-        		ret['bottom'] = 'checked';
+        		result['bottom'] = 'checked';
         	}
 
         	if (Math.abs(range.y - (appHeight - range.h)/2) < DEVIATION) {
         		radioBtnGroup['middle'].prop('checked', true);
-        		ret['middle'] = 'checked';
+        		result['middle'] = 'checked';
         	}
-        	return ret;
         }
+
+        return result;
     };
+
 
     /**
      * [destory 销毁Position实例的方法]

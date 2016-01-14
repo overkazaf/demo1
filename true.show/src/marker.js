@@ -24,6 +24,7 @@ define(function(require) {
     var Storage = require('./tools/Storage');
 
     var AttributeManager = require('AttributeManager');
+    var Player = require('Player');
     var Group = require('Group');
     // var Text = require('./attributor/Text');
 
@@ -108,7 +109,7 @@ define(function(require) {
             this.viewer = new Viewer({
                 delLayerCallback: function(id) {
                     console.log('delCallBack', id);
-                    that.removeElement(id);
+                    that.delLayer(id);
                 },
                 changeLayerCallback: function(id, css, styles) {
                     // console.log('changeCallBack', id, ' >> ', css, ' >> ', styles);
@@ -204,6 +205,8 @@ define(function(require) {
 
 
             this.initAttributeManager();
+            
+            this.initPlayer();
         },
         initAttributeManager: function() {
             // 1. 初始化构建属性管理对象
@@ -218,6 +221,20 @@ define(function(require) {
             // FIXME: 现在对象的指向的关系有点乱，后边要改成交给一个中介者全局调度
             this.setAM(AM);
             AM.setMarker(this);
+        },
+        initPlayer : function () {
+            var player = new Player({
+                dom: document.getElementById('pptbox'),
+                previewFunction : function () {
+                    // 把数据结构取到并传给player实例去播放
+                    var data = {};
+                    alert('hit me');
+                    player.playPPT(data);
+                }
+            });
+            player.init();
+
+            Storage.set('__PLAYER__', player);
         },
         changePage: function(page) {
             // FIXME : 这里有bug， 切换页面时候的初始化工作
@@ -287,6 +304,16 @@ define(function(require) {
             this.data.pages.push(pageData);
         },
         delPage: function(page) {
+            // 1. 删除页面要先删除缓存的配置项数据结构和页面内的元素
+            var that = this;
+            var pageData = this.data.pages[page];
+            var elements = pageData.elements;
+            tools.each(elements, function (el) {
+                Storage.remove(el.id);
+                that.viewer.removeElement(el.id);
+            });
+
+            // 2. 用力删除数据结构和页面dom
             this.data.pages.splice(page, 1);
             this.pages.remove(page);
         },
@@ -298,6 +325,17 @@ define(function(require) {
             var copypage = newPage();
             $.extend(true, copypage, this.copyer.pager);
             copypage.id = tools.uuid();
+
+            // 粘贴页面时要把元素id更新，同时把配置项复制一份
+            var elements = copypage.elements;
+            tools.each(elements, function (el){
+                var newid = tools.uuid();
+                var group = Storage.get(el.id);
+                var newGroup = Group.prototype.cloneGroup(group, newid);
+                Storage.set(newid, newGroup);
+                el.id = newid;
+            });
+
             if (after == true) page = page + 1;
             if (page >= this.data.pages.length) {
                 this.data.pages.push(copypage);
@@ -361,7 +399,6 @@ define(function(require) {
 
             // 拷贝新的配置项
             var group = Storage.get(id);
-
             var newGroup = Group.prototype.cloneGroup(group, newid);
             Storage.set(newid, newGroup);
             
@@ -391,13 +428,15 @@ define(function(require) {
             this.pages.addElement(copylayer, id, after);
         },
         addNewElement: function(data) {
+            if (typeof this.data.pages == 'undefined' || this.data.pages.length == 0) {
+                alert('请先添加页面！');
+                return;
+            }
 
             var clonedLayer = newLayer();
             $.extend(true, clonedLayer, data);
 
             this.data.pages[this.idx].elements.push(clonedLayer);
-
-
 
             var id = this.getLastElementId();
             id = !!id ? '#' + id : undefined;

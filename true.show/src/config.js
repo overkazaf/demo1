@@ -152,7 +152,7 @@
   		 	],
   		 	[
   				{label:"文本颜色", css:"color", name:"color", value: "", values: null, plugin:'colorpicker', unit:null},
-  				{label:"字号", css:"font-size", name:"font-size", value: "14", values: null, plugin:'slider-fontsize', unit:'px'},
+  				{label:"字号", css:"font-size", name:"font-size", value: "14", values: null, plugin:'slider-fontsize', unit:'px', status:''},
   				{label:"字体", css:"font-family", name:"font-family", value: null, values: [
   					{label:'黑体', name:"font-family", value:'Heiti', clazz:'icon-font', status:'selected'},
   					{label:'宋体', name:"font-family",value:'宋体', clazz:'icon-font', status:''},
@@ -184,13 +184,13 @@
   					{label:'居中', name:"text-center", type:"radio",value:'center', clazz:'c icon-text-center', status:'checked'},
   					{label:'右对齐', name:"text-right", type:"radio",value:'right', clazz:'r icon-text-right', status:''},
   				], plugin:'btngroup', unit:null},
-  				{label:"行距", css:"line-height", name:"line-height", value: "", values: null, plugin:'slider-lineheight', unit:''}
+  				{label:"行距", css:"line-height", name:"line-height", value: "", values: null, plugin:'slider-lineheight', unit:'', status:''}
   		 	],
   		 	[
   				{label:"阴影颜色", css:"text-shadow", name:"text-shadow-color", value: "#000000", values: null, plugin:'colorpicker', unit:null},
-  				{label:"模糊", css:"text-shadow", name:"text-shadow-blur", value: "0", values: null, plugin:'slider', unit:'px'},
-  				{label:"阴影距离", css:"text-shadow", name:"text-shadow-distance", value: "0", values: null, plugin:'slider', unit:'px'},
-  				{label:"阴影角度", css:"text-shadow", name:"text-shadow-angle", value: "0", values: null, plugin:'slider-angle', unit:'度'},
+  				{label:"模糊", css:"text-shadow", name:"text-shadow-blur", value: "0", values: null, plugin:'slider', unit:'px', status:''},
+  				{label:"阴影距离", css:"text-shadow", name:"text-shadow-distance", value: "0", values: null, plugin:'slider', unit:'px', status:''},
+  				{label:"阴影角度", css:"text-shadow", name:"text-shadow-angle", value: "0", values: null, plugin:'slider-angle', unit:'度', status:''},
   		 	]
   		]
     };
@@ -227,23 +227,23 @@
   					{label:'点线', name:"border-style-dotted",value:'dotted', clazz:'', status:''},
   					{label:'双线', name:"border-style-double",value:'double', clazz:'', status:''}
   				], plugin:'select', unit:null},
-  				{label:"边框宽度", css:"border-width", name:"border-width", value: "0", values: null, plugin:'slider', unit:'px'},
+  				{label:"边框宽度", css:"border-width", name:"border-width", value: "0", values: null, plugin:'slider', unit:'px', status:''},
   				{label:"边框颜色", name:"bdc", css:'border-color', value: "#000000", values:null, plugin:'colorpicker', unit:null}
   		 	],
   		 	[
-  				{label:"圆角半径", name:"bdr", css:'border-radius', value: "0", values:null, plugin:'slider', unit:'px'}
+  				{label:"圆角半径", name:"bdr", css:'border-radius', value: "0", values:null, plugin:'slider', unit:'px', status:''}
   		 	],
   		 	[
-  				{label:"透明度", name:"opacity", css:'opacity', value: "100", values:null, plugin:'slider-opacity', unit:'%'}
+  				{label:"透明度", name:"opacity", css:'opacity', value: "100", values:null, plugin:'slider-opacity', unit:'%', status:''}
   		 	],
   		 	[
-  				{label:"旋转角度", name:"transform", css:'transform', value: "0", values:null, plugin:'slider-angle', unit:'度'}
+  				{label:"旋转角度", name:"transform", css:'transform', value: "0", values:null, plugin:'slider-angle', unit:'度', status:''}
   		 	],
   		 	[
   				{label:"阴影颜色", css:"box-shadow", name:"box-shadow-color", value: "#ffffff", values: null, plugin:'colorpicker', unit:null},
-  				{label:"模糊", css:"box-shadow", name:"box-shadow-blur", value: "0", values: null, plugin:'slider', unit:'px'},
-  				{label:"阴影距离", css:"box-shadow", name:"box-shadow-distance", value: "0", values: null, plugin:'slider', unit:'px'},
-  				{label:"阴影角度", css:"box-shadow", name:"box-shadow-angle", value: "0", values: null, plugin:'slider-angle', unit:'度'},
+  				{label:"模糊", css:"box-shadow", name:"box-shadow-blur", value: "0", values: null, plugin:'slider', unit:'px', status:''},
+  				{label:"阴影距离", css:"box-shadow", name:"box-shadow-distance", value: "0", values: null, plugin:'slider', unit:'px', status:''},
+  				{label:"阴影角度", css:"box-shadow", name:"box-shadow-angle", value: "0", values: null, plugin:'slider-angle', unit:'度', status:''},
   		 	],
   		 	[
   				{label:"宽度", name:"width", css:'width', value: "100", values:null, plugin:'text', unit:'px'},

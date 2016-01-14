@@ -4,188 +4,184 @@
  * @author John Nong(https://www.github.com/overkazaf)
  * @module manager/GroupManager
  */
-;define(function (require) {
-	var $ = require('jquery');
+;
+define(function(require) {
+    var $ = require('jquery');
 
-	var Group = function (options) {
-		// Group实例中的id应该与存在的元素id一一对应
-		this.options = options;
-		this.id = this.options.id;
-		this.attrList = [];
-		this.attrMap = {};
-	};
+    var Group = function(options) {
+        // Group实例中的id应该与存在的元素id一一对应
+        this.options = options;
+        this.id = this.options.id;
+        this.attrList = [];
+        this.attrMap = {};
+        this.constructor = Group;
+    };
+
+    Group.prototype.constructor = Group;
+
+    // 对象方法
+    Group.prototype.add = function(attributor) {
+        this.attrList.push(attributor);
+        this.attrMap[attributor.id] = attributor;
+    };
+
+    Group.prototype.remove = function(attributorId) {
+        var index = this.find(attributorId);
+        if (index !== -1) {
+            this.attrList.splice(index, 1);
+            delete this.attrMap[attributorId]
+            return true;
+        }
+        return false;
+    };
+
+    Group.prototype.init = function() {
+        this.iterList(function(el, index, list) {
+            el.init();
+        });
+    };
+
+    Group.prototype.destory = function() {
+        this.iterList(function(el, index, list) {
+            el.destory();
+        });
+    };
+
+    /**
+     * [update 更新指定配置项]
+     * @param  {[type]} json [description]
+     * @return {[type]}      [description]
+     */
+    Group.prototype.update = function(json) {
+        var el = this.get(json.id);
+        if (el) {
+            return el.update(json);
+        }
+        return el === null;
+    };
 
 
-	// 对象方法
-	Group.prototype.add = function (attributor) {
-		this.attrList.push(attributor);
-		this.attrMap[attributor.id] = attributor;
-	};
-
-	Group.prototype.remove = function (attributorId) {
-		var index = this.find(attributorId);
-		if (index !== -1) {
-			this.attrList.splice(index, 1);
-			delete this.attrMap[attributorId]
-			return true;
-		}
-		return false;
-	};
-
-	Group.prototype.init = function () {
-		this.iterList(function (el, index, list) {
-			el.init();
-		});
-	};
-
-	Group.prototype.destory = function () {
-		this.iterList(function (el, index, list) {
-			el.destory();
-		});
-	};
-
-	/**
-	 * [update 更新指定配置项]
-	 * @param  {[type]} json [description]
-	 * @return {[type]}      [description]
-	 */
-	Group.prototype.update = function (json) {
-		var el = this.get(json.id);
-		if (el) {
-			return el.update(json);
-		}
-		return el === null;
-	};
-
-
-
-	/**
+    /**
      * [cloneGroup 根据给定的新groupId生成克隆]
-	 * @param  {[type]} group [源配置组]
-	 * @param  {[type]} newId [新的id]
-	 * @return {[type]}       [description]
-	 */
-	Group.prototype.cloneGroup = function (group, newId) {
-		var newGroup = $.extend(true, {}, group);
-		newGroup.constructor = Group;
-		newGroup.prototype = Group;
-		newGroup.id = newId;
+     * @param  {[type]} group [源配置组]
+     * @param  {[type]} newId [新的id]
+     * @return {[type]}       [description]
+     */
+    Group.prototype.cloneGroup = function(group, newId) {
+        var newGroup = $.extend(true, {}, group);
+        newGroup.id = newId;
 
-		var list = newGroup.attrList;
-		console.log(list);
-		$.each(list, function (index, attributor) {
-			var clonedObj = attributor.clone.call(attributor);
+        var list = newGroup.attrList;
+        $.each(list, function(index, attributor) {
+            var item = $.extend(true, {}, attributor);
+            item.groupId = newId;
+            item.options.groupId = newId;
+            list.splice(index, 1, item);
+            newGroup.attrMap[attributor.id] = item;
+        });
 
-			var item = $.extend(true, clonedObj, attributor);
+        newGroup.init();
 
-			item.groupId = newId;
-			item.options.groupId = newId;
-			list.splice(index, 1, item);
-			newGroup.attrMap[attributor.id] = item;
-		});
-
-		newGroup.init();
-
-		return newGroup;
-	};
+        return newGroup;
+    };
 
 
-	/**
-	 * [updateAll 更新全部配置项]
-	 * @param  {[Array]} jsonArray [description]
-	 * @return {[type]}      	  [description]
-	 */
-	Group.prototype.updateAll = function (jsonArray) {
-		var list = this.attrList;
-		list.forEach(function (el, index) {
-			el.update(jsonArray[index]);
-		});
-	};
+    /**
+     * [updateAll 更新全部配置项]
+     * @param  {[Array]} jsonArray [description]
+     * @return {[type]}      	  [description]
+     */
+    Group.prototype.updateAll = function(jsonArray) {
+        var list = this.attrList;
+        list.forEach(function(el, index) {
+            el.update(jsonArray[index]);
+        });
+    };
 
-	/**
-	 * [getAll 获取组内的所有配置项实例]
-	 * @param  {[void]}
-	 * @return {[Array]}    [配置项实例]
-	 */
-	Group.prototype.getAll = function () {
-		return this.attrList;
-	};
-	/**
-	 * [find 根据id在配置组内查找特性配置项的位置]
-	 * @param  {[String]} id [配置项id]
-	 * @return {[Object]}    [配置项实例]
-	 */
-	Group.prototype.get = function (id) {
-		var i,
-			el = null,
-			list = this.attrList;
+    /**
+     * [getAll 获取组内的所有配置项实例]
+     * @param  {[void]}
+     * @return {[Array]}    [配置项实例]
+     */
+    Group.prototype.getAll = function() {
+        return this.attrList;
+    };
+    /**
+     * [find 根据id在配置组内查找特性配置项的位置]
+     * @param  {[String]} id [配置项id]
+     * @return {[Object]}    [配置项实例]
+     */
+    Group.prototype.get = function(id) {
+        var i,
+            el = null,
+            list = this.attrList;
 
-			for (i = 0; el = list[i++];) {
-				if (el.id === id) {
-					return el;
-				}
-			}
-			return el;
-	};
+        for (i = 0; el = list[i++];) {
+            if (el.id === id) {
+                return el;
+            }
+        }
+        return el;
+    };
 
-	Group.prototype.iterList = function (func, options) {
-		var list = this.getAll();
-		list.forEach(function (item, index, list){
-			func.call(item, item, index, list);
-		});
-	};
+    Group.prototype.iterList = function(func, options) {
+        var list = this.getAll();
+        list.forEach(function(item, index, list) {
+            func.call(item, item, index, list);
+        });
+    };
 
-	/**
-	 * [find 根据id在配置组内查找特性配置项的位置]
-	 * @param  {[String]} id [配置项id]
-	 * @return {[Number]}    [配置项在group中的下标]
-	 */
-	Group.prototype.find = function (id) {
-		var 
-			i,
-			el = null,
-			list = this.attrList,
-			l = list.length;
+    /**
+     * [find 根据id在配置组内查找特性配置项的位置]
+     * @param  {[String]} id [配置项id]
+     * @return {[Number]}    [配置项在group中的下标]
+     */
+    Group.prototype.find = function(id) {
+        var
+            i,
+            el = null,
+            list = this.attrList,
+            l = list.length;
 
-			for (i = 0; i < l; i++) {
-				if (el.id === id) {
-					return i;
-				}
-			}
-			return -1;
-	};
+        for (i = 0; i < l; i++) {
+            if (el.id === id) {
+                return i;
+            }
+        }
+        return -1;
+    };
 
-	/**
-	 * [contains 查看group中是否存在一个配置项]
-	 * @param  {[String]} id [配置项id]
-	 * @return {[Boolean]}    [description]
-	 */
-	Group.prototype.contains = function (id) {
-		return !!this.attrMap[id];
-	};
-
-
-	/**
-	 * 通知更新，由AM实例统一进行，分层级传递组装后的参数
-	 */
-	Group.prototype.noticeUpdate = function () {
-		var forms = this.collectForms();
-		this.supervisor.noticeUpdate(forms);
-	};
-
-	/**
-	 *  获取所有的配置项表单， 实际上只要获取当前的配置项就可以了，局部更新
-	 *  所以在marker的更新逻辑处最好要使用一个策略
-	 */
-
-	Group.prototype.collectForms = function () {
-		var forms = {};
-		this.iterList(function (a, index, list){
-			forms[a.options.type] = a.getForm();
-		});
-		return forms;
-	};
+    /**
+     * [contains 查看group中是否存在一个配置项]
+     * @param  {[String]} id [配置项id]
+     * @return {[Boolean]}    [description]
+     */
+    Group.prototype.contains = function(id) {
+        return !!this.attrMap[id];
+    };
 
 
-	return Group;
+    /**
+     * 通知更新，由AM实例统一进行，分层级传递组装后的参数
+     */
+    Group.prototype.noticeUpdate = function() {
+        var forms = this.collectForms();
+        this.supervisor.noticeUpdate(forms);
+    };
+
+   
+    /**
+     * [collectForms 收集表单配置项]
+     * @return {[type]} [description]
+     */
+    Group.prototype.collectForms = function() {
+        var forms = {};
+        this.iterList(function(a, index, list) {
+            forms[a.options.type] = a.getForm();
+        });
+        return forms;
+    };
+
+
+    return Group;
 });

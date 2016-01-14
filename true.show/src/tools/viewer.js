@@ -64,7 +64,7 @@
 				event.preventDefault();
 				event.stopImmediatePropagation();
 
-				//if ($(this).hasClass('active')) return;
+				if ($(this).hasClass('active')) return;
 				$(that.opts.id).find(that.opts.cls).removeClass('active');
 				$(this).addClass('active');
 				that.updateElement($(this),{});
@@ -75,6 +75,14 @@
 				// 获取配置面板
 				if ($(this)[0].tagName.toLowerCase() == 'plugin-warp') {
 					var type = $(this).attr('type');
+					
+					// 在切换参数配置之前修正缓存参数
+					switch (type) {
+						case 'photo':
+							var picUrl = $(this).find('img').attr('src');
+							Storage.set('__currentImage__', picUrl);
+							break;
+					}
 					// swap tab
 					AM.getMarker().cper.swaptab(type);
 				}
@@ -82,7 +90,6 @@
 				if (!!AM) {
 					var group = Storage.get(elementId);
 					if (!!group) {
-						console.log(group.id);
 						group.init();
 					}
 				}
@@ -115,8 +122,10 @@
 
 				var id = t.attr('id');
 				var group = Storage.get(id);
-				var pos = group.attrList[2];
-				!!pos && pos.updateButtonGroup(id, 'left');
+				if (!!group) {
+					var pos = group.attrList[2];
+					!!pos && pos.updateButtonGroup(id, 'left');
+				}
 			});
 			this.ruler=new ruler('#rulerbtn','.ruler');
 
@@ -171,7 +180,7 @@
 				var cmd=$(this).attr('type');
 				switch(cmd){
 					case 'del-layer':
-						that.delLayer(that.ctmtid);
+						that.delElement(that.ctmtid);
 					break;
 					case 'copy-layer':
 						if(typeof that.opts.copyLayerCallback=='function')
@@ -276,6 +285,7 @@
 			if(type=='lock'){
 				bool=!bool;
 			}
+			console.log('dom', dom);
 			if(bool==false){
 				dom.attr({
 					states:states

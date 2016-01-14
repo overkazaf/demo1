@@ -27,7 +27,10 @@
 
 	var Styles = function (options) {
 		Base.call(this, options);
+		this.constructor = Styles;
 	};
+
+	Styles.prototype.constructor = Styles;
 
 	/**
 	 * [init description]
@@ -38,10 +41,6 @@
 		Base.prototype.init.call(this);
 		callback && callback.call(this);
 		return this;
-	};
-
-	Styles.prototype.clone = function () {
-		return new Styles(this.options);
 	};
 
 	Styles.prototype.setupPluginList = function () {

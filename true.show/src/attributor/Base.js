@@ -18,10 +18,7 @@ define(function(require) {
         return this;
     };
 
-    Base.prototype.updateMapping = function (newId) {
-    	this.options.groupId = newId;
-    	this.groupId = newId;
-    };
+    Base.prototype.constructor = Base;
 
     Base.prototype.init = function() {
     	/**
@@ -100,12 +97,10 @@ define(function(require) {
 
 
     Base.prototype.getForm = function() {
-
         return {};
     };
 
     Base.prototype.form2Data = function() {
-
         return {};
     };
 
@@ -116,6 +111,7 @@ define(function(require) {
             value = json.value,
             values = json.values,
             plugin = json.plugin,
+            status = json.status,
             unit = json.unit,
             unit = !!unit ? unit : "",
             html,
@@ -157,7 +153,7 @@ define(function(require) {
                 html = '<input type="range" data-unit="'+ unit +'" min="0" max="360" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
                 break;
             case 'slider-duration':
-                html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" '+ status +'/><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
                 break;
             case 'slider-delay':
                 html = '<input type="range" data-unit="'+ unit +'" min="0" max="180" step="0.1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'

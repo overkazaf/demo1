@@ -27,7 +27,10 @@
 
 	var Text = function (options) {
 		Base.call(this, options);
+		this.constructor = Text;
 	};
+
+	Text.prototype.constructor = Text;
 
 	/**
 	 * [init description]
@@ -51,11 +54,7 @@
 			plugin.init();
 		});
 	};
-
-	Text.prototype.clone = function () {
-		return $.extend(true, new Text(this.options), this);
-	};
-
+	
 	Text.prototype.getForm = function () {
 		/**
 		 * [groupId 获取从属的配置组id， 这个id其实和元素id是一致的]

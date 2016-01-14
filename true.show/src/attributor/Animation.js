@@ -24,14 +24,15 @@ define(function(require) {
     var tools = require('../tools/tools');
     var Storage = require('../tools/Storage');
     var Accordion = require('../plugins/Accordion');
-
-
     var appContext = $('app-page')[0];
     var pageContext = $('#pagesBox')[0];
 
     var Animation = function(options) {
         Base.call(this, options);
+        this.constructor = Animation;
     };
+
+    Animation.prototype.constructor = Animation;
 
     /**
      * [init description]
@@ -43,10 +44,6 @@ define(function(require) {
         callback && callback.call(this);
         return this;
     };
-
-    Animation.prototype.clone = function () {
-		return new Animation(this.options);
-	};
 
     /**
      * [setupPluginList 设置插件列表]
@@ -120,76 +117,12 @@ define(function(require) {
 
         var elements = [];
         elements.push(element);
-        this.playSpriteLine(elements);
+        
+        // 这里可以借用player类的playSpriteLine方法
+        var player = Storage.get('__PLAYER__');
+        player.playSpriteLine(elements);
     }
-
-    Animation.prototype.playSpriteLine = function(elements) {
-        if (this.stop == true) return;
-        var self = this,
-            els, animates;
-        while (elements.length > 0) {
-            //取出第一个
-            els = elements.shift();
-            animates = els.animates.slice(0);
-            //检测下一个
-            if (elements.length > 0 && elements[0].startAnimates.auto > 0) {
-                //同步执行
-                this.animateLine(0, els.id, animates);
-            } else {
-                //异步执行,执行callback解决js（伪）死循环执行问题
-                this.animateLine(0, els.id, animates, function() {
-                    self.playSpriteLine(elements);
-                });
-                break;
-            }
-        }
-    }
-
-    Animation.prototype.animateLine = function(start, id, animates, callback) {
-        if (this.stop == true) return;
-        if (animates.length <= 0) {
-            if (callback) callback();
-            return;
-        }
-        var self = this;
-        var animate = animates.shift();
-        var cls = animate.class,
-            delay = animate.delay,
-            repeat = animate.repeat;
-        //检测下一个动画,1同步执行
-        this.runAnim(id, cls, delay, repeat, function() {
-            self.animateLine(start + 1, id, animates, callback);
-        });
-    };
-
-    Animation.prototype.runAnim = function(id, cls, delay, repeat, callback) {
-        var self = this;
-        if (this.stop == true) return;
-        var r = 0;
-        var Anim = function() {
-            if (self.stop == true) return;
-            var $dom = $('#' + id, appContext);
-            $dom.removeClass(cls + ' animated visbile');
-            $dom.addClass(cls + ' animated visbile').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-                r++;
-                $(this).removeClass(cls + ' animated visbile');
-                // 这里要setTimeout，否则会被冲掉
-                setTimeout(function(){
-                	if (r >= repeat) {
-	                    if (callback) callback();
-	                } else {
-	                    //重复执行
-	                    setTimeout(Anim, +delay * 1000);
-	                }
-                }, 0);
-            });
-        }
-        if (delay > 0) {
-            setTimeout(Anim, +delay * 1000);
-        } else {
-            Anim();
-        }
-    }
+    
 
     /**
      * [addPlugin 添加插件]
@@ -209,6 +142,7 @@ define(function(require) {
                 css: 'duration',
                 name: 'anim-duration',
                 plugin: 'slider-duration',
+                status: 'disabled',
                 unit: 's'
             }, {
                 label: '延迟时间',
@@ -216,6 +150,7 @@ define(function(require) {
                 css: 'delay',
                 name: 'anim-delay',
                 plugin: 'slider-delay',
+                status:'',
                 unit: 's'
             }, {
                 label: '重复次数',
@@ -223,6 +158,7 @@ define(function(require) {
                 css: 'repeat',
                 name: 'anim-repeat',
                 plugin: 'slider-repeat',
+                status:'',
                 unit: '次'
             }],
             animClazz: ''

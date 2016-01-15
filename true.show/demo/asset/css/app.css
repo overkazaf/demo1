@@ -1490,6 +1490,7 @@ plugin-warp.state-visible {
 
 .ui-accordion .accordion-content dl {
     width: 100%;
+    margin-top:5px;
 }
 
 .ui-accordion .accordion-content dl dt,

@@ -138,28 +138,28 @@ define(function(require) {
                 html = '<input type="color" ' + eventString + ' id="' + id + '" name="' + name + '" value="' + (!!value ? value : "#000000") + '" />'
                 break;
             case 'slider-fontsize':
-            	html = '<input type="range" data-unit="'+ unit +'" min="12" max="80" step="1" defaultValue="12" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):12) +'" /><output name="result">'+(!!value?parseInt(value):12) + unit +'</output>'
+            html = '<input type="range" data-unit="'+ unit +'" min="12" max="80" step="1" defaultValue="12" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):12) +'" /><input name="result" value="'+(!!value?parseInt(value):12)  +'" /><span>'+ unit +'</span>';
                 break;
             case 'slider-opacity':
-            	html = '<input type="range" data-unit="'+ unit +'" min="0" max="100" step="1" defaultValue="100" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):12) +'" /><output name="result">'+(!!value?parseInt(value):100) + unit +'</output>'
+            	html = '<input type="range" data-unit="'+ unit +'" min="0" max="100" step="1" defaultValue="100" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):12) +'" /><input name="result" value="'+(!!value?parseInt(value):100) +'" /><span>'+ unit +'</span>';
                 break;
             case 'slider-lineheight':
-            	html = '<input type="range" data-unit="'+ unit +'" min=".1" max="5" step=".1" defaultValue=".1" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
+            	html = '<input type="range" data-unit="'+ unit +'" min=".1" max="5" step=".1" defaultValue=".1" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><input name="result" value="'+(!!value?parseInt(value):1) +'" /><span>'+ unit +'</span>';
                 break;
             case 'slider':
-                html = '<input type="range" data-unit="'+ unit +'" min="0" max="40" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="40" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><input name="result" value="'+(!!value?parseInt(value):0) +'" /><span>'+ unit +'</span>';
                 break;
             case 'slider-angle':
-                html = '<input type="range" data-unit="'+ unit +'" min="0" max="360" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="360" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><input name="result" value="'+(!!value?parseInt(value):0) +'" /><span>'+ unit +'</span>';
                 break;
             case 'slider-duration':
-                html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" '+ status +'/><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" '+ status +'/><input name="result" value="'+(!!value?parseInt(value):1) +'" /><span>'+ unit +'</span>';
                 break;
             case 'slider-delay':
-                html = '<input type="range" data-unit="'+ unit +'" min="0" max="180" step="0.1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><output name="result">'+(!!value?parseInt(value):0) + unit +'</output>'
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="180" step="0.1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><input name="result" value="'+(!!value?parseInt(value):0) +'" /><span>'+ unit +'</span>';
                 break;
             case 'slider-repeat':
-                html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><output name="result">'+(!!value?parseInt(value):1) + unit +'</output>'
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><input name="result" value="'+(!!value?parseInt(value):1) +'" /><span>'+ unit +'</span>';
                 break;
             default:
                 html = '<input ' + eventString + ' type="number" id="' + id + '" name="' + name + '" value="' + (!!value ? value : "") + '" />'

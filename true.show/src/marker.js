@@ -203,7 +203,6 @@ define(function(require) {
             });
             this.layer.init(this.data.pages[this.idx].elements);
 
-
             this.initAttributeManager();
 
             this.initPlayer();

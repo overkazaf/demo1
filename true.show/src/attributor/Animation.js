@@ -7,7 +7,7 @@
  *     var AM = require('manager/AttributeManager');
  *     var Group = require('manager/Group');
  *     var group = new Group({
- *     		id : elementId,
+ *          id : elementId,
  *     });
  *     var am = new AM();
  *     
@@ -71,23 +71,23 @@ define(function(require) {
         return this;
     };
 
-     Animation.prototype.initPlugins = function() {
-     	var $form = $('#' + this.formid);
+    Animation.prototype.initPlugins = function() {
+        var $form = $('#' + this.formid);
         var list = this.pluginList;
         var that = this;
         tools.each(list, function(plugin) {
             // 这里会隐藏原表单的input，用plugin的view的替换， 
             // 当plugin的值改变时trigger原表单的事件，通知上一层管理器更新view
             if (!!plugin && !!plugin.options) {
-            	plugin.options.formid = that.formid;
-            	plugin.init && plugin.init();
+                plugin.options.formid = that.formid;
+                plugin.init && plugin.init();
             }
         });
 
         if (list.length == 0) {
-        	$form.find('#play-animation').addClass('btn-disabled');
+            $form.find('#play-animation').addClass('btn-disabled');
         } else {
-        	$form.find('#play-animation').removeClass('btn-disabled');
+            $form.find('#play-animation').removeClass('btn-disabled');
         }
     };
 
@@ -103,7 +103,7 @@ define(function(require) {
                 'duration': sliders[0]['value'],
                 'delay': sliders[1]['value'],
                 'repeat': sliders[2]['value'],
-                'auto' : 0
+                'auto': 0
             };
             animList.push(anim);
         });
@@ -115,12 +115,12 @@ define(function(require) {
 
         var elements = [];
         elements.push(element);
-        
+
         // 这里可以借用player类的playSpriteLine方法
         var player = Storage.get('__PLAYER__');
         player.playSpriteLine(elements);
     }
-    
+
 
     /**
      * [addPlugin 添加插件]
@@ -148,7 +148,7 @@ define(function(require) {
                 css: 'delay',
                 name: 'anim-delay',
                 plugin: 'slider-delay',
-                status:'',
+                status: '',
                 unit: 's'
             }, {
                 label: '重复次数',
@@ -156,14 +156,22 @@ define(function(require) {
                 css: 'repeat',
                 name: 'anim-repeat',
                 plugin: 'slider-repeat',
-                status:'',
+                status: '',
                 unit: '次'
             }],
-            animClazz: ''
+            animClazz: '',
+            onReady : function () {
+                var $outputs = $('input[name="result"]', this.dom);
+                $outputs.each(function(index, item) {
+                    if ($(item).prev('input[type="range"]').prop('disabled')) {
+                        $(item).prop('disabled', true);
+                    }
+                });
+            }
         });
         accordion.supervisor = this;
         accordion.init();
-        
+
         $('#play-animation').removeClass('btn-disabled');
         this.pluginList.push(accordion);
 
@@ -177,17 +185,17 @@ define(function(require) {
         var list = this.pluginList;
         tools.each(list, function(plugin) {
             if (!!plugin) {
-            	var dl = plugin.dom.find('dl');
-	            var animObj = {};
-	            tools.each(dl, function(line) {
-	                var val = $(line).find('input').val();
-	                animObj[$(line).attr('data-css')] = val;
-	            });
+                var dl = plugin.dom.find('dl');
+                var animObj = {};
+                tools.each(dl, function(line) {
+                    var val = $(line).find('input').val();
+                    animObj[$(line).attr('data-css')] = val;
+                });
 
-	            plugin.options['animClazz'] = animObj['class'] = plugin.dom.find('.anim-item').filter('.active').attr('data-class');
-	            plugin.options['tabIndex'] = plugin.dom.find('.ui-tablist-item.active').index();
-	            console.log('options', plugin.options);
-	            ret.push(animObj);
+                plugin.options['animClazz'] = animObj['class'] = plugin.dom.find('.anim-item').filter('.active').attr('data-class');
+                plugin.options['tabIndex'] = plugin.dom.find('.ui-tablist-item.active').index();
+                console.log('options', plugin.options);
+                ret.push(animObj);
             }
         });
 
@@ -206,19 +214,19 @@ define(function(require) {
         var list = this.pluginList;
         tools.each(list, function(plugin) {
             if (!!plugin) {
-            	var dl = plugin.dom.find('dl');
-	            var sliders = plugin.options.sliders;
-	            var animObj = {};
-	            tools.each(dl, function(line, index) {
-	                var val = $(line).find('input').val();
-	                var css = $(line).attr('data-css');
-	                sliders[index][css] = sliders[index]['value'] = val;
-	                animObj[css] = val;
-	            });
+                var dl = plugin.dom.find('dl');
+                var sliders = plugin.options.sliders;
+                var animObj = {};
+                tools.each(dl, function(line, index) {
+                    var val = $(line).find('input').val();
+                    var css = $(line).attr('data-css');
+                    sliders[index][css] = sliders[index]['value'] = val;
+                    animObj[css] = val;
+                });
 
-	            plugin.options['animClazz'] = animObj['class'] = plugin.dom.find('.anim-item').filter('.active').attr('data-class');
-	            plugin.options['tabIndex'] = plugin.dom.find('.ui-tablist-item.active').index();
-	            ret.push(animObj);
+                plugin.options['animClazz'] = animObj['class'] = plugin.dom.find('.anim-item').filter('.active').attr('data-class');
+                plugin.options['tabIndex'] = plugin.dom.find('.ui-tablist-item.active').index();
+                ret.push(animObj);
             }
         });
 
@@ -242,7 +250,7 @@ define(function(require) {
         });
 
         if (list.length === 0) {
-        	$form.find('#play-animation').addClass('btn-disabled');
+            $form.find('#play-animation').addClass('btn-disabled');
         }
     };
 

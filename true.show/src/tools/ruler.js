@@ -58,13 +58,14 @@
 				that.curelem=$(this);
 				that.ori=that.getOrientation(that.curelem);
 			});
+
 			$(document).on('mouseup',function(event){
 				if (this.type && this.type != 'range') {
 					event.preventDefault();
 				} else {
 					var target = event.target;
 					if (target.type && target.type == 'range') {
-						$(target).next('output').text($(target).val() + $(target).attr('data-unit'));
+						$(target).next('input[name="result"]').val($(target).val());
 					}
 				}
 				
@@ -85,7 +86,7 @@
 				} else {
 					var target = event.target;
 					if (target.type && target.type == 'range') {
-						$(target).next('output').text($(target).val() + $(target).attr('data-unit'));
+						$(target).next('input[name="result"]').val($(target).val());
 					}
 				}
 

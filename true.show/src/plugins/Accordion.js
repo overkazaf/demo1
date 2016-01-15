@@ -64,6 +64,7 @@ define(function(require) {
 	    }],
 	    tabIndex: 0,
 	    animClazz:'',
+        onReady : function (){}
 	};
 
     var Accordion = function(options) {
@@ -74,6 +75,10 @@ define(function(require) {
     Accordion.prototype.init = function() {
         this.dom = this.buildPlugin();
         this.bindEvent();
+
+        if (this.options.onReady) {
+            this.options.onReady.call(this);
+        }
     };
 
     Accordion.prototype.bindEvent = function() {

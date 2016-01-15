@@ -152,8 +152,8 @@ define(function(require) {
                 that.swaptab(t);
 
                 switch (t) {
-                	case 'canvas':
-                		break;
+                    case 'canvas':
+                        break;
                     case 'photo':
                         if (!Storage.get('__Modal__')) {
                             // 测试图片
@@ -260,6 +260,24 @@ define(function(require) {
                         // C3. 尝试在AM实例中增加该组
                         AM.getInstance().addGroup(group);
                 }
+            });
+
+            var timeout;
+            $(document).on('keyup', 'input[name="result"]', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    var val = $(event.target).val();
+                    var $prev = $(event.target).prev('input');
+                    if (val != '' || !isNaN(val)) {
+                        $prev.val(val);
+                        $prev.trigger('change');
+                    }
+                }, 200);
+
+
             });
         },
         swaptab: function(key) {

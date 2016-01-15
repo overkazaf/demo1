@@ -112,6 +112,7 @@ define(function(require) {
 
     var timeout;
     window.callFN = function(fnName, groupId) {
+        console.log(fnName, groupId);
         var strategy = {
             'noticeUpdate': function(groupId) {
                 if (timeout) clearTimeout(timeout);

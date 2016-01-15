@@ -16,6 +16,9 @@
         	get : function (key) {
         		return window.__cache__[key];
         	}, 
+            getAM : function () {
+                return window.__cache__['__AM__'];
+            },
         	set : function (key, obj) {
         		if (!window.__cache__[key]) {
         			window.__cache__[key] = {};

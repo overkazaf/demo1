@@ -14,26 +14,55 @@ define(function(require) {
     var appContext = $('app-page')[0];
     var _elStyleTpl = 'position: absolute;top:{{top}};left:{{left}};z-index:{{z-index}};width:{{width}};height:{{height}};';
     var __defaults = {
-        //context : '.contextClass',
+        context : '#pptbox',
         pages: [],
+        mask : document.getElementById('ppt-mask'),
         dom: document.body,
         previewButton: '.system-btns-warp>.fa-eye',
         previewFunction: function() {
-            console.log('Override this preview function');
+            console.log('Implement this preview function');
         }
     };
 
     var Player = function(options) {
         this.options = $.extend({}, __defaults, options || {});
         this.dom = this.options.dom;
+        this.data = {};
         this.idx = 0;
         this.stop = false;
     };
 
-    Player.prototype.constructor = Player;
-
     Player.prototype.playPPT = function(pages) {
+        this.data.pages = pages;
 
+        this.drawPage(pages);
+
+        this.displayStudio();
+
+        this.animating(0);
+
+        this.initPlayer();
+    };
+
+    Player.prototype.displayStudio = function () {
+        var $mask = $('#ppt-mask');
+        var $container = $('#pptcontainer');
+
+        $mask.show();
+
+        $container.css({
+            'position': 'absolute',
+            'left' : '50%',
+            'top' : 0,
+            'margin-left' : -$container.outerWidth()/2
+        }).show();
+
+        $('#pptbox').fadeIn();
+
+        $('#ppt-mask').find('.btn-close').on('click', function (){
+            $container.hide();
+            $mask.hide();    
+        });
     };
 
     Player.prototype.drawPage = function(pages) {
@@ -83,27 +112,45 @@ define(function(require) {
         this.dom.innerHTML = html.join('');
     };
 
-    Player.prototype.init = function() {
+    Player.prototype.initPlayer = function () {
         var that = this;
-        this.pages = [];
-        this.Slip = _slip(this.dom, 'y').webapp(this.pages).end(function() {
-            if (that.idx == this.page) return;
+        this.pages= this.dom.querySelectorAll('.page');
+        // this.Slip = _slip(this.dom, 'y').webapp(this.pages).end(function() {
+        //     if (that.idx == this.page) return;
+        //     that.resetPage(that.idx);
+        //     that.idx = this.page;
+        //     that.animating(that.idx);
+        // });
+    
+
+
+        // 先绑定在click事件上做测试
+        var idx = 0;
+        var $sections = $('.page');
+        $('#iSlider-arrow').on('click', function() {
+            // if (that.idx == this.page) return;
+            if (that.idx == 3) {idx = -1;}
             that.resetPage(that.idx);
-            that.idx = this.page;
+            that.idx = ++idx;
+            $sections.hide().eq(idx).show();
             that.animating(that.idx);
         });
+        that.resetPage(that.idx);
+    };
+
+    Player.prototype.init = function() {
         this.bindEvent();
     };
     Player.prototype.animating = function(idx) {
         //这里需要深拷贝对象数组
-        var elements = this.options.pages[idx].elements.slice(0);
+        var elements = this.data.pages[idx].elements.slice(0);
         this.playSpriteLine(elements);
     };
 
 
     Player.prototype.resetPage = function(idx) {
         this.stop = true;
-        var els = this.options.pages[idx].elements;
+        var els = this.data.pages[idx].elements;
         for (var i in els) {
             $('#' + els[i].id, this.options.context || appContext).removeClass().addClass('invisibility');
         }
@@ -157,15 +204,16 @@ define(function(require) {
 
     Player.prototype.runAnim = function(id, cls, delay, repeat, callback) {
         var self = this;
+        var context = this.options.context;
         if (this.stop == true) return;
         var r = 0;
         var Anim = function() {
             if (self.stop == true) return;
-            var $dom = $('#' + id, this.options.context || appContext);
-            $dom.removeClass(cls + ' animated visbile');
-            $dom.addClass(cls + ' animated visbile').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+            var $dom = $('#' + id, context || appContext);
+            $dom.removeClass(cls + ' animated invisibility');
+            $dom.addClass(cls + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
                 r++;
-                $(this).removeClass(cls + ' animated visbile');
+                $(this).removeClass(cls + ' animated');
                 // 这里要setTimeout，否则会被冲掉
                 setTimeout(function() {
                     if (r >= repeat) {

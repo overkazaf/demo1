@@ -1568,3 +1568,123 @@ plugin-warp.state-visible {
 .ui-tab .ui-tab-content .effect-list .effect-list-item .anim-item.active {
     border-color: #f70;
 }
+
+
+/* 预览相关样式 */
+
+#ppt-mask {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0.95;
+    filter: alpha(opacity=95);
+    z-index: 999;
+    background-color: #000;
+    display: none;
+}
+
+#ppt-mask .btn-close {
+    font-size: 24px;
+    border: 3px solid #999;
+    padding: 5px;
+    border-radius: 50%;
+    color: #999;
+    position: absolute;
+    right: 40px;
+    top: 20px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.8s;
+    -moz-transition-duration: 0.8s;
+    -o-transition-duration: 0.8s;
+    transition-duration: 0.8s;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+}
+
+#ppt-mask .btn-close:hover {
+    border-color: #fff;
+    color: #fff;
+    font-weight: bold;
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+}
+
+#pptcontainer {
+    margin-top:20px;
+    width: 368px;
+    height: 733px;
+    background: url(../img/phone.png) no-repeat 0 0;
+    z-index: 1300;
+    display: none;
+}
+
+#pptbox {
+    background-color: #FFF;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 504px;
+    margin: 100px auto;
+    position: relative;
+    width: 320px;
+    overflow: hidden;
+    display: none;
+}
+
+section.page {
+    height: 100%;
+    background: transparent;
+}
+section .invisibility {
+    visibility: hidden;
+}
+
+@-webkit-keyframes reverseRotataZ {
+    0% {
+        -webkit-transform: rotateZ(0deg);
+    }
+    100% {
+        -webkit-transform: rotateZ(-360deg);
+    }
+}
+
+
+/* Arrow */
+
+#iSlider-arrow {
+    position: absolute;
+    width: 3em;
+    height: 3em;
+    left: 0;
+    right: 0;
+    bottom: 150px;
+    margin: 0 auto;
+    border-top: 2px solid #222;
+    border-right: 2px solid #222;
+    z-index: 10000;
+    opacity: 0.8;
+    -webkit-animation: nextPage 1.2s linear infinite;
+    cursor: pointer;
+}
+
+@-webkit-keyframes nextPage {
+    0% {
+        -webkit-transform: translateY(40px) rotate(-45deg);
+        opacity: 0.8;
+    }
+    50% {
+        -webkit-transform: translateY(20px) rotate(-45deg);
+        opacity: 0.4;
+    }
+    100% {
+        -webkit-transform: translateY(10px) rotate(-45deg);
+        opacity: 0;
+    }
+}

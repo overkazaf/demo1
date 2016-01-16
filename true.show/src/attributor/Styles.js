@@ -42,10 +42,11 @@
 	};
 
 	Styles.prototype.setupPluginList = function () {
-		var $form = $('#' + this.formid);
+		var $tab = $('#' + this.options.tabId);
+		var $contents = $('#confpanel').find('.tab-item').eq($tab.index());
 		var $el = $('#' + this.groupId, $('app-page')[0]);
-		$form.find('input[name="width"]').val($el.width());
-		$form.find('input[name="height"]').val($el.height());
+		$contents.find('input[name="width"]').val($el.width());
+		$contents.find('input[name="height"]').val($el.height());
 	};
 
 
@@ -55,27 +56,29 @@
 		 * @type {[type]}
 		 */
 		var groupId = this.groupId;
-
-		var form = document.getElementById(this.formid);
-		var aDl = form.getElementsByTagName('dl');
+		var $tab = $('#' + this.options.tabId);
+		var $contents = $('#confpanel').find('.tab-item').eq($tab.index());
+		var aDl = $contents.find('dl');
 		var ret = {};
-		tools.each(aDl, function (dl) {
-			var css = dl.getAttribute('data-css');
-			var unit = dl.getAttribute('data-unit');
-			var evalExp = dl.getAttribute('data-eval');
-			var dd = dl.getElementsByTagName('dd')[0];
-			var plugin = dd.getAttribute('data-plugin');
+
+		aDl.each(function (index, item) {
+			var $dl = $(item);
+			var css = $dl.attr('data-css');
+			var unit = $dl.attr('data-unit');
+			var evalExp = $dl.attr('data-eval');
+			var dd = $dl.find('dd');
+			var plugin = dd.attr('data-plugin');
 			var dom;
 
 			unit = !!unit ? unit : '';
 			switch (plugin) {
 				case 'select':
-					dom = dd.getElementsByTagName(plugin)[0];
+					dom = dd.find(plugin)[0];
 					ret[css] = dom.value;
 					break;
 				case 'btngroup':
 					var cssArr = css.split(';');
-					dom = dd.getElementsByTagName('input');
+					dom = dd.find('input')[0];
 					tools.each(cssArr, function (prop, index){
 						if (dom[index].type === 'checkbox') {
 							ret[prop] = dom[index].checked ? dom[index].value : '';
@@ -88,7 +91,7 @@
 					});
 					break;
 				default:
-					dom = dd.getElementsByTagName('input')[0];
+					dom = dd.find('input')[0];
 					if (!!dom.value) {
 						var value = dom.value + unit;
 						if (typeof ret[css] === 'undefined') {
@@ -128,9 +131,10 @@
 		// 下边这些属性要在当前Group的Styles实例中进行合并
 		ret['left'] = el.css('left');
 		ret['top'] = el.css('top');
-		//ret['width'] = el.css('width');
-		//ret['height'] = el.css('height');
+		ret['width'] = ret['width']+'px';
+		ret['height'] = ret['height']+'px';
 		
+
 		var content = ret.content;
 		var resultObj = {
 			'groupId' : groupId,
@@ -154,31 +158,34 @@
 		var groupId = this.groupId;
 		var group = Storage.get(groupId);
 		var newConfig = tools.clone(group.get(this.id).options);
-		var form = document.getElementById(this.formid);
-		var aDl = form.getElementsByTagName('dl');
+
+		var $tab = $('#' + this.options.tabId);
+		var $contents = $('#confpanel').find('.tab-item').eq($tab.index());
+		var aDl = $contents.find('dl');
 		var ret = {};
-		tools.each(aDl, function (dl) {
-			var css = dl.getAttribute('data-css');
-			var unit = dl.getAttribute('data-unit');
-			var evalExp = dl.getAttribute('data-eval');
-			var dd = dl.getElementsByTagName('dd')[0];
-			var plugin = dd.getAttribute('data-plugin');
+		aDl.each(function (index, item) {
+			var $dl = $(item);
+			var css = $dl.attr('data-css');
+			var unit = $dl.attr('data-unit');
+			var evalExp = $dl.attr('data-eval');
+			var dd = $dl.find('dd');
+			var plugin = dd.attr('data-plugin');
 			var dom;
 
 			unit = !!unit ? unit : '';
 			switch (plugin) {
 				case 'textarea':
-					dom = dd.getElementsByTagName(plugin)[0];
+					dom = dd.find(plugin)[0];
 					ret[css] = dom.value;
 					break;
 				case 'select':
-					dom = dd.getElementsByTagName(plugin)[0];
+					dom = dd.find(plugin)[0];
 					ret[css] = dom.value;
 					break;
 				case 'btngroup':
 
 					var cssArr = css.split(';');
-					dom = dd.getElementsByTagName('input');
+					dom = dd.find('input');
 					tools.each(cssArr, function (prop, index){
 						if (dom[index].type === 'checkbox') {
 							ret[prop] = dom[index].checked ? dom[index].value : '';
@@ -190,7 +197,7 @@
 					});
 					break;
 				default:
-					dom = dd.getElementsByTagName('input')[0];
+					dom = dd.find('input')[0];
 					if (!!dom.value) {
 						var value = dom.value + unit;
 						
@@ -274,7 +281,7 @@
 				}
 			});
 		});
-
+		console.log('newConfig', newConfig);
 		return newConfig;
 	};
 

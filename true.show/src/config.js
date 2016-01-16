@@ -66,6 +66,17 @@
 	/* ======================  组件相关  ==================== */
 	// 定义新增组件的数据结构， 构造实例后要重写其id属性
 	config.ComponentTemplate = {
+    'canvas' : {
+      id : null,
+      name : '背景',
+      type : 'canvas',
+      transform : '',
+      value : '',
+      styles : {
+        'background-image': 'none',
+        'background-color': '#09e'
+      }
+    },
 		'text' : {
             id: null,
             name: '编辑内容',
@@ -73,7 +84,7 @@
             type: 'text',
             styles: {
                 left: '110px',
-                top: '10px',
+                top: '30px',
                 width: '100px',
                 height: '50px',
                 'text-align': 'center'
@@ -140,7 +151,26 @@
 	config.Attributor = {};
 
 	/* 特有特性 */
-	
+	// 背景
+  config.Attributor.CANVAS = {
+    id : tools.uuid(),
+    tabId : 'panel-canvas',
+    type : 'canvas',
+    attributes : [
+      [
+        {label:"", name:"select-canvas", css:'btn', value: "选择背景图片", values:null, plugin:'modal', unit:null},
+        {label:"", name:"clear-canvas", css:'btn', value: "清空背景", values:null, plugin:'modal', unit:null}
+      ],
+      [
+        {label:"", name:"crop-canvas", css:'crop', value: "剪裁图片", values:null, plugin:'crop', unit:null}
+      ],
+      [
+        {label:"背景颜色", css:"background-color", name:"bg-color", value: "", values: null, plugin:'colorpicker', unit:null},
+      ]
+    ]
+  };
+
+
 	// 文本
 	config.Attributor.TEXT = {
 		id : tools.uuid(),
@@ -205,7 +235,7 @@
   				{label:"", name:"select-photo", css:'btn', value: "选择图片", values:null, plugin:'modal', unit:null}
   		 	],
   		 	[
-  		 		{label:"", name:"crop-photo", css:'crop', value: "裁剪图片", values:null, plugin:'crop', unit:null}
+  		 		{label:"", name:"crop-photo", css:'crop', value: "剪裁图片", values:null, plugin:'crop', unit:null}
   		 	]
   		]
     };
@@ -231,7 +261,7 @@
   				{label:"边框颜色", name:"bdc", css:'border-color', value: "#000000", values:null, plugin:'colorpicker', unit:null}
   		 	],
   		 	[
-  				{label:"圆角半径", name:"bdr", css:'border-radius', value: "0", values:null, plugin:'slider', unit:'px', status:''}
+  				{label:"圆角半径", name:"bdr", css:'border-radius', value: "0", values:null, plugin:'slider-radius', unit:'px', status:''}
   		 	],
   		 	[
   				{label:"透明度", name:"opacity", css:'opacity', value: "100", values:null, plugin:'slider-opacity', unit:'%', status:''}

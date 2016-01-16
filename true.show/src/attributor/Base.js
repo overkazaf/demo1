@@ -50,6 +50,14 @@ define(function(require) {
         	event.preventDefault();
         	return false;
         });
+
+        $('#' + this.formid).on('mousemove', function (event) {
+            var target = event.target;
+            if (target.type && target.type == 'range') {
+                $(target).next('input[name="result"]').val($(target).val());
+            }
+            //event.preventDefault();
+        });
         // $tabContainer.eq(index).find('select').each(function () {
         // 	$(this).find('option:selected').val();
         // });
@@ -161,8 +169,11 @@ define(function(require) {
             case 'slider-repeat':
                 html = '<input type="range" data-unit="'+ unit +'" min="0" max="20" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><input name="result" value="'+(!!value?parseInt(value):1) +'" /><span>'+ unit +'</span>';
                 break;
+            case 'slider-radius':
+                html = '<input type="range" data-unit="'+ unit +'" min="0" max="400" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><input name="result" value="'+(!!value?parseInt(value):1) +'" /><span>'+ unit +'</span>';
+                break;
             default:
-                html = '<input ' + eventString + ' type="number" id="' + id + '" name="' + name + '" value="' + (!!value ? value : "") + '" />'
+                html = '<input ' + eventString + ' type="number" id="' + id + '" name="' + name + '" value="' + (!!value ? value : "") + '" /><span>'+ unit +'</span>'
         }
         return html;
     };
@@ -191,7 +202,8 @@ define(function(require) {
            	case 'slider-lineheight':
            	case 'slider-fontsize':
            	case 'slider-opacity':
-           	case 'slider-angle':
+            case 'slider-angle':
+           	case 'slider-radius':
            	case 'slider':
                 html = 'onchange="callFN(\'noticeUpdate\', \'' + groupId + '\');"';
                 break;
@@ -287,27 +299,6 @@ define(function(require) {
             !!plugin && plugin.destroy();
         });
     };
-
-
-
-    /**
-     * [update 配置项实例的数据更新]
-     * @param  {[Object]} json [description]
-     * @return {[type]}      [description]
-     */
-    Base.prototype.update = function(json) {
-        // 更新数据模型
-        this.updateModel(json);
-        // 更新配置视图
-        this.renderView(json);
-    };
-
-
-    // 渲染相关
-    Base.prototype.renderView = function(json) {};
-
-    Base.prototype.updateModel = function(json) {};
-
 
     return Base;
 });

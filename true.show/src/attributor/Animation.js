@@ -68,6 +68,14 @@ define(function(require) {
                     break;
             }
         });
+
+        $form.on('keyup', 'input[name="result"]', function(ev) {
+            var target = ev.target;
+            var val = $(target).val();
+            if (val != '' && !isNaN(val)) {
+                $(target).prev('input[type="range"]').val(val);
+            }
+        });
         return this;
     };
 
@@ -103,7 +111,7 @@ define(function(require) {
                 'duration': sliders[0]['value'],
                 'delay': sliders[1]['value'],
                 'repeat': sliders[2]['value'],
-                'auto': 0
+                'auto': 1
             };
             animList.push(anim);
         });
@@ -118,7 +126,8 @@ define(function(require) {
 
         // 这里可以借用player类的playSpriteLine方法
         var player = Storage.get('__PLAYER__');
-        player.playSpriteLine(elements);
+        var context = $('app-page')[0];
+        player.playSpriteLine(elements, context);
     }
 
 
@@ -162,9 +171,18 @@ define(function(require) {
             animClazz: '',
             onReady : function () {
                 var $outputs = $('input[name="result"]', this.dom);
+                var $ranges = $('input[type="range"]', this.dom);
                 $outputs.each(function(index, item) {
                     if ($(item).prev('input[type="range"]').prop('disabled')) {
                         $(item).prop('disabled', true);
+                    }
+                });
+
+                $ranges.on('mouseup', function (event) {
+                    var target = event.target;
+                    if ($(target).next('input[name="result"]').length) {
+                        var val = $(target).val();
+                        $(target).next('input[name="result"]').val(val);
                     }
                 });
             }
@@ -179,8 +197,6 @@ define(function(require) {
 
     Animation.prototype.getForm = function() {
         var groupId = this.groupId;
-
-        var form = document.getElementById(this.formid);
         var ret = [];
         var list = this.pluginList;
         tools.each(list, function(plugin) {
@@ -194,7 +210,6 @@ define(function(require) {
 
                 plugin.options['animClazz'] = animObj['class'] = plugin.dom.find('.anim-item').filter('.active').attr('data-class');
                 plugin.options['tabIndex'] = plugin.dom.find('.ui-tablist-item.active').index();
-                console.log('options', plugin.options);
                 ret.push(animObj);
             }
         });

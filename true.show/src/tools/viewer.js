@@ -28,6 +28,7 @@ define(function(require) {
     var defopts = {
         id: 'app-page',
         cls: 'plugin-warp',
+        innerCls: '.cont-inner',
         ctmcls: '.plugin-ctm',
         sortLayerCallback: null,
         changeLayerCallback: null, //切换图层
@@ -61,32 +62,63 @@ define(function(require) {
         },
         bindEvent: function() {
             var that = this;
+
+            $(document).on('click', this.opts.id, function() {
+                $(that.opts.id).find(that.opts.cls).removeClass('active');
+            });
+
+            // $(document).on('dblclick', this.opts.innerCls, function(event) {
+            //     $(event.target).focus();
+            // });
+
+            
+            // $(document).on('keyup', this.opts.innerCls, function(event) {
+            // 	var parent = $(event.target).closest(that.opts.cls);
+            //     var pid = parent.attr('id');
+            //     var index = $('#panel-text').index();
+            //     $('#confpanel').find('.tab-item').eq(index).find('textarea').val($(event.target).text());
+            //     $('#' + pid, $('#pagesBox')[0]).find('.cont-inner').html($(event.target).text());
+            // });
+
+
+            // var timeout;
+            // $(document).on('blur', this.opts.innerCls, function (event){
+            // 	var parent = $(event.target).closest(that.opts.cls);
+            //     var pid = parent.attr('id');
+            // 	clearTimeout(timeout);
+            //     timeout = setTimeout(function() {
+            //         window.callFN('noticeUpdate', pid);
+            //     }, 50);
+            // })
+
             $(document).on('click', this.opts.cls, function(event) {
-                event.preventDefault();
                 event.stopImmediatePropagation();
 
-                if ($(this).hasClass('active')) return;
+                if ($(this).hasClass('active')) {
+                	return;
+                }
                 $(that.opts.id).find(that.opts.cls).removeClass('active');
                 $(this).addClass('active');
                 that.updateElement($(this), {});
-
                 var AM = Storage.get('__AM__');
                 var elementId = $(this).attr('id');
 
                 // 获取配置面板
-                if ($(this)[0].tagName.toLowerCase() == 'plugin-warp') {
-                    var type = $(this).attr('type');
+                var type = $(this).attr('type') || $(this).attr('plugin-type');
 
-                    // 在切换参数配置之前修正缓存参数
-                    switch (type) {
-                        case 'photo':
-                            var picUrl = $(this).find('img').attr('src');
-                            Storage.set('__currentImage__', picUrl);
-                            break;
-                    }
-                    // swap tab
-                    AM.getMarker().cper.swaptab(type);
+                // 在切换参数配置之前修正缓存参数
+                switch (type) {
+                    case 'photo':
+                        var picUrl = $(this).find('img').attr('src');
+                        Storage.set('__currentImage__', picUrl);
+                        break;
+                    case 'canvas':
+                        var picUrl = $(this).css('backgroundImage');
+                        Storage.set('__currentCanvas__', picUrl);
+                        break;
                 }
+                // swap tab
+                AM.getMarker().cper.swaptab(type);
 
                 if (!!AM) {
                     var group = Storage.get(elementId);
@@ -97,36 +129,43 @@ define(function(require) {
                 return false;
             });
 
-            this.resizer = new Resizer(null, null, function(t) {
-                that.updateElement(t, {
-                    'width': t.width() + 'px',
-                    'height': t.height() + 'px'
-                });
+            this.resizer = new Resizer(null, null, {
+                onResize: function(resizer) {
+                    var dom = resizer.dragger;
+                    that.updateElement(dom, {
+                        'width': dom.width() + 'px',
+                        'height': dom.height() + 'px'
+                    });
 
-                // FIXME : 下边的逻辑在每次改变容器大小时修正了图片的大小， 
-                // 应该在resize的过程中进行处理，暂时放在callback里一次刷新
-                var id = t.attr('id');
-                var opt = {
-                    width: t.width(),
-                    height: t.height()
-                };
-                t.find('.cont-inner>img').css(opt);
-                $('#' + id, $('#pagesBox')).find('.cont-inner>img').css(opt);
+                    var id = dom.attr('id');
+                    var opt = {
+                        width: dom.width() + 'px',
+                        height: dom.height() + 'px'
+                    };
+                    dom.find('.cont-inner>img').css(opt);
+                    $('#' + id, $('#pagesBox')).find('.cont-inner>img').css(opt);
+                },
+                callback: function(t) {
+                    var id = t.attr('id');
+                    // 重新initgroup
+                    var group = Storage.get(id);
+                    if (group) {
+                        group.init();
+                    }
 
-                // 重新initgroup
-                var group = Storage.get(id);
-                if (group) {
-                    group.init();
                 }
-
             });
             this.dragger = new Dragger(null, null, function(t) {
                 var o = $(t).position();
+                
                 that.updateElement(t, {
-                    'left': o.left + 'px',
-                    'top': o.top + 'px'
+                	width : t.width() + 'px',
+                	height : t.height() + 'px',
+                	left : o.left + 'px',
+                	top : o.top + 'px'
                 });
 
+                // 更新视图
                 var id = t.attr('id');
                 var group = Storage.get(id);
                 if (!!group) {
@@ -136,7 +175,7 @@ define(function(require) {
             });
             this.ruler = new ruler('#rulerbtn', '.ruler');
 
-            $(document).on('mouseup', function(event) {
+            $('.main-view', document).on('mouseup', function(event) {
                 event.preventDefault();
 
                 var t = event.target;
@@ -256,6 +295,7 @@ define(function(require) {
         updateElement: function(t, data) {
             var styles = $(t).attr('styles');
             styles = $.extend(true, JSON.parse(styles), data);
+            
             $(t).attr({
                 styles: JSON.stringify(styles)
             }).css(data);

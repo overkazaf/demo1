@@ -15,11 +15,19 @@
 		this.api = null;
 	};
 
+	var getStorageType = function (type) {
+		var types = {
+			'canvas' : '__currentCanvas__',
+			'photo' : '__currentImage__'
+		};
+		return types[type];
+	}
 
 	Crop.prototype.init = function () {
 		var that = this;
 		var options = this.options;
 		var dom = options.dom;
+		var cropImageType = getStorageType(options.type);
 		this.container = $('<div class="cropper">').attr({
 			id : tools.uuid()
 		}).css({
@@ -29,7 +37,7 @@
 
 		this.cropEl = $('<img>').attr({
 			id : tools.uuid(),
-			src : Storage.get('__currentImage__') || 'asset/img/piclib/7.jpg'
+			src : Storage.get(cropImageType)
 		}).css({
 			width:220,
 			height:220

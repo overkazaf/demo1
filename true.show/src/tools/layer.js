@@ -525,12 +525,15 @@ define(function(require) {
             if (!id) return;
             var dom = $(this.opts.id).find('#' + id),
                 states = dom.attr('states');
-            dom.addClass(this.opts.activeCls);
-            states = JSON.parse(states);
-            var cls = getState(states['lock'], 'lock', 'icon'),
-                tips = getState(states['lock'], 'lock', 'text');
-            this.changeToolsbarState(states.lock, tips, cls);
-            this.currpager = dom;
+            if (states) {
+                dom.addClass(this.opts.activeCls);
+            
+                states = JSON.parse(states);
+                var cls = getState(states['lock'], 'lock', 'icon'),
+                    tips = getState(states['lock'], 'lock', 'text');
+                this.changeToolsbarState(states.lock, tips, cls);
+                this.currpager = dom;
+            }
         },
         getActiveId: function() {
             return $(this.opts.id).find('.' + this.opts.activeCls).attr('id');

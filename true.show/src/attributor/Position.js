@@ -48,8 +48,9 @@ define(function(require) {
          */
         var groupId = this.groupId;
 
-        var form = document.getElementById(this.formid);
-        var aDl = form.getElementsByTagName('dl');
+        var $tab = $('#' + this.options.tabId);
+        var $contents = $('#confpanel').find('.tab-item').eq($tab.index());
+        var aDl = $contents.find('dl');
         var ret = {};
         tools.each(aDl, function(dl) {
             var css = dl.getAttribute('data-css');

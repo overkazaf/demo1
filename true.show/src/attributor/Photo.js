@@ -41,28 +41,6 @@
 		return this;
 	};
 
-	/**
-	 * [render description]
-	 * @param  {[Object]} data [当前焦点对象的数据结构]
-	 * @return {[type]}         [description]
-	 */
-	Photo.prototype.render = function (data) {
-
-
-		return this;
-	};
-
-	/**
-	 * [updateElement 更新元素的操作，传递给AM模块统一分配]
-	 * @param  {[type]} t    [description]
-	 * @param  {[type]} data [description]
-	 * @return {[type]}      [description]
-	 */
-	Photo.prototype.updateElement = function (t, data) {
-
-		return this;
-	};
-
 	Photo.prototype.getForm = function () {
 		/**
 		 * [groupId 获取从属的配置组id， 这个id其实和元素id是一致的]
@@ -151,6 +129,7 @@
 			var plug = dd.attr('data-plugin');
 			if (plug == 'crop') {
 				var crop = new Crop({
+					type : 'photo',
 					dom : dd
 				});
 				list.push(crop);

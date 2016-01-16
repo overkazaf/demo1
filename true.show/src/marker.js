@@ -467,7 +467,7 @@ define(function(require) {
                             y: '70px',
                             width: '280px',
                             height: '80px',
-                            styles: 'left:15px;top:70px;width:280px;height:80px;font-size:24px;line-height:80px;color:#09e;text-align:center;crop:on;background-color:#fff;border-style:dotted;border-width:2px;border-color:#222;border-radius:10px;opacity:1;transform:rotate(0deg);box-shadow: 1px 1px 5px #222;',
+                            styles: 'left:15px;top:70px;width:280px;height:80px;font-size:24px;line-height:80px;color:#09e;text-align:center;crop:on;background-color:#fff;border-style:solid;border-width:2px;border-color:#222;border-radius:10px;opacity:1;transform:rotate(0deg);box-shadow: 1px 1px 5px #222;',
                             animates: [{
                                 repeat: 1,
                                 class: 'flipInX',
@@ -493,7 +493,7 @@ define(function(require) {
                             y: '175px',
                             width: '280px',
                             height: '80px',
-                            styles: 'left:15px;top:175px;width:280px;height:80px;font-size:24px;line-height:80px;color:#f70;text-align:center;crop:on;background-color:#fff;border-style:dotted;border-width:2px;border-color:#222;border-radius:10px;opacity:1;transform:rotate(0deg);box-shadow: 1px 1px 5px #222;',
+                            styles: 'left:15px;top:175px;width:280px;height:80px;font-size:24px;line-height:80px;color:#f70;text-align:center;crop:on;background-color:#fff;border-style:solid;border-width:2px;border-color:#222;border-radius:10px;opacity:1;transform:rotate(0deg);box-shadow: 1px 1px 5px #222;',
                             animates: [{
                                 repeat: 0,
                                 class: 'flipInX',
@@ -519,7 +519,7 @@ define(function(require) {
                             y: '280px',
                             width: '280px',
                             height: '80px',
-                            styles: 'left:15px;top:280px;width:280px;height:80px;font-size:24px;line-height:80px;color:#0f0;text-align:center;crop:on;background-color:#fff;border-style:dotted;border-width:2px;border-color:#222;border-radius:10px;opacity:1;transform:rotate(0deg);box-shadow: 1px 1px 5px #222;',
+                            styles: 'left:15px;top:280px;width:280px;height:80px;font-size:24px;line-height:80px;color:#0f0;text-align:center;crop:on;background-color:#fff;border-style:solid;border-width:2px;border-color:#222;border-radius:10px;opacity:1;transform:rotate(0deg);box-shadow: 1px 1px 5px #222;',
                             animates: [{
                                 repeat: 0,
                                 class: 'flipInX',
@@ -544,7 +544,7 @@ define(function(require) {
                             y: '40px',
                             width: '290px',
                             height: '340px',
-                            styles: 'left:15px;top:40px;width:290px;height:340px;font-size:40px;line-height:340px;color:#fff;text-shadow:0 0 5px #fff;text-align:center;crop:on;background-color:#09e;border-style:solid;border-width:4px;border-color:#222;border-radius:40px;opacity:1;transform:rotate(0deg);',
+                            styles: 'left:15px;top:40px;width:290px;height:340px;font-size:40px;line-height:340px;color:#fff;text-shadow:0 0 5px #fff;text-align:center;crop:on;background-color:#09e;border-style:dashed;border-width:4px;border-color:#222;border-radius:40px;opacity:1;transform:rotate(0deg);',
                             animates: [{
                                 repeat: 0,
                                 class: 'rotateIn',
@@ -647,7 +647,7 @@ define(function(require) {
                             id: 'p4e6',
                             name: 'p4e6',
                             href: '',
-                            value: '0513-xxxxxxx',
+                            value: '0513-81550880',
                             type: 'text',
                             x: '75px',
                             y: '265px',
@@ -898,14 +898,16 @@ define(function(require) {
         pasteLayer: function(id, after) {
             var copylayer = newLayer();
             $.extend(true, copylayer, this.copyer.layer);
+
             var newid = tools.uuid();
             copylayer.id = newid;
-
+            console.log('copylayer', copylayer);
             // 拷贝新的配置项
             var group = Storage.get(id);
             var newGroup = Group.prototype.cloneGroup(group, newid);
-            Storage.set(newid, newGroup);
 
+            console.log('newGroup', newGroup);
+            Storage.set(newid, newGroup);
 
             var els = this.data.pages[this.idx].elements,
                 i = 0,
@@ -936,7 +938,7 @@ define(function(require) {
                 alert('请先添加页面！');
                 return;
             }
-
+            console.log('addNewElement', data);
             var clonedLayer = newLayer();
             $.extend(true, clonedLayer, data);
 
@@ -945,6 +947,8 @@ define(function(require) {
             var id = this.getLastElementId();
             id = !!id ? '#' + id : undefined;
 
+            console.log('data', data);
+            console.log('clonedLayer', clonedLayer);
             this.viewer.addElement(clonedLayer, id, true);
             this.layer.addElement(clonedLayer, id, true);
             this.pages.addElement(clonedLayer, id, true);

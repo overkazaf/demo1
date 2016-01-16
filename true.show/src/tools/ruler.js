@@ -44,14 +44,14 @@
 					$(this).data('state','on');
 				}
 			});
-			$(document).on('mousedown',this.bar,function(event){
+			$('.main-view', document).on('mousedown',this.bar,function(event){
 				that.resetOffset();
 				event.preventDefault();
 				that.state='bar';
 				that.curelem=$(this);
 				that.ori=that.getOrientation(that.curelem);
 			});
-			$(document).on('mousedown',this.line,function(event){
+			$('.main-view', document).on('mousedown',this.line,function(event){
 				that.resetOffset();
 				event.preventDefault();
 				that.state='line';
@@ -59,14 +59,9 @@
 				that.ori=that.getOrientation(that.curelem);
 			});
 
-			$(document).on('mouseup',function(event){
+			$('.main-view', document).on('mouseup',function(event){
 				if (this.type && this.type != 'range') {
 					event.preventDefault();
-				} else {
-					var target = event.target;
-					if (target.type && target.type == 'range') {
-						$(target).next('input[name="result"]').val($(target).val());
-					}
 				}
 				
 				if(that.state=='line'&&that.curelem!=null){
@@ -80,16 +75,8 @@
 				that.curelem=null;
 				that.ori=null;
 			});
-			$(document).on('mousemove', function(event) {
-				if (this.type && this.type != 'range'){
-					event.preventDefault();
-				} else {
-					var target = event.target;
-					if (target.type && target.type == 'range') {
-						$(target).next('input[name="result"]').val($(target).val());
-					}
-				}
-
+			$('.main-view', document).on('mousemove', function(event) {
+				event.preventDefault();
 				/* Act on the event */
 				if(that.curelem!=null&&that.state!=null){
 					that.moveAction(event);

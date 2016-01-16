@@ -784,6 +784,45 @@ header {
   opacity: 0.5*/
 }
 
+.ui-rotate-handle {
+    position: absolute;
+    z-index: 99;
+    touch-action: none font-size: 0.1px;
+    display: block;
+    top: 0;
+    left: 50%;
+    width: 20px;
+    height: 30px;
+    margin-left: -10px;
+    margin-top: -30px;
+    /*
+  background-color: green;
+  opacity: 0.5*/
+}
+
+.ui-rotate-bar-radius {
+    width: 12px;
+    height: 12px;
+    display: block;
+    border-radius: 50%;
+    background: #44cb83;
+    top: 15px;
+    margin-left: 4px;
+    cursor: url(../img/mouserotate.ico) 10 10, default;
+}
+
+.ui-rotate-bar-line {
+    position: absolute;
+    display: block;
+    line-height: 1 !important;
+    font-size: 20px !important;
+    top: 10px;
+    left: 50%;
+    background: #44cb83;
+    width: 1px;
+    height: 20px;
+}
+
 .ui-resizable-line {
     background-color: #08A1EF;
     display: block;
@@ -1142,16 +1181,19 @@ app-page {
 
 plugin-warp {
     position: absolute;
+    transform-origin: 50% 50%;
     /*
   background-color: orange;
   opacity: 0.6;*/
 }
 
-plugin-warp .ui-resizable-handle {
+plugin-warp .ui-resizable-handle,
+plugin-warp .ui-rotate-handle {
     display: none;
 }
 
-plugin-warp.active .ui-resizable-handle {
+plugin-warp.active .ui-resizable-handle,
+plugin-warp.active .ui-rotate-handle {
     display: block;
 }
 
@@ -1279,9 +1321,12 @@ plugin-warp.state-visible {
 
 .form-control input[type=number] {
     border-radius: 5px;
-    width: 100px;
+    width: 90px;
+    margin-right: 5px;
     padding: 5px 8px;
     border: 2px solid #666;
+    background: #222;
+    color: #fff;
     outline: none;
 }
 
@@ -1444,7 +1489,9 @@ plugin-warp.state-visible {
 }
 
 .form-control .cropper {
-    margin: 20px;
+    background: url(../img/crop-bg.png) repeat;
+    margin: 10px;
+    padding: 20px;
 }
 
 .form-control .cropper img {

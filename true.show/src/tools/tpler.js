@@ -1,12 +1,16 @@
 ;define(function (require) {
 	'use strict';
 	var tpl='<plugin-warp>\
-							<div class="cont-warp">\
-								<div class="cont-inner">{{cont}}</div>\
+							<div class="ui-draggable-handle cont-warp">\
+								<div class="cont-inner" contentEditable="true">{{cont}}</div>\
 							</div>\
 							{{resizeable}}\
 						</plugin-warp>';
-	var resizeableTpl='<span class="ui-resizable-handle top">\
+	var resizeableTpl='<span class="ui-rotate-handle">\
+								<span class="ui-rotate-bar-radius"></span>\
+								<span class="ui-rotate-bar-line"></span>\
+								</span>\
+								<span class="ui-resizable-handle top">\
 								<span class="ui-resizable-line"></span>\
 								<span class="ui-resizable-circle"></span>\
 								</span>\
@@ -33,8 +37,7 @@
 								</span>\
 								<span class="ui-resizable-handle left-top">\
 									<span class="ui-resizable-circle"></span>\
-								</span>\
-								<span class="ui-draggable-handle"></span>';
+								</span>';
 
 	function tpler(){}
 	tpler.prototype={

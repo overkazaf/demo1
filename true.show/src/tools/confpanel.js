@@ -9,13 +9,13 @@ define(function(require) {
 
     var Group = require('Group');
     var Base = require('../attributor/Base');
+    var Canvas = require('../attributor/Canvas');
     var Text = require('../attributor/Text');
     var Photo = require('../attributor/Photo');
-    var Position = require('../attributor/Position');
-    var Animation = require('../attributor/Animation');
-
 
     var Styles = require('../attributor/Styles');
+    var Position = require('../attributor/Position');
+    var Animation = require('../attributor/Animation');
 
     var Modal = require('../plugins/Modal');
 
@@ -39,6 +39,24 @@ define(function(require) {
     }
 
     var composeGroup = {
+        'canvas' : function (elementId) {
+            var group = new Group({
+                id: elementId
+            });
+
+            var CanvasPropParam = {
+                id: tools.uuid(),
+                groupId: elementId
+            };
+
+            $.extend(true, CanvasPropParam, config.Attributor.CANVAS);
+
+            var CanvasPropEl = new Canvas(CanvasPropParam).init();
+
+
+            group.add(CanvasPropEl);
+            return group;
+        },
         'text': function(elementId) {
             // 新增一个配置组
             var group = new Group({
@@ -145,14 +163,23 @@ define(function(require) {
             var that = this;
             $(document).on('click', '[plugin-type]', function(event) {
                 event.preventDefault();
-
                 /* Act on the event */
                 var t = $(this).attr('plugin-type');
-
                 that.swaptab(t);
-
                 switch (t) {
                     case 'canvas':
+                        // var AM = Storage.get('__AM__');
+                        // var elementId;
+                        // var templateJson = tools.clone(config.ComponentTemplate[t]);
+                        // templateJson.id = elementId = tools.uuid();
+                        // templateJson.type = 'canvas';
+
+                        // console.log('templateJson', templateJson);
+
+                        // var group = composeGroup[t](elementId);
+                        // Storage.set(group.id, group);
+                        // AM.getInstance().addGroup(group);
+
                         break;
                     case 'photo':
                         if (!Storage.get('__Modal__')) {
@@ -189,11 +216,9 @@ define(function(require) {
                                         return false;
                                     }
                                     var picUrl = dom.find('li.active').find('img').attr('src');
-
-
+                                    
                                     var AM = Storage.get('__AM__');
                                     var elementId;
-
                                     // Step A. 新增component
                                     // A1. new一个粗来，首先要克隆配置项
                                     var templateJson = tools.clone(config.ComponentTemplate[t]);
@@ -235,7 +260,7 @@ define(function(require) {
                     default:
                         var AM = Storage.get('__AM__');
                         var elementId;
-
+                        
                         // Step A. 新增component
                         // A1. new一个粗来，首先要克隆配置项
                         var templateJson = tools.clone(config.ComponentTemplate[t]);
@@ -275,9 +300,7 @@ define(function(require) {
                         $prev.val(val);
                         $prev.trigger('change');
                     }
-                }, 200);
-
-
+                }, 100);
             });
         },
         swaptab: function(key) {

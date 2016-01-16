@@ -2,7 +2,16 @@
 	'use strict';
 	var $=require('jquery');
 	var logs=require('./loger');
-	function resizer(boxid,cls,callback){
+
+
+	var __defaults = {
+		onReady : function (){},
+		onResize : function () {},
+		callback : function () {}
+	};
+
+	function resizer(boxid,cls,options){
+		var options = $.extend({}, __defaults, options);
 		this.boxid=boxid||'app-page';
 		this.cls=cls||'.ui-resizable-handle';
 		this.minpix=20;
@@ -14,7 +23,8 @@
 		this.draggable=false;
 		this.dragger=null;
 		this.ori=null;
-		this.callback=callback;
+		this.callback=options.callback;
+		this.onResize=options.onResize;
 		this.init();
 	}
 	resizer.prototype={
@@ -23,7 +33,7 @@
 		},
 		bindEvent:function(){
 			var that=this;
-			$(document).on('mousedown', this.cls, function(event) {
+			$('.main-view', document).on('mousedown', this.cls, function(event) {
 				event.preventDefault();
 				event.stopPropagation();
 				that.dragger=$(this).parent();
@@ -43,11 +53,17 @@
 					y:position.top
 				}
 			});
-			$(document).on('mouseup', function(){
+			$('.main-view', document).on('mouseup', function(event){
+				event.preventDefault();
 				that.clear();
 			});
-			$(document).on('mousemove', function(event){
-				if(that.draggable==true) that.move(event);
+			$('.main-view', document).on('mousemove', function(event){
+				if(that.draggable==true) {
+					that.move(event);
+					if (that.onResize) {
+						that.onResize.call(this, that);
+					}
+				}
 			});
 		},
 		move:function(event){

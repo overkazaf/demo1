@@ -137,10 +137,6 @@
 		var el = $('#' + groupId, $('app-page')[0]);
 		
 		// 下边这些属性要在当前Group的Styles实例中进行合并
-		ret['left'] = el.css('left');
-		ret['top'] = el.css('top');
-
-		console.log('ret in Text', ret);
 
 		var content = ret.content;
 		var resultObj = {

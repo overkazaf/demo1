@@ -11,6 +11,7 @@ define(function(require) {
     var confPanel = require('./tools/confpanel');
 
     var sounder = require('./tools/sounder');
+    var Studio = require('./tools/studio');
     //sounder.setSound('http://localhost/webppt/player/demo/asset/sound/sound.mp3');
     //sounder.play();
     var Pages = require('./tools/pages');
@@ -201,11 +202,15 @@ define(function(require) {
                         that.sortLayers(sortids);
                     } //排序
             });
-            this.layer.init(this.data.pages[this.idx].elements);
+            if (!!this.data.pages[this.idx] && this.data.pages[this.idx].elements) {
+                this.layer.init(this.data.pages[this.idx].elements);
+            }
 
             this.initAttributeManager();
 
             this.initPlayer();
+
+            this.initStudio();
         },
         initAttributeManager: function() {
             // 1. 初始化构建属性管理对象
@@ -740,16 +745,31 @@ define(function(require) {
 
             Storage.set('__PLAYER__', player);
         },
+
+        initStudio : function () {
+            var studio = new Studio({
+                onPlay : function (){
+                    var player = Storage.get('__PLAYER__');
+                    var AM = Storage.getAM();
+                    var mk = AM.getMarker();
+                    var elements = mk.data.pages[mk.idx].elements;
+                    if (elements.length) {
+                        player.playSpriteLine(elements.slice(0), appContext);
+                    }
+                },
+                onStop : function (){
+
+                }
+            });
+        },
         changePage: function(page) {
             // FIXME : 这里有bug， 切换页面时候的初始化工作
             this.idx = page;
-
             var pageData = this.data.pages[this.idx];
             var elements = pageData.elements;
             this.viewer.init(pageData);
             // 初始化， 并把页面的第一个层元素激活为焦点元素
-            this.layer.init(elements, 0);
-            $('#' + this.getActiveElementId(), appContext).trigger('click');
+            this.layer.init(this.data.pages[page].elements, 0);
         },
         changeAnimates: function(id, animates) {
             var el = this.getElement(id);
@@ -806,6 +826,7 @@ define(function(require) {
         newPage: function(id) {
             var pageData = newPage(id);
             this.data.pages.push(pageData);
+            $('.page-item', pageContext).addClass('active').siblings().removeClass('active');
         },
         delPage: function(page) {
             // 1. 删除页面要先删除缓存的配置项数据结构和页面内的元素
@@ -831,11 +852,12 @@ define(function(require) {
             copypage.id = tools.uuid();
 
             // 粘贴页面时要把元素id更新，同时把配置项复制一份
-            var elements = copypage.elements;
+            var elements = copypage.elements.slice(0);
             tools.each(elements, function(el) {
                 var newid = tools.uuid();
                 var group = Storage.get(el.id);
                 var newGroup = Group.prototype.cloneGroup(group, newid);
+                console.log('newGroup', newGroup);
                 Storage.set(newid, newGroup);
                 el.id = newid;
             });

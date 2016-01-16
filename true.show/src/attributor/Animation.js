@@ -202,7 +202,9 @@ define(function(require) {
         tools.each(list, function(plugin) {
             if (!!plugin) {
                 var dl = plugin.dom.find('dl');
-                var animObj = {};
+                var animObj = {
+                    'auto' : 1
+                };
                 tools.each(dl, function(line) {
                     var val = $(line).find('input').val();
                     animObj[$(line).attr('data-css')] = val;

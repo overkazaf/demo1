@@ -91,7 +91,8 @@ define(function(require) {
             //     }, 50);
             // })
 
-            $(document).on('click', this.opts.cls, function(event) {
+            $('.main-view', document).on('click', this.opts.cls, function(event) {
+            	event.preventDefault();
                 event.stopImmediatePropagation();
 
                 if ($(this).hasClass('active')) {

@@ -81,8 +81,12 @@
 		generatePage:function(page,type){
 			var i=0,l=page.elements?page.elements.length:0;
 			var pagedom=[];
+			var els = page.elements;
+			var that = this;
 			for(;i<l;i++){
-				pagedom.push(this.generatePlugin(page.elements[i],type));
+				(function (c){
+					pagedom.push(that.generatePlugin(els[c],type));
+				})(i);
 			}
 			return pagedom.join('');
 		}

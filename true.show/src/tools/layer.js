@@ -6,28 +6,28 @@ define(function(require) {
     var logger = require('./loger');
     var tpler = require('./tpler');
     var tpl = '<li id="{{id}}" class="page-item {{active}}">\
-						<div class="layer-cont clearfix">\
-						<span data-tips="{{eye-tips}}" tips-position="right" class="layer-visible layer-item-cmd"><i class="fa {{eye-icon}} fa-lg"></i></span>\
-						<span class="layer-type"><i class="fa {{type-icon}}"></i></span>\
-						<span class="layer-name">{{name}}</span>\
-						<span data-tips="{{lock-tips}}" class="layer-lock layer-item-cmd"><i class="fa {{lock-icon}} fa-lg"></i></span>\
-						</div>\
-					</li>';
+                        <div class="layer-cont clearfix">\
+                        <span data-tips="{{eye-tips}}" tips-position="right" class="layer-visible layer-item-cmd"><i class="fa {{eye-icon}} fa-lg"></i></span>\
+                        <span class="layer-type"><i class="fa {{type-icon}}"></i></span>\
+                        <span class="layer-name">{{name}}</span>\
+                        <span data-tips="{{lock-tips}}" class="layer-lock layer-item-cmd"><i class="fa {{lock-icon}} fa-lg"></i></span>\
+                        </div>\
+                    </li>';
     var ctmtpl = '<div class="contextmenu layer-contextmenu">\
-								<div type="del-layer" class="ctm-item layer-ctm">删除图层</div>\
-								<div class="ctm-split-line"></div>\
-								<div type="copy-layer" class="ctm-item layer-ctm">复制图层</div>\
-								<div type="paste-layer-defore" class="ctm-item state-disable layer-ctm">粘贴图层（之前）</div>\
-								<div type="paste-layer-after" class="ctm-item state-disable layer-ctm">粘贴图层（之后）</div>\
-								<div class="ctm-split-line"></div>\
-								<div type="lock-layer" class="ctm-item layer-ctm">加锁图层</div>\
-								<div type="visible-layer" class="ctm-item layer-ctm">隐藏图层</div>\
-								<div class="ctm-split-line"></div>\
-								<div type="top-layer" class="ctm-item layer-ctm">置为顶层</div>\
-								<div type="up-layer" class="ctm-item layer-ctm">上移一层</div>\
-								<div type="down-layer" class="ctm-item layer-ctm">下移一层</div>\
-								<div type="bottom-layer" class="ctm-item layer-ctm">置为底层</div>\
-							</div>';
+                                <div type="del-layer" class="ctm-item layer-ctm">删除图层</div>\
+                                <div class="ctm-split-line"></div>\
+                                <div type="copy-layer" class="ctm-item layer-ctm">复制图层</div>\
+                                <div type="paste-layer-defore" class="ctm-item state-disable layer-ctm">粘贴图层（之前）</div>\
+                                <div type="paste-layer-after" class="ctm-item state-disable layer-ctm">粘贴图层（之后）</div>\
+                                <div class="ctm-split-line"></div>\
+                                <div type="lock-layer" class="ctm-item layer-ctm">加锁图层</div>\
+                                <div type="visible-layer" class="ctm-item layer-ctm">隐藏图层</div>\
+                                <div class="ctm-split-line"></div>\
+                                <div type="top-layer" class="ctm-item layer-ctm">置为顶层</div>\
+                                <div type="up-layer" class="ctm-item layer-ctm">上移一层</div>\
+                                <div type="down-layer" class="ctm-item layer-ctm">下移一层</div>\
+                                <div type="bottom-layer" class="ctm-item layer-ctm">置为底层</div>\
+                            </div>';
 
     var sorttpl = '<li class="layer-sort"></li>';
     var disable = 'state-disable',
@@ -246,6 +246,7 @@ define(function(require) {
             $(this.opts.id).on('click', that.opts.item, function(event) {
                 event.preventDefault();
 
+                if ($(this).hasClass(that.opts.activeCls)) return;
                 if (!that.currpager || that.currpager.attr('id') == $(this).attr('id')) return;
                 that.currpager.removeClass(that.opts.activeCls);
                 $(this).addClass(that.opts.activeCls);
@@ -522,18 +523,16 @@ define(function(require) {
         },
         setActiveElement: function(id) {
             if (this.currpager != null) this.currpager.removeClass(this.opts.activeCls);
-            if (!id) return;
             var dom = $(this.opts.id).find('#' + id),
                 states = dom.attr('states');
-            if (states) {
-                dom.addClass(this.opts.activeCls);
-            
-                states = JSON.parse(states);
-                var cls = getState(states['lock'], 'lock', 'icon'),
-                    tips = getState(states['lock'], 'lock', 'text');
-                this.changeToolsbarState(states.lock, tips, cls);
-                this.currpager = dom;
-            }
+
+            dom.addClass(this.opts.activeCls);
+
+            states = JSON.parse(states);
+            var cls = getState(states['lock'], 'lock', 'icon'),
+                tips = getState(states['lock'], 'lock', 'text');
+            this.changeToolsbarState(states.lock, tips, cls);
+            this.currpager = dom;
         },
         getActiveId: function() {
             return $(this.opts.id).find('.' + this.opts.activeCls).attr('id');

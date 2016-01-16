@@ -126,7 +126,7 @@
 			}).css(css);
 		},
 		setAnimates:function(id,animates){
-			var obj=this.currpager.find('#'+id);
+			var obj=$('#'+id, $('app-page')[0]);
 			obj.attr({
 				animates: animates
 			});
@@ -172,6 +172,7 @@
 			that.resetOffset();
 			$(this.opts.id).on('click',that.opts.item,function(event){
 				event.preventDefault();
+				event.stopPropagation();
 				if(that.currpager.attr('id')==$(this).attr('id')) return;
 				that.currpager.removeClass(that.opts.activeCls);
 				$(this).addClass(that.opts.activeCls);
@@ -185,6 +186,8 @@
 			//拖拽
 			$(this.opts.id).on('mousedown', this.opts.item, function(event) {
 				event.preventDefault();
+				event.stopPropagation();
+
 				var self=this;
 				/* Act on the event */
 				that.timer=setTimeout(function(){

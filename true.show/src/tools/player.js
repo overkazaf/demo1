@@ -157,6 +157,13 @@ define(function(require) {
         this.stop = false;
     };
 
+    Player.prototype.resetElements = function (elements, context) {
+        for (var i = 0, ele; ele = elements[i++];) {
+            console.log(ele.id);
+            $('#' + ele.id, context).removeClass().addClass('invisibility');
+        }
+    };
+
     Player.prototype.bindEvent = function() {
         var that = this;
         // 暂时绑定在预览按钮上
@@ -166,6 +173,7 @@ define(function(require) {
 
     Player.prototype.playSpriteLine = function(elements, context) {
         if (this.stop == true) return;
+        this.resetElements(elements, context);
         var self = this,
             els, animates;
         while (elements.length > 0) {

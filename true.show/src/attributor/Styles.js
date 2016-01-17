@@ -281,7 +281,6 @@
 				}
 			});
 		});
-		console.log('newConfig', newConfig);
 		return newConfig;
 	};
 

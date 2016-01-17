@@ -232,8 +232,8 @@ define(function(require) {
                 previewFunction: function() {
                     // 把数据结构取到并传给player实例去播放
                     var sample = [{
-                        id:'page1',
-                        name:'页面1',
+                        id: 'page1',
+                        name: '页面1',
                         transform: '',
                         styles: '',
                         elements: [{
@@ -246,15 +246,37 @@ define(function(require) {
                             y: '47px',
                             width: '214px',
                             height: '50px',
-                            styles: 'left:53px;top:47px;width:214px;height:50px;text-align:center;content:True.Show;color:#f70;font-size:41px;font-family:Heiti;font-weight:bold;font-style:;text-decoration:;line-height:1;text-shadow:2.0000px 0.0000px 4px #5e5e5e;background-color:transparent;border-style:none;border-width:0px;border-color:#000000;border-radius:0px;opacity:1;transform:rotate(0deg);box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '53px',
+                                top: '47px',
+                                width: '214px',
+                                height: '50px',
+                                textAlign: 'center',
+                                content: 'True.Show',
+                                color: '#f70',
+                                fontSize: '41px',
+                                fontFamily: 'Heiti',
+                                fontWeight: 'bold',
+                                fontStyle: '',
+                                textDecoration: '',
+                                lineHeight: '1',
+                                textShadow: '2.0000px 0.0000px 4px #5e5e5e',
+                                backgroundColor: 'transparent',
+                                borderStyle: 'none',
+                                borderWidth: '0px',
+                                borderColor: '#000000',
+                                borderRadius: '0px',
+                                opacity: '1',
+                                transform: 'rotate(0deg)',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'flip',
                                 delay: 1
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p1e2',
                             name: 'p1e2',
                             href: '',
@@ -264,15 +286,29 @@ define(function(require) {
                             y: '130px',
                             width: '246px',
                             height: '254px',
-                            styles: 'left:37px;top:130px;width:246px;height:254px;text-align:center;crop:on;background-color:#ffffff;border-style:none;border-width:0px;border-color:#000000;border-radius:0px;opacity:1;transform:rotate(0deg);box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '37px',
+                                top: '130px',
+                                width: '246px',
+                                height: '254px',
+                                textAlign: 'center',
+                                crop: 'on',
+                                backgroundColor: '#ffffff',
+                                borderStyle: 'none',
+                                borderWidth: '0px',
+                                borderColor: '#000000',
+                                borderRadius: '0px',
+                                opacity: '1',
+                                transform: 'rotate(0deg)',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 30,
                                 class: 'pulse',
                                 delay: 2.5
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p1e3',
                             name: 'p1e3',
                             href: '',
@@ -282,21 +318,44 @@ define(function(require) {
                             y: '410px',
                             width: '194px',
                             height: '50px',
-                            styles: 'left:63px;top:410px;width:194px;height:50px;text-align:center;content:秀出你的数据;color:#000000;font-size:18px;font-family:Book Antiqua;font-weight:bold;font-style:;text-decoration:;line-height:1;text-shadow:1px 1px 4px #ccc;background-color:transparent;border-style:none;border-width:0px;border-color:#000000;border-radius:0px;opacity:1;transform:rotate(0deg);box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '63px',
+                                top: '410px',
+                                width: '194px',
+                                height: '50px',
+                                textAlign: 'center',
+                                content: '秀出你的数据',
+                                color: '#000000',
+                                fontSize: '18px',
+                                fontFamily: 'Book Antiqua',
+                                fontWeight: 'bold',
+                                fontStyle: '',
+                                textDecoration: '',
+                                lineHeight: '1',
+                                textShadow: '1px 1px 4px #ccc',
+                                backgroundColor: 'transparent',
+                                borderStyle: 'none',
+                                borderWidth: '0px',
+                                borderColor: '#000000',
+                                borderRadius: '0px',
+                                opacity: '1',
+                                transform: 'rotate(0deg)',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'rubberBand',
                                 delay: 4.2
-                            },{
+                            }, {
                                 repeat: 30,
                                 class: 'bounce',
                                 delay: 1.5
                             }],
                             auto: true
                         }]
-                    },{
-                        id:'page2',
-                        name:'页面2',
+                    }, {
+                        id: 'page2',
+                        name: '页面2',
                         styles: 'background:url(./asset/demo/background.jpg) no-repeat 0 0;',
                         elements: [{
                             id: 'p2e1',
@@ -308,15 +367,36 @@ define(function(require) {
                             y: '65px',
                             width: '130px',
                             height: '130px',
-                            styles: 'left:25px;top:65px;width:130px;height:130px;text-align:center;content:编辑内容;color:#000000;font-size:20px;font-family:Heiti;font-weight:bold;font-style:;text-decoration:;line-height:135px;text-shadow:0.0000px 0.0000px 0px #000000;background-color:#fff;opacity:0.8;border-style:solid;border-width:4px;border-color:#f40;border-radius:50%;box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '25px',
+                                top: '65px',
+                                width: '130px',
+                                height: '130px',
+                                textAlign: 'center',
+                                content: '编辑内容',
+                                color: '#000000',
+                                fontSize: '20px',
+                                fontFamily: 'Heiti',
+                                fontWeight: 'bold',
+                                fontStyle: '',
+                                textDecoration: '',
+                                lineHeight: '135px',
+                                textShadow: '0.0000px 0.0000px 0px #000000',
+                                backgroundColor: '#fff',
+                                opacity: '0.8',
+                                borderStyle: 'solid',
+                                borderWidth: '4px',
+                                borderColor: '#f40',
+                                borderRadius: '50%',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'bounceInLeft',
                                 delay: 1.1
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p2e2',
                             name: 'p2e2',
                             href: '',
@@ -326,15 +406,36 @@ define(function(require) {
                             y: '55px',
                             width: '155px',
                             height: '155px',
-                            styles: 'left:145px;top:55px;width:155px;height:155px;text-align:center;content:编辑内容;color:#ff0;font-size:26px;font-family:Heiti;font-weight:bold;font-style:;text-decoration:;line-height:155px;text-shadow:0.0000px 0.0000px 0px #000000;background-color:#666;opacity:0.7;border-style:solid;border-width:4px;border-color:#0f0;border-radius:50%;box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '145px',
+                                top: '55px',
+                                width: '155px',
+                                height: '155px',
+                                textAlign: 'center',
+                                content: '编辑内容',
+                                color: '#ff0',
+                                fontSize: '26px',
+                                fontFamily: 'Heiti',
+                                fontWeight: 'bold',
+                                fontStyle: '',
+                                textDecoration: '',
+                                lineHeight: '155px',
+                                textShadow: '0.0000px 0.0000px 0px #000000',
+                                backgroundColor: '#666',
+                                opacity: '0.7',
+                                borderStyle: 'solid',
+                                borderWidth: '4px',
+                                borderColor: '#0f0',
+                                borderRadius: '50%',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'bounceInRight',
                                 delay: 1.3
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p2e3',
                             name: 'p2e3',
                             href: '',
@@ -344,15 +445,36 @@ define(function(require) {
                             y: '155px',
                             width: '155px',
                             height: '155px',
-                            styles: 'left:70px;top:155px;width:155px;height:155px;text-align:center;content:编辑内容;color:#fff;font-size:32px;font-family:Heiti;font-weight:bold;font-style:;text-decoration:;line-height:145px;text-shadow:0.0000px 0.0000px 0px #000000;background-color:#09e;opacity:0.7;border-style:solid;border-width:4px;border-color:#222;border-radius:50%;box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '70px',
+                                top: '155px',
+                                width: '155px',
+                                height: '155px',
+                                textAlign: 'center',
+                                content: '编辑内容',
+                                color: '#fff',
+                                fontSize: '32px',
+                                fontFamily: 'Heiti',
+                                fontWeight: 'bold',
+                                fontStyle: '',
+                                textDecoration: '',
+                                lineHeight: '145px',
+                                textShadow: '0.0000px 0.0000px 0px #000000',
+                                backgroundColor: '#09e',
+                                opacity: '0.7',
+                                borderStyle: 'solid',
+                                borderWidth: '4px',
+                                borderColor: '#222',
+                                borderRadius: '50%',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'bounceInUp',
                                 delay: 1.5
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p2e4',
                             name: 'p2e4',
                             href: '',
@@ -362,18 +484,39 @@ define(function(require) {
                             y: '375px',
                             width: '65px',
                             height: '20px',
-                            styles: 'left:12px;top:375px;width:65px;height:20px;text-align:center;content:编辑内容;color:#000;font-size:16px;font-family:Heiti;font-weight:bold;font-style:;text-decoration:;line-height:20px;text-shadow:0.0000px 0.0000px 0px #000000;background-color:transparent;border-style:solid;border-width:0;border-color:#fff;border-radius:0;box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '12px',
+                                top: '375px',
+                                width: '65px',
+                                height: '20px',
+                                textAlign: 'center',
+                                content: '编辑内容',
+                                color: '#000',
+                                fontSize: '16px',
+                                fontFamily: 'Heiti',
+                                fontWeight: 'bold',
+                                fontStyle: '',
+                                textDecoration: '',
+                                lineHeight: '20px',
+                                textShadow: '0.0000px 0.0000px 0px #000000',
+                                backgroundColor: 'transparent',
+                                borderStyle: 'solid',
+                                borderWidth: '0',
+                                borderColor: '#fff',
+                                borderRadius: '0',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'bounceInRight',
                                 delay: 1.8
-                            },{
+                            }, {
                                 repeat: 20,
                                 class: 'tada',
                                 delay: 1.4
                             }],
                             auto: true
-                        },{
+                        }, {
                             id: 'p2e5',
                             name: 'p2e5',
                             href: '',
@@ -383,18 +526,39 @@ define(function(require) {
                             y: '375px',
                             width: '65px',
                             height: '20px',
-                            styles: 'left:65px;top:375px;width:65px;height:20px;text-align:center;content:编辑内容;color:#000;font-size:16px;font-family:Heiti;font-weight:bold;font-style:;text-decoration:;line-height:20px;text-shadow:0.0000px 0.0000px 0px #000000;background-color:transparent;border-style:solid;border-width:0;border-color:#fff;border-radius:0;box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '65px',
+                                top: '375px',
+                                width: '65px',
+                                height: '20px',
+                                textAlign: 'center',
+                                content: '编辑内容',
+                                color: '#000',
+                                fontSize: '16px',
+                                fontFamily: 'Heiti',
+                                fontWeight: 'bold',
+                                fontStyle: '',
+                                textDecoration: '',
+                                lineHeight: '20px',
+                                textShadow: '0.0000px 0.0000px 0px #000000',
+                                backgroundColor: 'transparent',
+                                borderStyle: 'solid',
+                                borderWidth: '0',
+                                borderColor: '#fff',
+                                borderRadius: '0',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'bounceInRight',
                                 delay: 2.2
-                            },{
+                            }, {
                                 repeat: 20,
                                 class: 'tada',
                                 delay: 1.6
                             }],
                             auto: true
-                        },{
+                        }, {
                             id: 'p2e6',
                             name: 'p2e6',
                             href: '',
@@ -404,18 +568,39 @@ define(function(require) {
                             y: '375px',
                             width: '65px',
                             height: '20px',
-                            styles: 'left:120px;top:375px;width:65px;height:20px;text-align:center;content:编辑内容;color:#000;font-size:16px;font-family:Heiti;font-weight:bold;font-style:;text-decoration:;line-height:20px;text-shadow:0.0000px 0.0000px 0px #000000;background-color:transparent;border-style:solid;border-width:0;border-color:#fff;border-radius:0;box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '120px',
+                                top: '375px',
+                                width: '65px',
+                                height: '20px',
+                                textAlign: 'center',
+                                content: '编辑内容',
+                                color: '#000',
+                                fontSize: '16px',
+                                fontFamily: 'Heiti',
+                                fontWeight: 'bold',
+                                fontStyle: '',
+                                textDecoration: '',
+                                lineHeight: '20px',
+                                textShadow: '0.0000px 0.0000px 0px #000000',
+                                backgroundColor: 'transparent',
+                                borderStyle: 'solid',
+                                borderWidth: '0',
+                                borderColor: '#fff',
+                                borderRadius: '0',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'bounceInRight',
                                 delay: 2.4
-                            },{
+                            }, {
                                 repeat: 20,
                                 class: 'tada',
                                 delay: 1.8
                             }],
                             auto: true
-                        },{
+                        }, {
                             id: 'p2e7',
                             name: 'p2e7',
                             href: '',
@@ -425,18 +610,39 @@ define(function(require) {
                             y: '375px',
                             width: '65px',
                             height: '20px',
-                            styles: 'left:170px;top:375px;width:65px;height:20px;text-align:center;content:编辑内容;color:#000;font-size:16px;font-family:Heiti;font-weight:bold;font-style:;text-decoration:;line-height:20px;text-shadow:0.0000px 0.0000px 0px #000000;background-color:transparent;border-style:solid;border-width:0;border-color:#fff;border-radius:0;box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '170px',
+                                top: '375px',
+                                width: '65px',
+                                height: '20px',
+                                textAlign: 'center',
+                                content: '编辑内容',
+                                color: '#000',
+                                fontSize: '16px',
+                                fontFamily: 'Heiti',
+                                fontWeight: 'bold',
+                                fontStyle: '',
+                                textDecoration: '',
+                                lineHeight: '20px',
+                                textShadow: '0.0000px 0.0000px 0px #000000',
+                                backgroundColor: 'transparent',
+                                borderStyle: 'solid',
+                                borderWidth: '0',
+                                borderColor: '#fff',
+                                borderRadius: '0',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'bounceInRight',
                                 delay: 2.6
-                            },{
+                            }, {
                                 repeat: 20,
                                 class: 'tada',
                                 delay: 2.0
                             }],
                             auto: true
-                        },{
+                        }, {
                             id: 'p2e8',
                             name: 'p2e8',
                             href: '',
@@ -446,21 +652,42 @@ define(function(require) {
                             y: '375px',
                             width: '65px',
                             height: '20px',
-                            styles: 'left:240px;top:375px;width:65px;height:20px;text-align:center;content:编辑内容;color:#000;font-size:16px;font-family:Heiti;font-weight:bold;font-style:;text-decoration:;line-height:20px;text-shadow:0.0000px 0.0000px 0px #000000;background-color:transparent;border-style:solid;border-width:0;border-color:#fff;border-radius:0;box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '240px',
+                                top: '375px',
+                                width: '65px',
+                                height: '20px',
+                                textAlign: 'center',
+                                content: '编辑内容',
+                                color: '#000',
+                                fontSize: '16px',
+                                fontFamily: 'Heiti',
+                                fontWeight: 'bold',
+                                fontStyle: '',
+                                textDecoration: '',
+                                lineHeight: '20px',
+                                textShadow: '0.0000px 0.0000px 0px #000000',
+                                backgroundColor: 'transparent',
+                                borderStyle: 'solid',
+                                borderWidth: '0',
+                                borderColor: '#fff',
+                                borderRadius: '0',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'bounceInRight',
                                 delay: 2.8
-                            },{
+                            }, {
                                 repeat: 20,
                                 class: 'tada',
                                 delay: 2.2
                             }],
                             auto: true
                         }]
-                    },{
-                        id:'page3',
-                        name:'页面3',
+                    }, {
+                        id: 'page3',
+                        name: '页面3',
                         styles: 'background:url(./asset/demo/background.jpg) no-repeat 0 0;',
                         elements: [{
                             id: 'p3e1',
@@ -472,23 +699,40 @@ define(function(require) {
                             y: '70px',
                             width: '280px',
                             height: '80px',
-                            styles: 'left:15px;top:70px;width:280px;height:80px;font-size:24px;line-height:80px;color:#09e;text-align:center;crop:on;background-color:#fff;border-style:solid;border-width:2px;border-color:#222;border-radius:10px;opacity:1;transform:rotate(0deg);box-shadow: 1px 1px 5px #222;',
+                            styles: {
+                                left: '15px',
+                                top: '70px',
+                                width: '280px',
+                                height: '80px',
+                                fontSize: '24px',
+                                lineHeight: '80px',
+                                color: '#09e',
+                                textAlign: 'center',
+                                crop: 'on',
+                                backgroundColor: '#fff',
+                                borderStyle: 'solid',
+                                borderWidth: '2px',
+                                borderColor: '#222',
+                                borderRadius: '10px',
+                                opacity: '1',
+                                transform: 'rotate(0deg)',
+                                boxShadow: ' 1px 1px 5px #222'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'flipInX',
                                 delay: 1
-                            },{
+                            }, {
                                 repeat: 0,
                                 class: 'bounceOut',
                                 delay: 5
-                            },{
+                            }, {
                                 repeat: 0,
                                 class: 'fadeOut',
                                 delay: 0
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p3e2',
                             name: 'p3e2',
                             href: '',
@@ -498,23 +742,40 @@ define(function(require) {
                             y: '175px',
                             width: '280px',
                             height: '80px',
-                            styles: 'left:15px;top:175px;width:280px;height:80px;font-size:24px;line-height:80px;color:#f70;text-align:center;crop:on;background-color:#fff;border-style:solid;border-width:2px;border-color:#222;border-radius:10px;opacity:1;transform:rotate(0deg);box-shadow: 1px 1px 5px #222;',
+                            styles: {
+                                left: '15px',
+                                top: '175px',
+                                width: '280px',
+                                height: '80px',
+                                fontSize: '24px',
+                                lineHeight: '80px',
+                                color: '#f70',
+                                textAlign: 'center',
+                                crop: 'on',
+                                backgroundColor: '#fff',
+                                borderStyle: 'solid',
+                                borderWidth: '2px',
+                                borderColor: '#222',
+                                borderRadius: '10px',
+                                opacity: '1',
+                                transform: 'rotate(0deg)',
+                                boxShadow: ' 1px 1px 5px #222'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'flipInX',
                                 delay: 2
-                            },{
+                            }, {
                                 repeat: 0,
                                 class: 'bounceOut',
                                 delay: 4.0
-                            },{
+                            }, {
                                 repeat: 0,
                                 class: 'fadeOut',
                                 delay: 0
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p3e3',
                             name: 'p3e3',
                             href: '',
@@ -524,32 +785,69 @@ define(function(require) {
                             y: '280px',
                             width: '280px',
                             height: '80px',
-                            styles: 'left:15px;top:280px;width:280px;height:80px;font-size:24px;line-height:80px;color:#0f0;text-align:center;crop:on;background-color:#fff;border-style:solid;border-width:2px;border-color:#222;border-radius:10px;opacity:1;transform:rotate(0deg);box-shadow: 1px 1px 5px #222;',
+                            styles: {
+                                left: '15px',
+                                top: '280px',
+                                width: '280px',
+                                height: '80px',
+                                fontSize: '24px',
+                                lineHeight: '80px',
+                                color: '#0f0',
+                                textAlign: 'center',
+                                crop: 'on',
+                                backgroundColor: '#fff',
+                                borderStyle: 'solid',
+                                borderWidth: '2px',
+                                borderColor: '#222',
+                                borderRadius: '10px',
+                                opacity: '1',
+                                transform: 'rotate(0deg)',
+                                boxShadow: ' 1px 1px 5px #222'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'flipInX',
                                 delay: 3
-                            },{
+                            }, {
                                 repeat: 0,
                                 class: 'bounceOut',
                                 delay: 3.0
-                            },{
+                            }, {
                                 repeat: 0,
                                 class: 'fadeOut',
                                 delay: 0
                             }],
                             auto: true
-                        },{
+                        }, {
                             id: 'p3e4',
                             name: 'p3e4',
                             href: '',
-                            value: '开启你的旅程',
+                            value: '开启旅程',
                             type: 'text',
-                            x: '10px',
+                            x: '13px',
                             y: '40px',
-                            width: '290px',
+                            width: '280px',
                             height: '340px',
-                            styles: 'left:15px;top:40px;width:290px;height:340px;font-size:40px;line-height:340px;color:#fff;text-shadow:0 0 5px #fff;text-align:center;crop:on;background-color:#09e;border-style:dashed;border-width:4px;border-color:#222;border-radius:40px;opacity:1;transform:rotate(0deg);',
+                            styles: {
+                                left: '13px',
+                                top: '40px',
+                                width: '280px',
+                                height: '340px',
+                                fontSize: '60px',
+                                lineHeight: '340px',
+                                color: '#fff',
+                                textShadow: '2px 2px 10px #222',
+                                textAlign: 'center',
+                                crop: 'on',
+                                backgroundColor: '#09e',
+                                borderStyle: 'solid',
+                                borderWidth: '6px',
+                                borderColor: '#999',
+                                borderRadius: '40px',
+                                opacity: '1',
+                                transform: 'rotate(0deg)',
+                                boxShadow: ' 1px 1px 20px #222'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'rotateIn',
@@ -557,9 +855,9 @@ define(function(require) {
                             }],
                             auto: true
                         }]
-                    },{
-                        id:'page4',
-                        name:'页面4',
+                    }, {
+                        id: 'page4',
+                        name: '页面4',
                         styles: 'background:url(./asset/demo/background.jpg) no-repeat 0 0;',
                         elements: [{
                             id: 'p4e1',
@@ -571,14 +869,32 @@ define(function(require) {
                             y: '50px',
                             width: '260px',
                             height: '50px',
-                            styles: 'left:30px;top:50px;width:260px;height:50px;font-size:32px;color:#222;text-align:center;crop:on;line-height:50px;background-color:transparent;border-style:none;border-width:0px;border-color:#000000;border-radius:0px;opacity:1;transform:rotate(0deg);box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '30px',
+                                top: '50px',
+                                width: '260px',
+                                height: '50px',
+                                fontSize: '32px',
+                                color: '#222',
+                                textAlign: 'center',
+                                crop: 'on',
+                                lineHeight: '50px',
+                                backgroundColor: 'transparent',
+                                borderStyle: 'none',
+                                borderWidth: '0px',
+                                borderColor: '#000000',
+                                borderRadius: '0px',
+                                opacity: '1',
+                                transform: 'rotate(0deg)',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'bounceInDown',
                                 delay: 1
                             }],
                             auto: true
-                        },{
+                        }, {
                             id: 'p4e2',
                             name: 'p4e2',
                             href: '',
@@ -588,14 +904,32 @@ define(function(require) {
                             y: '90px',
                             width: '260px',
                             height: '50px',
-                            styles: 'left:30px;top:90px;width:260px;height:50px;font-size:28px;color:#222;text-align:center;crop:on;line-height:50px;background-color:transparent;border-style:none;border-width:0px;border-color:#000000;border-radius:0px;opacity:1;transform:rotate(0deg);box-shadow:0.0000px 0.0000px 0px #ffffff;',
+                            styles: {
+                                left: '30px',
+                                top: '90px',
+                                width: '260px',
+                                height: '50px',
+                                fontSize: '28px',
+                                color: '#222',
+                                textAlign: 'center',
+                                crop: 'on',
+                                lineHeight: '50px',
+                                backgroundColor: 'transparent',
+                                borderStyle: 'none',
+                                borderWidth: '0px',
+                                borderColor: '#000000',
+                                borderRadius: '0px',
+                                opacity: '1',
+                                transform: 'rotate(0deg)',
+                                boxShadow: '0.0000px 0.0000px 0px #ffffff'
+                            },
                             animates: [{
                                 repeat: 0,
                                 class: 'bounceInDown',
                                 delay: 1.5
                             }],
                             auto: true
-                        },{
+                        }, {
                             id: 'p4e3',
                             name: 'p4e3',
                             href: '',
@@ -605,15 +939,25 @@ define(function(require) {
                             y: '220px',
                             width: '40px',
                             height: '40px',
-                            styles: 'left:32px;top:220px;font-size:14px;width:40px;line-height:40px;text-align:center;font-weight:bold;background: #222;opacity:0.8;color:#fff;',
+                            styles: {
+                                left: '32px',
+                                top: '220px',
+                                fontSize: '14px',
+                                width: '40px',
+                                lineHeight: '40px',
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                background: ' #222',
+                                opacity: '0.8',
+                                color: '#fff'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'bounceInLeft',
                                 delay: 2
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p4e4',
                             name: 'p4e4',
                             href: '',
@@ -623,14 +967,25 @@ define(function(require) {
                             y: '220px',
                             width: '220px',
                             height: '40px',
-                            styles: 'left:75px;top:220px;font-size:14px;width:220px;line-height:40px;text-align:center;font-weight:bold;background: #222;opacity:0.8;color:#fff;',
+                            styles: {
+                                left: '75px',
+                                top: '220px',
+                                fontSize: '14px',
+                                width: '220px',
+                                lineHeight: '40px',
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                background: ' #222',
+                                opacity: '0.8',
+                                color: '#fff'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'bounceInRight',
                                 delay: 2.2
                             }],
                             auto: true
-                        },{
+                        }, {
                             id: 'p4e5',
                             name: 'p4e5',
                             href: '',
@@ -640,15 +995,25 @@ define(function(require) {
                             y: '265px',
                             width: '40px',
                             height: '40px',
-                            styles: 'left:32px;top:265px;font-size:14px;width:40px;line-height:40px;text-align:center;font-weight:bold;background: #222;opacity:0.8;color:#fff;',
+                            styles: {
+                                left: '32px',
+                                top: '265px',
+                                fontSize: '14px',
+                                width: '40px',
+                                lineHeight: '40px',
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                background: ' #222',
+                                opacity: '0.8',
+                                color: '#fff'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'bounceInLeft',
                                 delay: 2.5
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p4e6',
                             name: 'p4e6',
                             href: '',
@@ -658,14 +1023,25 @@ define(function(require) {
                             y: '265px',
                             width: '220px',
                             height: '40px',
-                            styles: 'left:75px;top:265px;font-size:14px;width:220px;line-height:40px;text-align:center;font-weight:bold;background: #222;opacity:0.8;color:#fff;',
+                            styles: {
+                                left: '75px',
+                                top: '265px',
+                                fontSize: '14px',
+                                width: '220px',
+                                lineHeight: '40px',
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                background: ' #222',
+                                opacity: '0.8',
+                                color: '#fff'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'bounceInRight',
                                 delay: 2.7
                             }],
                             auto: true
-                        },{
+                        }, {
                             id: 'p4e7',
                             name: 'p4e7',
                             href: '',
@@ -675,15 +1051,25 @@ define(function(require) {
                             y: '310px',
                             width: '40px',
                             height: '40px',
-                            styles: 'left:32px;top:310px;font-size:14px;width:40px;line-height:40px;text-align:center;font-weight:bold;background: #222;opacity:0.8;color:#fff;',
+                            styles: {
+                                left: '32px',
+                                top: '310px',
+                                fontSize: '14px',
+                                width: '40px',
+                                lineHeight: '40px',
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                background: ' #222',
+                                opacity: '0.8',
+                                color: '#fff'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'bounceInLeft',
                                 delay: 2.9
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p4e8',
                             name: 'p4e8',
                             href: '',
@@ -693,14 +1079,25 @@ define(function(require) {
                             y: '310px',
                             width: '220px',
                             height: '40px',
-                            styles: 'left:75px;top:310px;font-size:14px;width:220px;line-height:40px;text-align:center;font-weight:bold;background: #222;opacity:0.8;color:#fff;',
+                            styles: {
+                                left: '75px',
+                                top: '310px',
+                                fontSize: '14px',
+                                width: '220px',
+                                lineHeight: '40px',
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                background: ' #222',
+                                opacity: '0.8',
+                                color: '#fff'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'bounceInRight',
                                 delay: 3.1
                             }],
                             auto: true
-                        },{
+                        }, {
                             id: 'p4e9',
                             name: 'p4e9',
                             href: '',
@@ -710,15 +1107,25 @@ define(function(require) {
                             y: '355px',
                             width: '40px',
                             height: '40px',
-                            styles: 'left:32px;top:355px;font-size:14px;width:40px;line-height:40px;text-align:center;font-weight:bold;background: #222;opacity:0.8;color:#fff;',
+                            styles: {
+                                left: '32px',
+                                top: '355px',
+                                fontSize: '14px',
+                                width: '40px',
+                                lineHeight: '40px',
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                background: ' #222',
+                                opacity: '0.8',
+                                color: '#fff'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'bounceInLeft',
                                 delay: 3.1
                             }],
                             auto: true
-                        },
-                        {
+                        }, {
                             id: 'p4e10',
                             name: 'p4e10',
                             href: '',
@@ -728,15 +1135,25 @@ define(function(require) {
                             y: '355px',
                             width: '220px',
                             height: '40px',
-                            styles: 'left:75px;top:355px;font-size:14px;width:220px;line-height:40px;text-align:center;font-weight:bold;background: #222;opacity:0.8;color:#fff;',
+                            styles: {
+                                left: '75px',
+                                top: '355px',
+                                fontSize: '14px',
+                                width: '220px',
+                                lineHeight: '40px',
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                background: ' #222',
+                                opacity: '0.8',
+                                color: '#fff'
+                            },
                             animates: [{
                                 repeat: 1,
                                 class: 'bounceInRight',
                                 delay: 3.3
                             }],
                             auto: true
-                        }
-                        ]
+                        }]
                     }];
                     player.playPPT(sample);
                 }
@@ -746,19 +1163,24 @@ define(function(require) {
             Storage.set('__PLAYER__', player);
         },
 
-        initStudio : function () {
+        initStudio: function() {
             var studio = new Studio({
-                onPlay : function (){
+                onPlay: function() {
                     var player = Storage.get('__PLAYER__');
                     var AM = Storage.getAM();
                     var mk = AM.getMarker();
                     var elements = mk.data.pages[mk.idx].elements;
                     if (elements.length) {
+                        player.stop = false;
                         player.playSpriteLine(elements.slice(0), appContext);
                     }
                 },
-                onStop : function (){
-
+                onStop: function() {
+                    var player = Storage.get('__PLAYER__');
+                    var AM = Storage.getAM();
+                    var mk = AM.getMarker();
+                    var elements = mk.data.pages[mk.idx].elements;
+                    player.stopAnimation(elements.slice(0), appContext);
                 }
             });
         },

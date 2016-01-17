@@ -8,7 +8,7 @@
 	var FSM = {
 		on : {
 			buttonPressed : function () {
-				$(this.dom).attr('data-tips', '暂停').find('i').removeClass().addClass('fa fa-pause-circle');
+				$(this.dom).attr('data-tips', '播放').find('i').removeClass().addClass('fa fa-play-circle');
 				this.currentStatus = FSM.off;
 
 				if (this.options.onStop) {
@@ -18,7 +18,7 @@
 		},
 		off : {
 			buttonPressed : function () {
-				$(this.dom).attr('data-tips', '播放').find('i').removeClass().addClass('fa fa-play-circle');
+				$(this.dom).attr('data-tips', '暂停').find('i').removeClass().addClass('fa fa-pause-circle');
 				this.currentStatus = FSM.on;
 
 				if (this.options.onPlay) {

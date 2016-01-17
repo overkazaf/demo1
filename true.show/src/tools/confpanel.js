@@ -166,6 +166,7 @@ define(function(require) {
                 /* Act on the event */
                 var t = $(this).attr('plugin-type');
                 that.swaptab(t);
+                
                 switch (t) {
                     case 'canvas':
                         // var AM = Storage.get('__AM__');

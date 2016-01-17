@@ -39,6 +39,23 @@
 									<span class="ui-resizable-circle"></span>\
 								</span>';
 
+	/* helper functions */
+    function camel2HB (str) {
+        return str.replace(/([A-Z])/g, "-$1").toLowerCase();
+    };
+
+    function j2sFN (raw) {
+        var json = raw;
+        var result = '';
+        for (var key in json) {
+            var val = json[key];
+            result += key + ':' + val + ';';
+        }
+        result = result.replace(/([A-Z])/g, "-$1").toLowerCase();
+        return result;
+    };
+    /* helper functions end */
+
 	function tpler(){}
 	tpler.prototype={
 		generateEl:function(obj){
@@ -82,11 +99,8 @@
 			var i=0,l=page.elements?page.elements.length:0;
 			var pagedom=[];
 			var els = page.elements;
-			var that = this;
 			for(;i<l;i++){
-				(function (c){
-					pagedom.push(that.generatePlugin(els[c],type));
-				})(i);
+				pagedom.push(this.generatePlugin(els[i],type));
 			}
 			return pagedom.join('');
 		}

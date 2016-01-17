@@ -6,6 +6,9 @@ define(function(require) {
     var ruler = require('./ruler');
     var tpler = require('./tpler');
     var Storage = require('./Storage');
+    var Adaptor = require('../adaptor/Adaptor');
+    var Group = require('Group');
+    var GroupFactory = require('../manager/GroupFactory');
 
     var ctmtpl = '<div class="contextmenu viewer-contextmenu">\
 								<div type="del-layer" class="ctm-item plugin-ctm">删除图层</div>\
@@ -123,8 +126,15 @@ define(function(require) {
 
                 if (!!AM) {
                     var group = Storage.get(elementId);
+                    // 这里加一个适配器层， 用于直接fetch元素的属性
                     if (!!group) {
                         group.init();
+                    } else {
+                    	var groupFactory = new GroupFactory({});
+                    	var newGroup = groupFactory.forceCreateGroup(type, elementId, true);
+                    	newGroup.init();
+                    	AM.getInstance().addGroup(newGroup);
+                    	Storage.set(elementId, newGroup);
                     }
                 }
                 return false;
@@ -220,6 +230,7 @@ define(function(require) {
                 });
                 that.ctm = ctm;
             });
+
             $(document).on('click', this.opts.ctmcls, function(event) {
                 event.preventDefault();
                 if ($(this).hasClass('state-disable')) {
@@ -337,7 +348,6 @@ define(function(require) {
             if (type == 'lock') {
                 bool = !bool;
             }
-            console.log('dom', dom);
             if (bool == false) {
                 dom.attr({
                     states: states

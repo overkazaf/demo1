@@ -65,6 +65,24 @@ define(function(require) {
         });
     };
 
+
+    /* helper functions */
+    function camel2HB (str) {
+        return str.replace(/([A-Z])/g, "-$1").toLowerCase();
+    };
+
+    function j2sFN (raw) {
+        var json = raw;
+        var result = '';
+        for (var key in json) {
+            var val = json[key];
+            result += key + ':' + val + ';';
+        }
+        result = result.replace(/([A-Z])/g, "-$1").toLowerCase();
+        return result;
+    };
+    /* helper functions end */
+
     Player.prototype.drawPage = function(pages) {
         var i = 0,
             l = pages.length;
@@ -76,15 +94,19 @@ define(function(require) {
             html.push('<section class="page" style="' + page.styles + '" id="' + page.id + '" name="' + page.name + '">');
             for (; m < n; m++) {
                 var el = page.elements[m],
-                    h = '';
+                    h = '',
+                    css = el.styles;
+
                 var elStyle = _elStyleTpl
-                    .replace('{{left}}', el.x)
-                    .replace('{{top}}', el.y)
+                    .replace('{{left}}', css.left)
+                    .replace('{{top}}', css.top)
                     .replace('{{z-index}}', m)
-                    .replace('{{width}}', el.width)
-                    .replace('{{height}}', el.height);
-                elStyle = !el.styles ? elStyle : elStyle + el.styles;
+                    .replace('{{width}}', css.width)
+                    .replace('{{height}}', css.height);
+
+                elStyle = !el.styles ? elStyle : elStyle + j2sFN(css);
                 switch (el.type) {
+                    case "photo":
                     case "img":
                         h = '<img class="element invisibility" style="' + elStyle + '" id="' + el.id + '" name="' + el.name + '" href="' + el.href + '" src="' + el.value + '" />';
                         break;
@@ -144,24 +166,34 @@ define(function(require) {
     Player.prototype.animating = function(idx) {
         //这里需要深拷贝对象数组
         var elements = this.data.pages[idx].elements.slice(0);
-        this.playSpriteLine(elements);
+        this.playSpriteLine(elements, this.options.context);
     };
 
 
     Player.prototype.resetPage = function(idx) {
-        this.stop = true;
         var els = this.data.pages[idx].elements;
         for (var i in els) {
             $('#' + els[i].id, this.options.context || appContext).removeClass().addClass('invisibility');
         }
-        this.stop = false;
     };
 
     Player.prototype.resetElements = function (elements, context) {
+        this.stop = true;
         for (var i = 0, ele; ele = elements[i++];) {
-            console.log(ele.id);
             $('#' + ele.id, context).removeClass().addClass('invisibility');
         }
+        this.stop = false;
+    };
+
+    Player.prototype.stopAnimation = function (elements, context) {
+        var self = this;
+        self.stop = true;
+        $.each(elements, function (index, item) {
+            var el = elements[index];
+            var $dom = $('#' + el.id, context);
+            $dom.removeClass('animated invisibility').addClass('animated');
+        });
+
     };
 
     Player.prototype.bindEvent = function() {
@@ -173,7 +205,7 @@ define(function(require) {
 
     Player.prototype.playSpriteLine = function(elements, context) {
         if (this.stop == true) return;
-        this.resetElements(elements, context);
+        this.resetElements(elements, $('app-page')[0]);
         var self = this,
             els, animates;
         while (elements.length > 0) {
@@ -215,7 +247,6 @@ define(function(require) {
         var self = this;
         if (this.stop == true) return;
         var r = 0;
-        console.log('context', context);
         var Anim = function() {
             if (self.stop == true) return;
             var $dom = $('#' + id, context || self.options.context);

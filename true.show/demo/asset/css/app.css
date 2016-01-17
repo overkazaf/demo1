@@ -1725,6 +1725,10 @@ section .invisibility {
     visibility: hidden;
 }
 
+.invisibility {
+    visibility: hidden;
+}
+
 @-webkit-keyframes reverseRotataZ {
     0% {
         -webkit-transform: rotateZ(0deg);

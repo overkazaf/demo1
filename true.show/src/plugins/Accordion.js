@@ -161,7 +161,7 @@ define(function(require) {
         		$(this).removeClass('animated').removeClass($(this).attr('data-class'));
         	})
         	$(this).find('.anim-item').addClass('active');
-        	$(this).addClass('active').siblings().find('.anim-item').removeClass('active');
+        	$(this).addClass('active').siblings().removeClass('active').end().closest('.effect-list-item').siblings().find('.anim-item').removeClass('active');
 
         	var $subtitle = $(this).closest('.ui-accordion').find('.accordion-subtitle');
         	

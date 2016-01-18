@@ -198,6 +198,7 @@
         <div id="iSlider-arrow"></div>
     </div>
 </body>
+<script type="text/javascript" src="asset/js/echarts.min.js"></script>
 <script type="text/javascript" src="asset/js/require.js"></script>
 <script type="text/javascript">
 require(['marker'],
@@ -258,6 +259,12 @@ require(['marker'],
             // }
             // ]
             pages: [{
+                id: 'page0',
+                name: '演示页面',
+                transform: '',
+                styles: '',
+                elements : []
+            }, {
                 id: 'page1',
                 name: '页面1',
                 transform: '',
@@ -749,6 +756,158 @@ require(['marker'],
                         repeat: 20,
                         class: 'tada',
                         delay: 2.2
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }]
+            }, {
+                id: 'page6',
+                name: '页面6',
+                transform: '',
+                styles: '',
+                elements: [{
+                    id: 'p6e1',
+                    name: 'p6e1',
+                    href: '',
+                    type: 'chart',
+                    modelType: 'pie',
+                    width: '310px',
+                    height: '310px',
+                    styles: {
+                        left: '5px',
+                        top: '50px',
+                        width: '310px',
+                        height: '310px',
+                        "text-align": 'center',
+                        color: '#f70',
+                        "font-size": '41px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        "text-decoration": '',
+                        "background-color": '#ccc',
+                        opacity: '1'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'fadeInLeft',
+                        delay: 1
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                },{
+                    id: 'p6e2',
+                    name: 'p6e2',
+                    href: '',
+                    value: '饼图',
+                    type: 'text',
+                    styles: {
+                        left: '120px',
+                        top: '395px',
+                        width: '65px',
+                        height: '40px',
+                        "text-align": 'center',
+                        content: '编辑内容',
+                        color: '#000',
+                        "font-size": '24px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        "font-style": '',
+                        "text-decoration": '',
+                        "line-height": '1',
+                        "text-shadow": '0.0000px 0.0000px 0px #000000',
+                        "background-color": 'transparent',
+                        "border-style": 'solid',
+                        "border-width": '0',
+                        "border-color": '#fff',
+                        "border-radius": '0',
+                        "box-shadow": '0.0000px 0.0000px 0px #ffffff'
+                    },
+                    animates: [{
+                        repeat: 0,
+                        class: 'bounceInRight',
+                        delay: 1.8
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }]
+            }, {
+                id: 'page5',
+                name: '页面5',
+                transform: '',
+                styles: '',
+                elements: [{
+                    id: 'p5e1',
+                    name: 'p5e1',
+                    href: '',
+                    type: 'chart',
+                    modelType: 'bar',
+                    width: '310px',
+                    height: '310px',
+                    styles: {
+                        left: '5px',
+                        top: '50px',
+                        width: '310px',
+                        height: '310px',
+                        "text-align": 'center',
+                        color: '#f70',
+                        "font-size": '41px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        "text-decoration": '',
+                        "background-color": '#ccc',
+                        opacity: '1'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'fadeInUp',
+                        delay: 1
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                },{
+                    id: 'p5e2',
+                    name: 'p5e2',
+                    href: '',
+                    value: '柱状图',
+                    type: 'text',
+                    styles: {
+                        left: '100px',
+                        top: '395px',
+                        width: '120px',
+                        height: '40px',
+                        "text-align": 'center',
+                        content: '编辑内容',
+                        color: '#000',
+                        "font-size": '24px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        "font-style": '',
+                        "text-decoration": '',
+                        "line-height": '1',
+                        "text-shadow": '0.0000px 0.0000px 0px #000000',
+                        "background-color": 'transparent',
+                        "border-style": 'solid',
+                        "border-width": '0',
+                        "border-color": '#fff',
+                        "border-radius": '0',
+                        "box-shadow": '0.0000px 0.0000px 0px #ffffff'
+                    },
+                    animates: [{
+                        repeat: 0,
+                        class: 'bounceInUp',
+                        delay: 1.8
                     }],
                     states: {
                         lock: false,

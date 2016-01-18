@@ -30,6 +30,14 @@
 	};
 
 	var strategies = {
+        'chart' : function (elementId) {
+        	var group = new Group({
+        		id : elementId
+        	});
+
+
+        	return group;
+        },
         'canvas' : function (elementId) {
             var group = new Group({
                 id: elementId
@@ -137,13 +145,21 @@
         }
     };
 
+    GroupFactory.prototype.mergeAttributes = function (json, attributes) {
+    	var newAttr = [];
+
+
+    	return newAttr;
+    };
+
     GroupFactory.prototype.forceCreateGroup = function (groupType, elementId) {
     	var element = $('#' + elementId, appContext);
     	var styles = element.attr('styles');
     	var animates = element.attr('animates');
     	var events = element.attr('events');
 
-    	
+    	var stylesJson = JSON.parse(styles);
+    	console.log('stylesJson', stylesJson);
     	// console.log('styles', styles);
     	// console.log('animates', animates);
 

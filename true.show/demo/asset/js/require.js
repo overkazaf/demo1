@@ -50,6 +50,8 @@ require.config({
     	'slip' : 'slip',
     	'AttributeManager' : '../../../src/manager/AttributeManager',
     	'Group' : '../../../src/manager/Group',
-    	'Player' : '../../../src/tools/Player'
+        'Player' : '../../../src/tools/Player',
+        'Chart' : '../../../src/plugins/Chart',
+    	'ChartConfig' : '../../../src/plugins/config',
     }
 });

@@ -34,6 +34,8 @@ define(function(require) {
     var appContext = $(document).find('app-page')[0];
     var pageContext = document.getElementById('pagesBox');
 
+    var ChartConfig = require('ChartConfig');
+
     var paperTpl = {
         id: tools.uuid(),
         name: '',
@@ -94,6 +96,14 @@ define(function(require) {
         // });
 
         this.AM = null; // 负责特性配置的管理模块
+
+        this.charts = {
+            el: {},
+            size: 0
+        };
+
+        this.chartInstancesArray = [];
+        this.chartInstancesMap = {};
 
         this.init();
     }
@@ -211,6 +221,31 @@ define(function(require) {
             this.initPlayer();
 
             this.initStudio();
+
+            this._buildChart();
+        },
+
+        _buildChart: function() {
+            var that = this;
+            var pages = this.data.pages;
+            tools.each(pages, function(page) {
+                that.renderChart(page, pageContext);
+            });
+        },
+        renderChart: function(page, context) {
+            var that = this;
+            var elements = page.elements;
+            tools.each(elements, function(el) {
+                // pageContext
+                if (el.type == 'chart') {
+                    var instance = echarts.init($('#' + el.id, context)[0]);
+                    if (!el.id in that.chartInstancesMap) {
+                        that.chartInstancesArray.push(instance);
+                        that.chartInstancesMap[el.id] = instance;
+                    }
+                    instance.setOption(ChartConfig.charts.options[el.modelType][0]);
+                }
+            });
         },
         initAttributeManager: function() {
             // 1. 初始化构建属性管理对象
@@ -356,7 +391,7 @@ define(function(require) {
                     }, {
                         id: 'page2',
                         name: '页面2',
-                        styles: 'background:url(./asset/demo/background.jpg) no-repeat 0 0;',
+                        styles:'',
                         elements: [{
                             id: 'p2e1',
                             name: 'p2e1',
@@ -373,7 +408,6 @@ define(function(require) {
                                 width: '130px',
                                 height: '130px',
                                 textAlign: 'center',
-                                content: '编辑内容',
                                 color: '#000000',
                                 fontSize: '20px',
                                 fontFamily: 'Heiti',
@@ -412,7 +446,6 @@ define(function(require) {
                                 width: '155px',
                                 height: '155px',
                                 textAlign: 'center',
-                                content: '编辑内容',
                                 color: '#ff0',
                                 fontSize: '26px',
                                 fontFamily: 'Heiti',
@@ -451,7 +484,6 @@ define(function(require) {
                                 width: '155px',
                                 height: '155px',
                                 textAlign: 'center',
-                                content: '编辑内容',
                                 color: '#fff',
                                 fontSize: '32px',
                                 fontFamily: 'Heiti',
@@ -490,7 +522,6 @@ define(function(require) {
                                 width: '65px',
                                 height: '20px',
                                 textAlign: 'center',
-                                content: '编辑内容',
                                 color: '#000',
                                 fontSize: '16px',
                                 fontFamily: 'Heiti',
@@ -532,7 +563,6 @@ define(function(require) {
                                 width: '65px',
                                 height: '20px',
                                 textAlign: 'center',
-                                content: '编辑内容',
                                 color: '#000',
                                 fontSize: '16px',
                                 fontFamily: 'Heiti',
@@ -574,7 +604,6 @@ define(function(require) {
                                 width: '65px',
                                 height: '20px',
                                 textAlign: 'center',
-                                content: '编辑内容',
                                 color: '#000',
                                 fontSize: '16px',
                                 fontFamily: 'Heiti',
@@ -616,7 +645,6 @@ define(function(require) {
                                 width: '65px',
                                 height: '20px',
                                 textAlign: 'center',
-                                content: '编辑内容',
                                 color: '#000',
                                 fontSize: '16px',
                                 fontFamily: 'Heiti',
@@ -658,7 +686,6 @@ define(function(require) {
                                 width: '65px',
                                 height: '20px',
                                 textAlign: 'center',
-                                content: '编辑内容',
                                 color: '#000',
                                 fontSize: '16px',
                                 fontFamily: 'Heiti',
@@ -685,10 +712,389 @@ define(function(require) {
                             }],
                             auto: true
                         }]
+                    },
+                    {
+                id: 'page11',
+                name: '页面11',
+                transform: '',
+                styles: '',
+                elements : [{
+                    id:'p11e01',
+                    name: 'p11e01',
+                    href: '',
+                    value: '研发中心再获2个高新产品、6个软件产品',
+                    type : 'text',
+                    styles : {
+                        left: '20px',
+                        top: '30px',
+                        width: '20px',
+                        height: '154px',
+                        lineHeight:'24px',
+                        "text-align": 'center',
+                        color: '#f00',
+                        fontSize:'22px',
+                        fontWeight:'bold'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'lightSpeedIn',
+                        delay: .5
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                },{
+                    id: 'p11e02',
+                    name: 'p11e02',
+                    href: '',
+                    src: '../demo/asset/images/news/news2.jpg',
+                    value: '../demo/asset/images/news/news2.jpg',
+                    type: 'photo',
+                    styles: {
+                        left: '65px',
+                        top: '30px',
+                        width: '220px',
+                        height: '154px',
+                        "text-align": 'center',
+                        crop: 'on',
+                        "background-color": '#ffffff',
+                        "border-style": 'none',
+                        "border-width": '0px',
+                        "border-color": '#000000',
+                        "border-radius": '0px',
+                        opacity: '1',
+                        transform: 'rotate(0deg)',
+                        "box-shadow": '0.0000px 0.0000px 0px #ffffff'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'flipInY',
+                        delay: 1.5
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                },{
+                    id: 'p11e03',
+                    name: 'p11e03',
+                    href: '',
+                    src: '../demo/asset/images/news/news3.jpg',
+                    value: '../demo/asset/images/news/news3.jpg',
+                    type: 'photo',
+                    styles: {
+                        left: '55px',
+                        top: '190px',
+                        width: '210px',
+                        height: '124px',
+                        "text-align": 'center',
+                        crop: 'on',
+                        "background-color": '#ffffff',
+                        "border-style": 'none',
+                        "border-width": '0px',
+                        "border-color": '#000000',
+                        "border-radius": '0px',
+                        opacity: '1',
+                        transform: 'rotate(355deg)',
+                        "box-shadow": '0.0000px 0.0000px 0px #ffffff'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'fadeInRightBig',
+                        delay: 2.5
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                },{
+                    id: 'p11e04',
+                    name: 'p11e04',
+                    href: '',
+                    src: '../demo/asset/images/news/news4.jpg',
+                    value: '../demo/asset/images/news/news4.jpg',
+                    type: 'photo',
+                    styles: {
+                        left: '75px',
+                        top: '310px',
+                        width: '220px',
+                        height: '114px',
+                        "text-align": 'center',
+                        crop: 'on',
+                        "background-color": '#ffffff',
+                        "border-style": 'none',
+                        "border-width": '0px',
+                        "border-color": '#000000',
+                        "border-radius": '0px',
+                        opacity: '1',
+                        transform: 'rotate(15deg)',
+                        "box-shadow": '0.0000px 0.0000px 0px #ffffff'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'rollIn',
+                        delay: 3.5
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }]
+            },
+            {
+                id: 'page1',
+                name: '页面1',
+                transform: '',
+                styles: '',
+                elements : [{
+                    id:'p1e01',
+                    name: 'p1e01',
+                    href: '',
+                    value: '热烈祝贺我司被授予“江苏省优秀软件企业”称号',
+                    type : 'text',
+                    styles : {
+                        left: '40px',
+                        top: '30px',
+                        width: '240px',
+                        height: '154px',
+                        lineHeight:'24px',
+                        "text-align": 'center',
+                        color: '#f00',
+                        fontSize:'20px',
+                        fontWeight:'bold'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'fadeInUp',
+                        delay: .5
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                },{
+                    id: 'p1ex',
+                    name: 'p1ex',
+                    href: '',
+                    src: '../demo/asset/images/news/news1.jpg',
+                    value: '../demo/asset/images/news/news1.jpg',
+                    type: 'photo',
+                    styles: {
+                        left: '25px',
+                        top: '130px',
+                        width: '260px',
+                        height: '154px',
+                        "text-align": 'center',
+                        crop: 'on',
+                        "background-color": '#ffffff',
+                        "border-style": 'none',
+                        "border-width": '0px',
+                        "border-color": '#000000',
+                        "border-radius": '0px',
+                        opacity: '1',
+                        transform: 'rotate(0deg)',
+                        "box-shadow": '0.0000px 0.0000px 0px #ffffff'
+                    },
+                    animates: [{
+                        repeat: 2,
+                        class: 'flash',
+                        delay: 2.5
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                },{
+                    id:'p1e02',
+                    name: 'p1e02',
+                    href: '',
+                    value: '&nbsp;&nbsp;&nbsp;&nbsp;热烈祝贺我司在2015年度举办的“江苏省优秀软件企业”评选中，从众多参选的省软件、物联网、云计算智能化等行业企业中脱颖而出，获此殊荣。',
+                    type : 'text',
+                    styles : {
+                        left: '30px',
+                        top: '330px',
+                        width: '250px',
+                        height: '154px',
+                        lineHeight:'18px',
+                        "text-align": 'left',
+                        fontSize:'14px',
+                        fontWeight:'bold'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'fadeIn',
+                        delay: 2.5
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }]
+            },
+                    {
+                        id: 'page6',
+                        name: '页面6',
+                        transform: '',
+                        styles: '',
+                        elements: [{
+                            id: 'p6e1',
+                            name: 'p6e1',
+                            href: '',
+                            type: 'chart',
+                            modelType: 'pie',
+                            width: '310px',
+                            height: '310px',
+                            styles: {
+                                left: '5px',
+                                top: '50px',
+                                width: '310px',
+                                height: '310px',
+                                "text-align": 'center',
+                                color: '#f70',
+                                "font-size": '41px',
+                                "font-family": 'Heiti',
+                                "font-weight": 'bold',
+                                "text-decoration": '',
+                                "background-color": '#ccc',
+                                opacity: '1'
+                            },
+                            animates: [{
+                                repeat: 1,
+                                class: 'fadeInLeft',
+                                delay: 1
+                            }],
+                            states: {
+                                lock: false,
+                                visible: true
+                            },
+                            auto: true
+                        }, {
+                            id: 'p6e2',
+                            name: 'p6e2',
+                            href: '',
+                            value: '饼图',
+                            type: 'text',
+                            styles: {
+                                left: '120px',
+                                top: '395px',
+                                width: '65px',
+                                height: '40px',
+                                "text-align": 'center',
+                                content: '编辑内容',
+                                color: '#000',
+                                "font-size": '24px',
+                                "font-family": 'Heiti',
+                                "font-weight": 'bold',
+                                "font-style": '',
+                                "text-decoration": '',
+                                "line-height": '1',
+                                "text-shadow": '0.0000px 0.0000px 0px #000000',
+                                "background-color": 'transparent',
+                                "border-style": 'solid',
+                                "border-width": '0',
+                                "border-color": '#fff',
+                                "border-radius": '0',
+                                "box-shadow": '0.0000px 0.0000px 0px #ffffff'
+                            },
+                            animates: [{
+                                repeat: 0,
+                                class: 'bounceInRight',
+                                delay: 1.8
+                            }],
+                            states: {
+                                lock: false,
+                                visible: true
+                            },
+                            auto: true
+                        }]
+                    }, {
+                        id: 'page5',
+                        name: '页面5',
+                        transform: '',
+                        styles: '',
+                        elements: [{
+                            id: 'p5e1',
+                            name: 'p5e1',
+                            href: '',
+                            type: 'chart',
+                            modelType: 'bar',
+                            width: '310px',
+                            height: '310px',
+                            styles: {
+                                left: '5px',
+                                top: '50px',
+                                width: '310px',
+                                height: '310px',
+                                "text-align": 'center',
+                                color: '#f70',
+                                "font-size": '41px',
+                                "font-family": 'Heiti',
+                                "font-weight": 'bold',
+                                "text-decoration": '',
+                                "background-color": '#ccc',
+                                opacity: '1'
+                            },
+                            animates: [{
+                                repeat: 1,
+                                class: 'fadeInUp',
+                                delay: 1
+                            }],
+                            states: {
+                                lock: false,
+                                visible: true
+                            },
+                            auto: true
+                        }, {
+                            id: 'p5e2',
+                            name: 'p5e2',
+                            href: '',
+                            value: '柱状图',
+                            type: 'text',
+                            styles: {
+                                left: '120px',
+                                top: '395px',
+                                width: '120px',
+                                height: '40px',
+                                "text-align": 'center',
+                                content: '编辑内容',
+                                color: '#000',
+                                "font-size": '24px',
+                                "font-family": 'Heiti',
+                                "font-weight": 'bold',
+                                "font-style": '',
+                                "text-decoration": '',
+                                "line-height": '1',
+                                "text-shadow": '0.0000px 0.0000px 0px #000000',
+                                "background-color": 'transparent',
+                                "border-style": 'solid',
+                                "border-width": '0',
+                                "border-color": '#fff',
+                                "border-radius": '0',
+                                "box-shadow": '0.0000px 0.0000px 0px #ffffff'
+                            },
+                            animates: [{
+                                repeat: 0,
+                                class: 'bounceInUp',
+                                delay: 1.8
+                            }],
+                            states: {
+                                lock: false,
+                                visible: true
+                            },
+                            auto: true
+                        }]
                     }, {
                         id: 'page3',
                         name: '页面3',
-                        styles: 'background:url(./asset/demo/background.jpg) no-repeat 0 0;',
+                        styles:'',
                         elements: [{
                             id: 'p3e1',
                             name: 'p3e1',
@@ -725,11 +1131,7 @@ define(function(require) {
                             }, {
                                 repeat: 0,
                                 class: 'bounceOut',
-                                delay: 5
-                            }, {
-                                repeat: 0,
-                                class: 'fadeOut',
-                                delay: 0
+                                delay: 6
                             }],
                             auto: true
                         }, {
@@ -768,11 +1170,7 @@ define(function(require) {
                             }, {
                                 repeat: 0,
                                 class: 'bounceOut',
-                                delay: 4.0
-                            }, {
-                                repeat: 0,
-                                class: 'fadeOut',
-                                delay: 0
+                                delay: 5.0
                             }],
                             auto: true
                         }, {
@@ -811,11 +1209,7 @@ define(function(require) {
                             }, {
                                 repeat: 0,
                                 class: 'bounceOut',
-                                delay: 3.0
-                            }, {
-                                repeat: 0,
-                                class: 'fadeOut',
-                                delay: 0
+                                delay: 4.0
                             }],
                             auto: true
                         }, {
@@ -858,7 +1252,7 @@ define(function(require) {
                     }, {
                         id: 'page4',
                         name: '页面4',
-                        styles: 'background:url(./asset/demo/background.jpg) no-repeat 0 0;',
+                        styles:'',
                         elements: [{
                             id: 'p4e1',
                             name: 'p4e1',
@@ -1155,6 +1549,7 @@ define(function(require) {
                             auto: true
                         }]
                     }];
+                    //var sample = Storage.getAM().getMarker().data.pages.slice(0);
                     player.playPPT(sample);
                 }
             });
@@ -1192,6 +1587,8 @@ define(function(require) {
             this.viewer.init(pageData);
             // 初始化， 并把页面的第一个层元素激活为焦点元素
             this.layer.init(this.data.pages[page].elements, 0);
+
+            this.renderChart(this.data.pages[page], appContext);
         },
         changeAnimates: function(id, animates) {
             var el = this.getElement(id);

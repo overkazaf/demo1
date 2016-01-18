@@ -10,6 +10,7 @@
 define(function(require) {
     var $ = require('jquery');
     var _slip = require('slip');
+    var Chart = require('Chart');
 
     var appContext = $('app-page')[0];
     var _elStyleTpl = 'position: absolute;top:{{top}};left:{{left}};z-index:{{z-index}};width:{{width}};height:{{height}};';
@@ -28,6 +29,10 @@ define(function(require) {
         this.options = $.extend({}, __defaults, options || {});
         this.dom = this.options.dom;
         this.data = {};
+        this.charts = {
+            el : {},
+            size : 0
+        };
         this.idx = 0;
         this.stop = false;
     };
@@ -42,6 +47,8 @@ define(function(require) {
         this.animating(0);
 
         this.initPlayer();
+
+        this._buildChart();
     };
 
     Player.prototype.displayStudio = function () {
@@ -113,15 +120,17 @@ define(function(require) {
                     case "object":
 
                         break;
-                    case "echarts":
-                        h = '<div id="' + el.id + '" style="' + elStyle + '"></div>';
+                    case "chart":
+                        h = '<div class="element invisibility" id="' + el.id + '" style="' + elStyle + '"></div>';
                         //延后处理
-                        this.chart.el[el.id] = {
+                        this.charts.el[el.id] = {
+                            id : el.id,
+                            modelType : el.modelType,
                             pi: i,
                             ei: m,
                             models: el.value
                         };
-                        this.chart.size += 1;
+                        this.charts.size += 1;
                         break;
                     default:
                         h = '<span class="element invisibility" style="' + elStyle + '" id="' + el.id + '" name="' + el.name + '" href="' + el.href + '">' + el.value + '</span>';
@@ -151,7 +160,7 @@ define(function(require) {
         var $sections = $('.page');
         $('#iSlider-arrow').on('click', function() {
             // if (that.idx == this.page) return;
-            if (that.idx == 3) {idx = -1;}
+            if (that.idx == 7) {idx = -1;}
             that.resetPage(that.idx);
             that.idx = ++idx;
             $sections.hide().eq(idx).show();
@@ -270,6 +279,11 @@ define(function(require) {
         } else {
             Anim();
         }
+    }
+
+     Player.prototype._buildChart = function () {
+        if(this.charts.size==0) return;
+        var _chart=new Chart(this.charts.el);
     }
 
     return Player;

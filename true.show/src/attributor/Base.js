@@ -152,7 +152,7 @@ define(function(require) {
             	html = '<input type="range" data-unit="'+ unit +'" min="0" max="100" step="1" defaultValue="100" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):12) +'" /><input name="result" value="'+(!!value?parseInt(value):100) +'" /><span>'+ unit +'</span>';
                 break;
             case 'slider-lineheight':
-            	html = '<input type="range" data-unit="'+ unit +'" min=".1" max="5" step=".1" defaultValue=".1" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><input name="result" value="'+(!!value?parseInt(value):1) +'" /><span>'+ unit +'</span>';
+            	html = '<input type="range" data-unit="'+ unit +'" min=".1" max="5" step=".1" defaultValue="1" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseFloat(value).toFixed(1):1) +'" /><input name="result" value="'+(!!value?parseInt(value):1) +'" /><span>'+ unit +'</span>';
                 break;
             case 'slider':
                 html = '<input type="range" data-unit="'+ unit +'" min="0" max="40" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):0) +'" /><input name="result" value="'+(!!value?parseInt(value):0) +'" /><span>'+ unit +'</span>';

@@ -115,6 +115,13 @@ define(function(require) {
 
         var strategy = {
             'noticeUpdate': function(groupId) {
+                var states = $('#' + groupId, $('app-page')[0]).attr('states');
+                var lock = JSON.parse(states)['lock'];
+                if (lock) {
+                    alert('图层已锁定，请先解锁');
+                    return;
+                }
+
                 if (timeout) clearTimeout(timeout);
                 timeout = null;
                 timeout = setTimeout(function() {

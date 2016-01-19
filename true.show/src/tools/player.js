@@ -38,6 +38,9 @@ define(function(require) {
     };
 
     Player.prototype.playPPT = function(pages) {
+        
+        this.stop = false;
+
         this.data.pages = pages;
 
         this.drawPage(pages);
@@ -159,14 +162,13 @@ define(function(require) {
         var idx = 0;
         var $sections = $('.page');
         $('#iSlider-arrow').on('click', function() {
-            // if (that.idx == this.page) return;
-            if (that.idx == 7) {idx = -1;}
+            if (that.idx == that.options.data.length) {idx = -1;}
             that.resetPage(that.idx);
             that.idx = ++idx;
             $sections.hide().eq(idx).show();
             that.animating(that.idx);
         });
-        that.resetPage(that.idx);
+        that.resetPage(0);
     };
 
     Player.prototype.init = function() {

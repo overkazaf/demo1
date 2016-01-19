@@ -588,7 +588,7 @@ define(function(require) {
 
     /* demo数据结束 */ 
 
-    var optionTotal
+    var optionTotal;
     optionTotal = {
         title: {
             text: echartTitle + '总量',
@@ -617,7 +617,7 @@ define(function(require) {
         }]
     };
 
-    var optionGrowth
+    var optionGrowth;
     optionGrowth = {
         title: {
             text: echartTitle + '增幅',

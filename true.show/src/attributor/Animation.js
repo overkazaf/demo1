@@ -191,8 +191,7 @@ define(function(require) {
         accordion.init();
 
         $('#play-animation').removeClass('btn-disabled');
-        this.pluginList.push(accordion);
-
+        this.pluginList.push(accordion); 
     }
 
     Animation.prototype.getForm = function() {

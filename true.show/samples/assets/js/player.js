@@ -159,7 +159,7 @@ define(function(require) {
         var $sections = $('.page');
         $('#iSlider-arrow').on('click', function() {
             // if (that.idx == this.page) return;
-            if (that.idx == 7) {idx = -1;}
+            if (that.idx == that.options.data.pages.length - 1) {idx = -1;}
             that.resetPage(that.idx);
             that.idx = ++idx;
             $sections.hide().eq(idx).show();

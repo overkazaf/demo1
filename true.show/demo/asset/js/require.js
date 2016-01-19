@@ -52,6 +52,7 @@ require.config({
     	'Group' : '../../../src/manager/Group',
         'Player' : '../../../src/tools/Player',
         'Chart' : '../../../src/plugins/Chart',
-    	'ChartConfig' : '../../../src/plugins/config',
+        'ChartConfig' : '../../../src/plugins/config',
+    	'PreviewSample' : '../../../src/dummyData/previewSample'
     }
 });

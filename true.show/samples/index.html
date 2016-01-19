@@ -14,30 +14,32 @@
     <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
     <link rel="stylesheet" type="text/css" href="assets/css/app.css">
 </head>
+
 <body>
-	<div id="pptcontainer">
-		<div id="container">
-    	</div>
-    	<div id="iSlider-arrow"></div>
-	</div>
+    <div id="pptcontainer">
+        <div id="container">
+        </div>
+        <div id="iSlider-arrow"></div>
+    </div>
 </body>
 <script src="assets/lib/echarts.min.js"></script>
 <script src="assets/lib/require.js"></script>
 <script>
 require(['APP'], function(APP) {
-	'use strict';
+    'use strict';
 
-	var app = new APP();
+    var app = new APP();
 
     app.init();
 
 
     var data = {
-            id: 'paper1',
-            name: '测试结构',
-            layout: 'liner',
-            sound: 'asset/sound/llh.mp3',
-            pages: [
+        id: 'paper1',
+        name: '测试结构',
+        layout: 'liner',
+        sound: 'asset/sound/llh.mp3',
+        pages: [
+
             {
                 id: 'page1',
                 name: '页面1',
@@ -176,7 +178,7 @@ require(['APP'], function(APP) {
             }, {
                 id: 'page2',
                 name: '页面2',
-                styles:'',
+                styles: '',
                 elements: [{
                     id: 'p2e1',
                     name: 'p2e1',
@@ -542,23 +544,23 @@ require(['APP'], function(APP) {
                 name: '页面11',
                 transform: '',
                 styles: '',
-                elements : [{
-                	id:'p11e01',
-                	name: 'p11e01',
-                	href: '',
-                	value: '研发中心再获2个高新产品、6个软件产品',
-                	type : 'text',
-                	styles : {
-                		left: '20px',
+                elements: [{
+                    id: 'p11e01',
+                    name: 'p11e01',
+                    href: '',
+                    value: '研发中心再获2个高新产品、6个软件产品',
+                    type: 'text',
+                    styles: {
+                        left: '20px',
                         top: '30px',
                         width: '20px',
                         height: '154px',
-                        lineHeight:'24px',
+                        lineHeight: '24px',
                         "text-align": 'center',
                         color: '#f00',
-                        fontSize:'22px',
-                        fontWeight:'bold'
-                	},
+                        fontSize: '22px',
+                        fontWeight: 'bold'
+                    },
                     animates: [{
                         repeat: 1,
                         class: 'lightSpeedIn',
@@ -569,8 +571,8 @@ require(['APP'], function(APP) {
                         visible: true
                     },
                     auto: true
-                },{
-                	id: 'p11e02',
+                }, {
+                    id: 'p11e02',
                     name: 'p11e02',
                     href: '',
                     src: './assets/images/news/news2.jpg',
@@ -602,8 +604,8 @@ require(['APP'], function(APP) {
                         visible: true
                     },
                     auto: true
-                },{
-                	id: 'p11e03',
+                }, {
+                    id: 'p11e03',
                     name: 'p11e03',
                     href: '',
                     src: './assets/images/news/news3.jpg',
@@ -635,8 +637,8 @@ require(['APP'], function(APP) {
                         visible: true
                     },
                     auto: true
-                },{
-                	id: 'p11e04',
+                }, {
+                    id: 'p11e04',
                     name: 'p11e04',
                     href: '',
                     src: './assets/images/news/news4.jpg',
@@ -669,29 +671,28 @@ require(['APP'], function(APP) {
                     },
                     auto: true
                 }]
-            },
-            {
+            }, {
                 id: 'page1',
                 name: '页面1',
                 transform: '',
                 styles: '',
-                elements : [{
-                	id:'p1e01',
-                	name: 'p1e01',
-                	href: '',
-                	value: '热烈祝贺我司被授予“江苏省优秀软件企业”称号',
-                	type : 'text',
-                	styles : {
-                		left: '40px',
+                elements: [{
+                    id: 'p1e01',
+                    name: 'p1e01',
+                    href: '',
+                    value: '热烈祝贺我司被授予“江苏省优秀软件企业”称号',
+                    type: 'text',
+                    styles: {
+                        left: '40px',
                         top: '30px',
                         width: '240px',
                         height: '154px',
-                        lineHeight:'24px',
+                        lineHeight: '24px',
                         "text-align": 'center',
                         color: '#f00',
-                        fontSize:'20px',
-                        fontWeight:'bold'
-                	},
+                        fontSize: '20px',
+                        fontWeight: 'bold'
+                    },
                     animates: [{
                         repeat: 1,
                         class: 'fadeInUp',
@@ -702,8 +703,8 @@ require(['APP'], function(APP) {
                         visible: true
                     },
                     auto: true
-                },{
-                	id: 'p1ex',
+                }, {
+                    id: 'p1ex',
                     name: 'p1ex',
                     href: '',
                     src: './assets/images/news/news1.jpg',
@@ -735,22 +736,22 @@ require(['APP'], function(APP) {
                         visible: true
                     },
                     auto: true
-                },{
-                	id:'p1e02',
-                	name: 'p1e02',
-                	href: '',
-                	value: '&nbsp;&nbsp;&nbsp;&nbsp;热烈祝贺我司在2015年度举办的“江苏省优秀软件企业”评选中，从众多参选的省软件、物联网、云计算智能化等行业企业中脱颖而出，获此殊荣。',
-                	type : 'text',
-                	styles : {
-                		left: '30px',
+                }, {
+                    id: 'p1e02',
+                    name: 'p1e02',
+                    href: '',
+                    value: '&nbsp;&nbsp;&nbsp;&nbsp;热烈祝贺我司在2015年度举办的“江苏省优秀软件企业”评选中，从众多参选的省软件、物联网、云计算智能化等行业企业中脱颖而出，获此殊荣。',
+                    type: 'text',
+                    styles: {
+                        left: '30px',
                         top: '330px',
                         width: '250px',
                         height: '154px',
-                        lineHeight:'18px',
+                        lineHeight: '18px',
                         "text-align": 'left',
-                        fontSize:'14px',
-                        fontWeight:'bold'
-                	},
+                        fontSize: '14px',
+                        fontWeight: 'bold'
+                    },
                     animates: [{
                         repeat: 1,
                         class: 'fadeIn',
@@ -762,13 +763,13 @@ require(['APP'], function(APP) {
                     },
                     auto: true
                 }]
-            },{
-            	id: 'page12',
+            }, {
+                id: 'page12',
                 name: '页面12',
                 transform: '',
                 styles: '',
                 elements: [{
-                	id: 'p12e0',
+                    id: 'p12e0',
                     name: 'p12e0',
                     href: '',
                     type: 'text',
@@ -796,8 +797,8 @@ require(['APP'], function(APP) {
                         visible: true
                     },
                     auto: true
-                },{
-                	id: 'p12e00',
+                }, {
+                    id: 'p12e00',
                     name: 'p12e00',
                     href: '',
                     type: 'text',
@@ -810,11 +811,11 @@ require(['APP'], function(APP) {
                         color: '#09e',
                         "font-family": 'Heiti',
                         "font-weight": 'bold',
-                        "background" : '#222',
+                        "background": '#222',
                         "textShadow": '1px 1px 0px #000',
-                        "borderStyle" : 'solid',
-                        "borderColor" : '#222',
-                        "borderWidth" : '1px',
+                        "borderStyle": 'solid',
+                        "borderColor": '#222',
+                        "borderWidth": '1px',
                         opacity: '1'
                     },
                     animates: [{
@@ -827,7 +828,7 @@ require(['APP'], function(APP) {
                         visible: true
                     },
                     auto: true
-                },{
+                }, {
                     id: 'p12e1',
                     name: 'p12e1',
                     href: '',
@@ -846,7 +847,7 @@ require(['APP'], function(APP) {
                         "font-weight": 'bold',
                         "text-decoration": '',
                         "background-color": '#ccc',
-                        'box-shadow' : '2px -4px 4px #222',
+                        'box-shadow': '2px -4px 4px #222',
                         opacity: '1'
                     },
                     animates: [{
@@ -878,7 +879,7 @@ require(['APP'], function(APP) {
                         "font-weight": 'bold',
                         "text-decoration": '',
                         "background-color": '#ccc',
-                        'box-shadow' : '2px -4px 4px #222',
+                        'box-shadow': '2px -4px 4px #222',
                         opacity: '1'
                     },
                     animates: [{
@@ -892,7 +893,247 @@ require(['APP'], function(APP) {
                     },
                     auto: true
                 }]
-            },{
+            }, {
+                id: 'page13',
+                name: '页面13',
+                transform: '',
+                styles: '',
+                elements: [{
+                    id: 'p13e1',
+                    name: 'p13e1',
+                    href: '',
+                    type: 'photo',
+                    src: './assets/images/news/product-center.jpg',
+                    value: './assets/images/news/product-center.jpg',
+                    styles: {
+                        left: '0',
+                        top: '0',
+                        width: '320px',
+                        height: '130px',
+                        "text-align": 'center',
+                        color: '#f70',
+                        "font-size": '14px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        "text-decoration": '',
+                        "background-color": '#ccc',
+                        opacity: '1'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'fadeInUp',
+                        delay: 1
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }, {
+                    id: 'p13e2',
+                    name: 'p13e2',
+                    href: '',
+                    type: 'text',
+                    value: '中威文稿',
+                    styles: {
+                        left: '76px',
+                        top: '146px',
+                        width: '150px',
+                        height: '80px',
+                        "text-align": 'center',
+                        color: '#09f',
+                        "font-size": '18px',
+                        "line-height": '80px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        "text-decoration": '',
+                        "borderStyle": 'solid',
+                        "borderColor": '#999',
+                        "borderWidth": '4px',
+                        "borderRadius": '6px',
+                        opacity: '1'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'flipInY',
+                        delay: 2
+                    }, {
+                        repeat: 1,
+                        class: 'tada',
+                        delay: 6
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }, {
+                    id: 'p13e3',
+                    name: 'p13e3',
+                    href: '',
+                    type: 'photo',
+                    src: './assets/images/news/twpaper.jpg',
+                    value: './assets/images/news/twpaper.jpg',
+                    styles: {
+                        left: '80px',
+                        top: '150px',
+                        width: '150px',
+                        height: '80px',
+                        "text-align": 'center',
+                        color: '#f70',
+                        "font-size": '14px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        "text-decoration": '',
+                        "background-color": '#ccc',
+                        opacity: '1'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'flipInY',
+                        delay: 3
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }, {
+                    id: 'p13e4',
+                    name: 'p13e4',
+                    href: '',
+                    type: 'text',
+                    value: '中威通讯',
+                    styles: {
+                        left: '76px',
+                        top: '246px',
+                        width: '150px',
+                        height: '80px',
+                        "text-align": 'center',
+                        color: '#f40',
+                        "font-size": '18px',
+                        "line-height": '80px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        "text-decoration": '',
+                        "borderStyle": 'solid',
+                        "borderColor": '#999',
+                        "borderWidth": '4px',
+                        "borderRadius": '6px',
+                        opacity: '1'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'flipInX',
+                        delay: 4
+                    }, {
+                        repeat: 1,
+                        class: 'tada',
+                        delay: 5
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }, {
+                    id: 'p13e5',
+                    name: 'p13e5',
+                    href: '',
+                    type: 'photo',
+                    src: './assets/images/news/twchat.jpg',
+                    value: './assets/images/news/twchat.jpg',
+                    styles: {
+                        left: '80px',
+                        top: '250px',
+                        width: '150px',
+                        height: '80px',
+                        "text-align": 'center',
+                        color: '#f70',
+                        "font-size": '14px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        opacity: '1'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'flipInX',
+                        delay: 5
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }, {
+                    id: 'p13e6',
+                    name: 'p13e6',
+                    href: '',
+                    type: 'text',
+                    value: '中威移动微网站',
+                    styles: {
+                        left: '76px',
+                        top: '346px',
+                        width: '150px',
+                        height: '80px',
+                        "text-align": 'center',
+                        color: '#6e0',
+                        "font-size": '18px',
+                        "line-height": '80px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        "text-decoration": '',
+                        "borderStyle": 'solid',
+                        "borderColor": '#999',
+                        "borderWidth": '4px',
+                        "borderRadius": '6px',
+                        opacity: '1'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'slideInLeft',
+                        delay: 7
+                    }, {
+                        repeat: 1,
+                        class: 'tada',
+                        delay: 3
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }, {
+                    id: 'p13e7',
+                    name: 'p13e7',
+                    href: '',
+                    type: 'photo',
+                    src: './assets/images/news/cms.jpg',
+                    value: './assets/images/news/cms.jpg',
+                    styles: {
+                        left: '80px',
+                        top: '350px',
+                        width: '150px',
+                        height: '80px',
+                        "text-align": 'center',
+                        color: '#f70',
+                        "font-size": '14px',
+                        "font-family": 'Heiti',
+                        "font-weight": 'bold',
+                        opacity: '1'
+                    },
+                    animates: [{
+                        repeat: 1,
+                        class: 'fadeIn',
+                        delay: 8
+                    }],
+                    states: {
+                        lock: false,
+                        visible: true
+                    },
+                    auto: true
+                }]
+            }, {
                 id: 'page6',
                 name: '页面6',
                 transform: '',
@@ -902,7 +1143,7 @@ require(['APP'], function(APP) {
                     name: 'p6e1',
                     href: '',
                     type: 'chart',
-                    modelType : 'pie',
+                    modelType: 'pie',
                     width: '310px',
                     height: '310px',
                     styles: {
@@ -929,7 +1170,7 @@ require(['APP'], function(APP) {
                         visible: true
                     },
                     auto: true
-                },{
+                }, {
                     id: 'p6e2',
                     name: 'p6e2',
                     href: '',
@@ -978,7 +1219,7 @@ require(['APP'], function(APP) {
                     name: 'p5e1',
                     href: '',
                     type: 'chart',
-                    modelType : 'bar',
+                    modelType: 'bar',
                     width: '310px',
                     height: '310px',
                     styles: {
@@ -1005,7 +1246,7 @@ require(['APP'], function(APP) {
                         visible: true
                     },
                     auto: true
-                },{
+                }, {
                     id: 'p5e2',
                     name: 'p5e2',
                     href: '',
@@ -1047,7 +1288,7 @@ require(['APP'], function(APP) {
             }, {
                 id: 'page3',
                 name: '页面3',
-                styles:'',
+                styles: '',
                 elements: [{
                     id: 'p3e1',
                     name: 'p3e1',
@@ -1221,7 +1462,7 @@ require(['APP'], function(APP) {
             }, {
                 id: 'page4',
                 name: '页面4',
-                styles:'',
+                styles: '',
                 elements: [{
                     id: 'p4e1',
                     name: 'p4e1',
@@ -1570,13 +1811,14 @@ require(['APP'], function(APP) {
                     },
                     auto: true
                 }]
-            }]
-        };
+            }
+        ]
+    };
 
 
     app.initPlayer({
-    	dom : document.getElementById('container'),
-    	data : data
+        dom: document.getElementById('container'),
+        data: data
     });
 
     app.play();

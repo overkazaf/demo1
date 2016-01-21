@@ -172,6 +172,9 @@ define(function(require) {
             case 'slider-radius':
                 html = '<input type="range" data-unit="'+ unit +'" min="0" max="400" step="1" defaultValue="0" ' + eventString + ' id="' + id + '" name="' + name + '" value="'+ (!!value?parseInt(value):1) +'" /><input name="result" value="'+(!!value?parseInt(value):1) +'" /><span>'+ unit +'</span>';
                 break;
+            case 'animations':
+                html = this.panelPluginStrategies['animations'](name, value, values, eventString);
+                break;
             default:
                 html = '<input ' + eventString + ' type="number" id="' + id + '" name="' + name + '" value="' + (!!value ? value : "") + '" /><span>'+ unit +'</span>'
         }
@@ -233,6 +236,15 @@ define(function(require) {
                 html.push('<option value="' + val['value'] + '" ' + (!!val['status']?'selected="selected"':'') + '">' + val['label'] + '</option>');
             }
             html.push('</select>');
+            return html.join('');
+        },
+        'animations': function(name, value, values, evtString) {
+
+            var html = [];
+            for (var i = 0, l = values.length; i < l; i++) {
+                var val = values[i];
+                html.push('<input name="animations" type="hidden" data-class="' + val['class'] + '" data-duration="'+ val['duration'] +'" data-repeat="'+ val['repeat'] +'" data-delay="'+ val['delay'] +'"/>');
+            }
             return html.join('');
         }
     };

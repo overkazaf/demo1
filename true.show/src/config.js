@@ -91,8 +91,8 @@
             },
             animates: [{
                 repeat: 0,
-                duration: 0,
-                class: 'flip',
+                duration: 1,
+                class: '',
                 delay: 0
             }],
             events: [{
@@ -125,7 +125,7 @@
             animates: [{
                 repeat: 0,
                 duration: 0,
-                class: 'flip',
+                class: '',
                 delay: 0
             }],
             events: [{
@@ -205,9 +205,9 @@
   		 	],
   		 	[
   				{label:"格式", name:"font-format", css:'font-weight;font-style;text-decoration', value: null, values: [
-  					{label:'粗体', name:"font-bold", type:"checkbox", value:'bold', clazz:'icon-bold', status:''},
-  					{label:'斜体', name:"font-italic",type:"checkbox",value:'italic', clazz:'icon-italic', status:''},
-  					{label:'下划线', name:"font-underline",type:"checkbox",value:'underline', clazz:'icon-underline', status:''},
+  					{label:'粗体', name:"font-weight", type:"checkbox", value:'bold', clazz:'icon-bold', status:''},
+  					{label:'斜体', name:"font-style",type:"checkbox",value:'italic', clazz:'icon-italic', status:''},
+  					{label:'下划线', name:"text-decoration",type:"checkbox",value:'underline', clazz:'icon-underline', status:''},
   				], plugin:'btngroup', unit:null},
 				{label:"对齐方式", name:"text-align", css:'text-align;text-align;text-align', value: null, values: [
   					{label:'左对齐', name:"text-left", type:"radio", value:'left', clazz:'l icon-text-left', status:''},
@@ -291,7 +291,7 @@
   			[
   				{label:"水平位置", name:"pos-align", css:'pos-align;pos-align;pos-align', value: null, values: [
   					{label:'左对齐', name:"pos-align-left", type:"radio", value:'left', clazz:'icon-pos-left', status:''},
-  					{label:'水平居中', name:"pos-align-center",type:"radio",value:'center', clazz:'icon-pos-center', status:'checked'},
+  					{label:'水平居中', name:"pos-align-center",type:"radio",value:'center', clazz:'icon-pos-center', status:''},
   					{label:'右对齐', name:"pos-align-right",type:"radio",value:'right', clazz:'icon-pos-right', status:''}
   				], plugin:'btngroup', unit:null},
   				{label:"垂直位置", name:"pos-valign", css:'pos-valign;pos-valign;pos-valign', value: null, values: [
@@ -320,6 +320,9 @@
   		type : 'animate',
   		attributes : [
   			[
+        {label:"", name:"animations", css:"hidden", value:null, values:[
+            //{label:"",delay:1,duration:1,repeat:1,auto:true,class:""}
+          ], plugin: "animations", unit:null},
   			{label:"", name:"add-animation", css:'btn', value: "<i class='fa fa-plus'></i> 添加动画", values:null, plugin:'accordion', unit:null},
   			{label:"", name:"play-animation", css:'btn', value: "<i class='fa fa-play'></i> 播放动画", values:null, plugin:'accordion', unit:null}
   		 	]

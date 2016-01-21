@@ -48,11 +48,13 @@ require.config({
     paths : {
     	'Jcrop' : 'jquery.Jcrop.min',
     	'slip' : 'slip',
+        'jqUI' : 'jquery-ui',
     	'AttributeManager' : '../../../src/manager/AttributeManager',
     	'Group' : '../../../src/manager/Group',
         'Player' : '../../../src/tools/Player',
         'Chart' : '../../../src/plugins/Chart',
         'ChartConfig' : '../../../src/plugins/config',
-    	'PreviewSample' : '../../../src/dummyData/previewSample'
+        'PreviewSample' : '../../../src/dummyData/previewSample',
+    	'animTpl' : '../../../src/templates/animateCSSTemplate'
     }
 });

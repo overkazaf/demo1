@@ -1213,6 +1213,7 @@ app-page {
 plugin-warp {
     position: absolute;
     transform-origin: 50% 50%;
+    -webkit-transform-style: preserve-3d;
     /*
   background-color: orange;
   opacity: 0.6;*/

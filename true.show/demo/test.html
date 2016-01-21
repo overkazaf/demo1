@@ -9,15 +9,30 @@
 	<meta name="keywords" content="">
 	<title>PPT Marker</title>
 	<link rel="stylesheet" type="text/css" href="asset/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="asset/css/font-awesome-4.4.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="asset/css/app.css">
 	<link rel="stylesheet" type="text/css" href="asset/css/animate.css">
+  <style id="{{STYLEID}}" type="text/css">
+  #div1 {
+    position: absolute;
+    left: 200px;
+    top: 100px;
+    width: 100px;
+    height: 100px;
+    background: #09e;
+  }
+  #div1.bounceIn-delay-1-duration-2-repeat-2 {
+    -webkit-animation-duration: 5s;
+    -webkit-animation-delay: 2s;
+    -webkit-animation-iteration-count: 2;
+  }</style>
 	</head>
 	<body>
+    <div id="div1"></div>
 	<!-- <div id="tips" class="tips-right" style="left:100px;top: 100px;visibility:visible;">122</div>
 		<input type="button" value="读取剪贴板内容" onclick="readClipboardData();" />
     <br /> <textarea rows="20" cols="60" id="txtContent"></textarea> -->
 	</body>
+  <script src="asset/js/jquery.js"></script>
 	<script type="text/javascript">
       function getClipboard() {
           if (window.clipboardData) {
@@ -57,34 +72,11 @@
       }
 
       window.onload = function () {
-        var c = document.createElement('canvas');
-        c.width = 300;
-        c.height = 300;
-        document.body.appendChild(c);
-        var ctx = c.getContext('2d');
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(100, 4);
-        ctx.lineTo(100, 300);
-        ctx.stroke();
-
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(150.5, 4);
-        ctx.lineTo(150.5, 300);
-        ctx.stroke();
-
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(200, 4);
-        ctx.lineTo(200, 300);
-        ctx.stroke();
-
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(250.5, 4);
-        ctx.lineTo(250.5, 300);
-        ctx.stroke();
+        var $div = $('#div1');
+        var cls = "bounceIn bounceIn-delay-1-duration-2-repeat-2";
+        $div.addClass(cls + " animated").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+          $(this).removeClass(cls + " animated");
+        });
       };
 	</script>
 </html>

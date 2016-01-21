@@ -83,7 +83,7 @@ define(function(require) {
             text: '音频',
             icon: 'fa-music'
         },
-        audio: {
+        video: {
             text: '视频',
             icon: 'fa-video-camera'
         }

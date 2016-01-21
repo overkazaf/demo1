@@ -10,6 +10,7 @@ define(function(require) {
     var Group = require('Group');
     var GroupFactory = require('../manager/GroupFactory');
 
+    var tools = require('./tools');
     var ctmtpl = '<div class="contextmenu viewer-contextmenu">\
 								<div type="del-layer" class="ctm-item plugin-ctm">删除图层</div>\
 								<div class="ctm-split-line"></div>\
@@ -74,7 +75,7 @@ define(function(require) {
             //     $(event.target).focus();
             // });
 
-            
+
             // $(document).on('keyup', this.opts.innerCls, function(event) {
             // 	var parent = $(event.target).closest(that.opts.cls);
             //     var pid = parent.attr('id');
@@ -95,11 +96,11 @@ define(function(require) {
             // })
 
             $('.main-view', document).on('click', this.opts.cls, function(event) {
-            	event.preventDefault();
+                event.preventDefault();
                 event.stopImmediatePropagation();
 
                 if ($(this).hasClass('active')) {
-                	return;
+                    return;
                 }
                 $(that.opts.id).find(that.opts.cls).removeClass('active');
                 $(this).addClass('active');
@@ -130,11 +131,11 @@ define(function(require) {
                     if (!!group) {
                         group.init();
                     } else {
-                    	var groupFactory = new GroupFactory({});
-                    	var newGroup = groupFactory.forceCreateGroup(type, elementId, true);
-                    	newGroup.init();
-                    	AM.getInstance().addGroup(newGroup);
-                    	Storage.set(elementId, newGroup);
+                        var groupFactory = new GroupFactory({});
+                        var newGroup = groupFactory.forceCreateGroup(type, elementId, true);
+                        newGroup.init();
+                        AM.getInstance().addGroup(newGroup);
+                        Storage.set(elementId, newGroup);
                     }
                 }
                 return false;
@@ -168,13 +169,15 @@ define(function(require) {
             });
             this.dragger = new Dragger(null, null, function(t) {
                 var o = $(t).position();
-                
-                that.updateElement(t, {
-                	width : t.width() + 'px',
-                	height : t.height() + 'px',
-                	left : o.left + 'px',
-                	top : o.top + 'px'
-                });
+                //tools.rotateEl(t[0], 0);
+                // that.updateElement(t, {
+                //     width: t.width() + 'px',
+                //     height: t.height() + 'px',
+                //     left: o.left + 'px',
+                //     top: o.top + 'px'
+                // });
+
+                //tools.rotateEl(t[0], that.dragger.rotateDegree);
 
                 // 更新视图
                 var id = t.attr('id');
@@ -307,7 +310,7 @@ define(function(require) {
         updateElement: function(t, data) {
             var styles = $(t).attr('styles');
             styles = $.extend(true, JSON.parse(styles), data);
-            
+
             $(t).attr({
                 styles: JSON.stringify(styles)
             }).css(data);
@@ -365,5 +368,8 @@ define(function(require) {
             return this.copyer[key];
         }
     };
+
+
+    
     return viewer;
 });

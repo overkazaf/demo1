@@ -177,7 +177,7 @@ define(function(require) {
     Player.prototype.animating = function(idx) {
         //这里需要深拷贝对象数组
         var elements = this.data.pages[idx].elements.slice(0);
-        this.playSpriteLine(elements, this.options.context);
+        this.playAnimation(elements, this.options.context);
     };
 
 
@@ -235,6 +235,93 @@ define(function(require) {
                 break;
             }
         }
+    }
+
+    /**
+     * [playAnimation 新的动画播放方法，直接为元素添加和删除动画类即可]
+     * @return {[type]} [description]
+     */
+    Player.prototype.playAnimation = function (elements, context) {
+        if (this.stop == true) return;
+        var that = this,
+            els,
+            animates;
+        while (elements.length > 0) {
+            els = elements.shift();
+            animates = els.animates.slice(0);
+            
+            if (elements.length > 0 && elements[0].auto > 0) {
+                //同步执行
+                this.callAnimationLine(els.id, context, animates);
+            } else {
+                //异步执行,执行callback解决js（伪）死循环执行问题
+                this.callAnimationLine(els.id, context, animates, function() {
+                    that.playAnimation(elements, context);
+                });
+                break;
+            }
+        }
+    }
+
+
+    Player.prototype.callAnimationLine = function (id, context, animates, callback) {
+        if (this.stop == true) return;
+        if (animates.length <= 0) {
+            !!callback && callback();
+            return;
+        }
+
+        var self = this;
+        var animate = animates.shift();
+        var cls = animate.class,
+            duration = animate.duration,
+            delay = animate.delay,
+            repeat = animate.repeat;
+
+        //检测下一个动画,1同步执行
+        this.callAnimation({
+            id : id,
+            context, context,
+            'class' : cls,
+            duration : duration,
+            delay : delay,
+            repeat : repeat
+        }, function() {
+            self.callAnimationLine(id, context, animates, callback);
+        });
+    };
+
+
+    function buildAnimationClassName (json) {
+        var arr = [];
+        for (var k in json) {
+            if (k != 'id' && k != 'context' && k != 'class') {
+                arr.push(k);
+                arr.push(json[k]);
+            }
+        }
+        arr.unshift(json['class']);
+
+        return arr.join('-');
+    }
+
+    Player.prototype.callAnimation = function (param, callback) {
+        var self = this;
+        if (this.stop == true) return;
+
+        var $dom = $('#' + param.id, param.context || self.options.context);
+        var effectClazz = buildAnimationClassName(param);
+        var targetClazz = param.class + ' ' + effectClazz;
+
+        $dom.removeClass(targetClazz + ' animated invisibility');
+        $dom.addClass(targetClazz + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+            $dom.removeClass(targetClazz + ' animated');
+
+            if (callback) {
+                callback();
+            }
+        });
+
     }
 
     Player.prototype.animateLine = function(start, id, context, animates, callback) {

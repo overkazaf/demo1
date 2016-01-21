@@ -121,6 +121,7 @@ define(function(require) {
         var groupId = this.options.activeId;
         var $form = $('#' + this.formid);
         var $tab = $('#' + subTabId, $form[0]);
+        var accordContext = $('#'+this.domUUID)[0];
         var $activeEl = $('#' + this.options.activeId, $('app-page')[0]);
         $tab.on('click', '.ui-tablist-item', function(ev) {
             $(this).addClass('active').siblings().removeClass('active');
@@ -128,59 +129,59 @@ define(function(require) {
             $tab.find('.ui-tab-content').hide().eq(index).show();
         });
 
-        $('.ui-tablist-item', $('#'+this.domUUID)[0]).eq(this.options.tabIndex || 0).trigger('click');
+        $('.ui-tablist-item', accordContext).eq(this.options.tabIndex || 0).trigger('click');
         this.accordion('collapse');
 
         var timeout;
-        $('.effect-list-item').on('mouseover', function(ev) {
+        $('.effect-list-item', accordContext).on('mouseover', function(ev) {
             var $target = $(this).find('.anim-item');
             if ($target.attr('data-class')) {
-            	clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                	var clazz = $target.attr('data-class');
-               	    $target.addClass('animated').addClass(clazz);
-                }, 0);
-                
+            	var clazz = $target.attr('data-class');
+                $target.addClass('animated').addClass(clazz);
             }
         });
 
         
-        $('.effect-list-item').on('mouseout', function(ev) {
+        $('.effect-list-item', accordContext).on('mouseout', function(ev) {
             var $target = $(this).find('.anim-item');
             if ($target.attr('data-class')) {
-                clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                	var clazz = $target.attr('data-class');
-                	$target.removeClass('animated').removeClass(clazz);
-                }, 0);
+                var clazz = $target.attr('data-class');
+                $target.removeClass('animated').removeClass(clazz);
             }
         });
 
-        $('.effect-list-item').on('click', function (){
-        	$('.anim-item').each(function (){
-        		$(this).removeClass('animated').removeClass($(this).attr('data-class'));
-        	})
-        	$(this).find('.anim-item').addClass('active');
-        	$(this).addClass('active').siblings().removeClass('active').end().closest('.effect-list-item').siblings().find('.anim-item').removeClass('active');
 
-        	var $subtitle = $(this).closest('.ui-accordion').find('.accordion-subtitle');
-        	
-        	$activeEl.removeClass().addClass('active');
-        	var $animItem = $(this).find('.anim-item');
-        	if ($(this).hasClass('active')) {
-        		$subtitle.html($animItem.attr('data-name'))
-        		$activeEl.addClass($animItem.attr('data-class') + ' animated');
-        	} else {
-        		$subtitle.html('无动画');
-        		$activeEl.removeClass($animItem.attr('data-class') + ' animated');
-        	}
 
-        	setTimeout(function () {
-        		$activeEl.removeClass($animItem.attr('data-class') + ' animated');
-        	}, 2000);
+        $('.effect-list-item', accordContext).on('click', function (){
+            var $animItem = $(this).find('.anim-item');
+            $activeEl.removeClass().addClass('active');
 
-        	window.callFN('noticeUpdate', groupId);
+            var $subtitle = $(this).closest('.ui-accordion').find('.accordion-subtitle');
+            
+
+            if (!$(this).hasClass('active')) {
+                $subtitle.html($animItem.attr('data-name'))
+                $activeEl.addClass($animItem.attr('data-class') + ' animated');
+
+                $('.anim-item', accordContext).removeClass('active');
+                $animItem.addClass('active');
+                $(this).removeClass('active');
+            } else {
+                $subtitle.html('无动画');
+                $activeEl.removeClass($animItem.attr('data-class') + ' animated');
+
+                $('.anim-item', accordContext).removeClass('active');
+                $(this).removeClass('active');
+            }
+
+
+            $activeEl.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function (){
+                $activeEl.removeClass($animItem.attr('data-class') + ' animated');
+            });
+
+            window.callFN('noticeUpdate', groupId);
         });
+
 
         if (this.options.animClazz) {
         	var $AnimClazz = $('[data-class="'+this.options.animClazz+'"]', $tab[0]);
@@ -210,7 +211,7 @@ define(function(require) {
         css: 'duration',
         name: 'anim-duration',
         plugin: 'slider-duration',
-        status: 'disabled',
+        status: '',
         unit: 's'
     }, {
         label: '延迟时间',

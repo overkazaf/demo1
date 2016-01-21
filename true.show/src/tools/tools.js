@@ -91,7 +91,7 @@ define(function(require) {
                 x: distance * Math.cos(alpha * (2 * Math.PI / 360)),
                 y: distance * Math.sin(alpha * (2 * Math.PI / 360))
             };
-            if (!!fixed) {
+            if (!!fixed || fixed == 0) {
                 ret.x = new Number(ret.x).toFixed(fixed);
                 ret.y = new Number(ret.y).toFixed(fixed);
             }
@@ -107,6 +107,88 @@ define(function(require) {
                 ret.dis = new Number(ret.dis).toFixed(fixed);
             }
             return ret;
+        },
+        rotateEl : function (obj, deg) {
+            obj.style.webkitTransform = 'rotate('+deg+'deg)'; 
+            obj.style.mozTransform    = 'rotate('+deg+'deg)'; 
+            obj.style.msTransform     = 'rotate('+deg+'deg)'; 
+            obj.style.oTransform      = 'rotate('+deg+'deg)'; 
+            obj.style.transform       = 'rotate('+deg+'deg)'; 
+        },
+        calcRotateDelta : function ($el) {
+            var INFINITE_VAL = 999999,
+                dx = INFINITE_VAL,
+                dy = INFINITE_VAL,
+                arr = [];
+
+            var elGroup = $el.find('.ui-resizable-handle');
+            elGroup.each(function (index, rotEl) {
+                var offset = $(this).offset();
+                arr.push(offset);
+            });
+
+            $.each(arr, function (idx, range) {
+                if (range.left < dx) {
+                    dx = range.left;
+                }
+
+                if (range.top < dy) {
+                    dy = range.top;
+                }
+            });
+
+            console.log('dx,dy', dx+','+dy);
+
+
+            return {
+                x:dx,
+                y:dy
+            };
+        },
+        getRotationDegrees : function (obj) {
+            var matrix = obj.css("-webkit-transform") ||
+                obj.css("-moz-transform") ||
+                obj.css("-ms-transform") ||
+                obj.css("-o-transform") ||
+                obj.css("transform");
+            if (matrix !== 'none') {
+                var values = matrix.split('(')[1].split(')')[0].split(',');
+                var a = values[0];
+                var b = values[1];
+                var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            } else {
+                var angle = 0;
+            }
+            return (angle < 0) ? angle += 360 : angle;
+        },
+
+        fnCalcRotateOffset : function (el, l, t) {
+            var $el = $(el);
+            var w = $el.outerWidth();
+            var h = $el.outerHeight();
+            var degree = tools.getRotationDegrees($el);
+
+            // angle = - angle * Math.PI / 180;
+            // var cosAngle = Math.cos(angle);
+            // var sinAngle = Math.sin(angle);
+            // var relativeX = (this.x * cosAngle) - (this.y * sinAngle);
+            // var relativeY = (this.x * sinAngle) + (this.y * cosAngle);
+
+            // 中心轴旋转的弧度
+            var alpha = degree * (2 * Math.PI / 360);
+
+            var angle = - alpha;
+
+            var cosAngle = Math.cos(angle);
+            var sinAngle = Math.sin(angle);
+            var relativeX = (l * cosAngle) - (t * sinAngle);
+            var relativeY = (l * sinAngle) + (t * cosAngle);
+
+
+            return {
+                x: relativeX,
+                y: relativeY
+            };
         }
     };
 

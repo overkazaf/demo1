@@ -170,15 +170,7 @@
 		bindEvent:function(){
 			var that=this;
 			that.resetOffset();
-			$(this.opts.id).on('click',that.opts.item,function(event){
-				event.preventDefault();
-				event.stopPropagation();
-				if(that.currpager.attr('id')==$(this).attr('id')) return;
-				that.currpager.removeClass(that.opts.activeCls);
-				$(this).addClass(that.opts.activeCls);
-				that.currpager=$(this);
-				that.changePage(that.currpager.index());
-			});
+			
 			$(document).on('click',that.opts.addbtn,function(event){
 				event.preventDefault();
 				that.addNewPage();
@@ -187,6 +179,13 @@
 			$(this.opts.id).on('mousedown', this.opts.item, function(event) {
 				event.preventDefault();
 				event.stopPropagation();
+
+				// 页面切换
+				that.currpager.removeClass(that.opts.activeCls);
+				$(this).addClass(that.opts.activeCls);
+				that.currpager=$(this);
+				that.changePage(that.currpager.index());
+
 
 				var self=this;
 				/* Act on the event */

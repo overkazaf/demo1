@@ -223,8 +223,21 @@ define(function(require) {
             this.initStudio();
 
             this._buildChart();
-        },
 
+            this.test();
+        },
+        test : function () {
+            var animTpl = require('animTpl');
+            var style = animTpl.compile('XXXYYY', {
+                class : 'bounceIn',
+                duration : 2,
+                delay : 2,
+                repeat : 4
+            });
+
+            var $style = $(style);
+
+        },
         _buildChart: function() {
             var that = this;
             var pages = this.data.pages;
@@ -286,7 +299,7 @@ define(function(require) {
                     var elements = mk.data.pages[mk.idx].elements;
                     if (elements.length) {
                         player.stop = false;
-                        player.playSpriteLine(elements.slice(0), appContext);
+                        player.playAnimation(elements.slice(0), appContext);
                     }
                 },
                 onStop: function() {

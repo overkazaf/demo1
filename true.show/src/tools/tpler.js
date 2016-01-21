@@ -2,10 +2,10 @@
 	'use strict';
 	var tpl='<plugin-warp>\
 							<div class="ui-draggable-handle cont-warp">\
-								<div class="cont-inner" contentEditable="true">{{cont}}</div>\
+								<div class="cont-inner">{{cont}}</div>\
 							</div>\
 							{{resizeable}}\
-						</plugin-warp>';
+							</plugin-warp>';
 	var resizeableTpl='<span class="ui-rotate-handle">\
 								<span class="ui-rotate-bar-radius"></span>\
 								<span class="ui-rotate-bar-line"></span>\
@@ -38,23 +38,6 @@
 								<span class="ui-resizable-handle left-top">\
 									<span class="ui-resizable-circle"></span>\
 								</span>';
-
-	/* helper functions */
-    function camel2HB (str) {
-        return str.replace(/([A-Z])/g, "-$1").toLowerCase();
-    };
-
-    function j2sFN (raw) {
-        var json = raw;
-        var result = '';
-        for (var key in json) {
-            var val = json[key];
-            result += key + ':' + val + ';';
-        }
-        result = result.replace(/([A-Z])/g, "-$1").toLowerCase();
-        return result;
-    };
-    /* helper functions end */
 
 	function tpler(){}
 	tpler.prototype={

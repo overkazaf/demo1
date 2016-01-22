@@ -95,6 +95,7 @@
                 class: '',
                 delay: 0
             }],
+            auto : 1,
             events: [{
                 "name": "click",
                 "actions": [{
@@ -128,6 +129,7 @@
                 class: '',
                 delay: 0
             }],
+            auto : 1,
             events: [{
                 "name": "click",
                 "actions": [{
@@ -321,7 +323,7 @@
   		attributes : [
   			[
         {label:"", name:"animations", css:"hidden", value:null, values:[
-            //{label:"",delay:1,duration:1,repeat:1,auto:true,class:""}
+            //{label:"",delay:1,duration:1,repeat:1,auto:true,class:"", "auto":1}
           ], plugin: "animations", unit:null},
   			{label:"", name:"add-animation", css:'btn', value: "<i class='fa fa-plus'></i> 添加动画", values:null, plugin:'accordion', unit:null},
   			{label:"", name:"play-animation", css:'btn', value: "<i class='fa fa-play'></i> 播放动画", values:null, plugin:'accordion', unit:null}

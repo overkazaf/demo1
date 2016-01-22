@@ -169,17 +169,17 @@ define(function(require) {
                 
                 switch (t) {
                     case 'canvas':
-                        // var AM = Storage.get('__AM__');
-                        // var elementId;
-                        // var templateJson = tools.clone(config.ComponentTemplate[t]);
-                        // templateJson.id = elementId = tools.uuid();
-                        // templateJson.type = 'canvas';
+                        var AM = Storage.get('__AM__');
+                        var elementId;
+                        var templateJson = tools.clone(config.ComponentTemplate[t]);
+                        templateJson.id = elementId = tools.uuid();
+                        templateJson.type = 'canvas';
 
-                        // console.log('templateJson', templateJson);
+                        console.log('templateJson', templateJson);
 
-                        // var group = composeGroup[t](elementId);
-                        // Storage.set(group.id, group);
-                        // AM.getInstance().addGroup(group);
+                        var group = composeGroup[t](elementId);
+                        Storage.set(group.id, group);
+                        AM.getInstance().addGroup(group);
 
                         break;
                     case 'photo':

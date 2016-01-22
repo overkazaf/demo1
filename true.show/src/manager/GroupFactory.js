@@ -1,8 +1,6 @@
 /**
- * [一个组配置的工厂， 用于生成]
- * @param  {Object} require) {	var              factory [description]
- * @param  {Group}  'text':  function(elementId) {                                          var group [description]
- * @return {[type]}          [description]
+ * [一个组配置的工厂类， 用于根据焦点元素的属性生成配置组信息]
+ * 
  */
 ;define(function (require) {
 	var $ = require('jquery');
@@ -172,7 +170,9 @@
     					var plugin = item.plugin;
     					var unit = item.unit;
 
-							// 有单位的要区分插件类型，及属性类型
+                        if (!json[css]) return;
+						
+                        // 有单位的要区分插件类型，及属性类型
 						switch (plugin) {
 							case 'textarea':
 								newCSSProp['value'] = json[css];
@@ -268,7 +268,9 @@
     					var plugin = item.plugin;
     					var unit = item.unit;
 
-							// 有单位的要区分插件类型，及属性类型
+                        if (!json[css]) return;
+
+						// 有单位的要区分插件类型，及属性类型
 						switch (plugin) {
 							case 'text':
 								if (name == 'width' || name == 'height') {
@@ -346,6 +348,8 @@
     					var name = item.name;
     					var plugin = item.plugin;
     					var unit = item.unit;
+
+                        if (!json[css]) return;
 
     					switch (plugin) {
     						case 'btngroup':
@@ -440,9 +444,21 @@
     		}
     	},
     	'photo' : {
+    		'photo' : function ($el, json) {
+    			// 借用已经有的生成函数
+    			return _mergeJSONStrategies['text']['styles'].call(null, $el, json);
+    		},
     		'styles' : function ($el, json) {
-    			// 借用已经有的函数啦
-    			return _mergeJSONStrategies['text']['styles'].call($el, json);
+    			// 借用已经有的生成函数
+    			return _mergeJSONStrategies['text']['styles'].call(null, $el, json);
+    		},
+    		'position' : function ($el, json) {
+    			// 借用已经有的生成函数
+    			return _mergeJSONStrategies['text']['position'].call(null, $el, json);
+    		},
+    		'animations' : function ($el, json) {
+    			// 借用已经有的生成函数
+    			return _mergeJSONStrategies['text']['animations'].call(null, $el, json);
     		}
     	}
     };
@@ -516,13 +532,12 @@
 
     	var styleJson = JSON.parse(styles);
     	var animateJsonArray = JSON.parse(animates);
-    	var textJson = _mergeJSON(element, elementType, 'text', styleJson);
+    	var textJson = _mergeJSON(element, elementType, elementType, styleJson);
     	var stylesJson = _mergeJSON(element, elementType, 'styles', styleJson);
     	var positionJson = _mergeJSON(element, elementType, 'position', styleJson);
     	var animateJson = _mergeJSON(element, elementType, 'animations', animateJsonArray);
 
-    	console.log('animateJsonArray', animateJson);
-    	// console.log('animates', animates);
+    	console.log('animates', animates);
 
     	return strategies[groupType || this.options.type](elementId, [textJson, stylesJson, positionJson, animateJson]);
     }
@@ -535,7 +550,7 @@
      * @return {[type]}           [description]
      */
 	GroupFactory.prototype.createGroup = function (groupType, elementId, force) {
-		return strategies[groupType || this.options.type](elementId);
+		return !!force ? this.forceCreateGroup(groupType, elementId) : strategies[groupType || this.options.type](elementId);
 	};
 
 

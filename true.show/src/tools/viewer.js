@@ -131,8 +131,12 @@ define(function(require) {
                     if (!!group) {
                         group.init();
                     } else {
-                        var groupFactory = new GroupFactory({});
-                        var newGroup = groupFactory.forceCreateGroup(type, elementId, true);
+                        if (!Storage.get('__GroupFactory__')) {
+                            Storage.set('__GroupFactory__', new GroupFactory({}));
+                        }
+
+                        var groupFactory = Storage.get('__GroupFactory__');
+                        var newGroup = groupFactory.createGroup(type, elementId, true);
                         newGroup.init();
                         AM.getInstance().addGroup(newGroup);
                         Storage.set(elementId, newGroup);
@@ -170,12 +174,12 @@ define(function(require) {
             this.dragger = new Dragger(null, null, function(t) {
                 var o = $(t).position();
                 //tools.rotateEl(t[0], 0);
-                // that.updateElement(t, {
-                //     width: t.width() + 'px',
-                //     height: t.height() + 'px',
-                //     left: o.left + 'px',
-                //     top: o.top + 'px'
-                // });
+                that.updateElement(t, {
+                    width: t.width() + 'px',
+                    height: t.height() + 'px',
+                    left: o.left + 'px',
+                    top: o.top + 'px'
+                });
 
                 //tools.rotateEl(t[0], that.dragger.rotateDegree);
 

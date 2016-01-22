@@ -196,15 +196,15 @@ define(function(require) {
         this.stop = false;
     };
 
-    Player.prototype.stopAnimation = function (elements, context) {
-        var self = this;
-        self.stop = true;
-        $.each(elements, function (index, item) {
-            var el = elements[index];
-            var $dom = $('#' + el.id, context);
-            $dom.removeClass('animated invisibility').addClass('animated');
-        });
+    Player.prototype.showElements = function (elements, context) {
+        for (var i = 0, ele; ele = elements[i++];) {
+            $('#' + ele.id, context).removeClass('invisibility');
+        }
+    }
 
+    Player.prototype.stopAnimation = function (elements, context) {
+        this.resetElements(elements, context);
+        this.showElements(elements, context);
     };
 
     Player.prototype.bindEvent = function() {
@@ -242,7 +242,7 @@ define(function(require) {
      * @return {[type]} [description]
      */
     Player.prototype.playAnimation = function (elements, context) {
-        if (this.stop == true) return;
+        this.resetElements(elements, context);
         var that = this,
             els,
             animates;
@@ -312,6 +312,8 @@ define(function(require) {
         var $dom = $('#' + param.id, param.context || self.options.context);
         var effectClazz = buildAnimationClassName(param);
         var targetClazz = param.class + ' ' + effectClazz;
+
+        console.log('targetClazz', targetClazz);
 
         $dom.removeClass(targetClazz + ' animated invisibility');
         $dom.addClass(targetClazz + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {

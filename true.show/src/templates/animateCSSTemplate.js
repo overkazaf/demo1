@@ -6,7 +6,7 @@
  * 
  */
 ;define(function (require) {
-	var tpl = '<style data-desc="anim-config-style" id="{{STYLEID}}" type="text/css">.device-view #{{ID}}.{{CLASSNAME}}-{{DESC}} {\
+	var tpl = '<style data-desc="anim-config-style" id="{{STYLEID}}" type="text/css">.device-view .{{CLASSNAME}}-{{DESC}} {\
 			{{VENDOR1}}animation-duration: {{DURATION}}s;\
 			{{VENDOR1}}animation-delay: {{DELAY}}s;\
 			{{VENDOR1}}animation-iteration-count: {{REPEAT}};\
@@ -41,7 +41,6 @@
 			var style = 
 						tpl
 						.replace("{{STYLEID}}", elementId + '-' + param['class'] + '-' + DESC)
-						.replace("{{ID}}", elementId)
 						.replace("{{CLASSNAME}}", param['class'])
 						.replace("{{DESC}}", DESC)
 						.replace(/{{VENDOR1}}/g, "-webkit-")
@@ -54,6 +53,15 @@
 						.replace(/{{REPEAT}}/g, (parseInt(param['repeat']) <= 0 ? 'infinite' : param['repeat']));
 
 			return style;
+		},
+		getAnimateClassNameByParam : function (param) {
+			var arr = [];
+			var DESC = getAnimationDescription(param);
+
+			arr.push(param['class']);
+			arr.push(DESC);
+
+			return arr.join('-');
 		}
 	};
 

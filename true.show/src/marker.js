@@ -87,12 +87,17 @@ define(function(require) {
             bger: null,
             layer: null
         };
+        
         // $(document).on('dblclick', function(event) {
-        //  //event.preventDefault();
-        //  // var x=event.pageX,y=event.pageY;
-        //   Act on the event 
-        //  // var r=that.ruler.getNearest({left:x,top:y,width:50,height:50});
-        //  // logs.log('getNearest',r);
+        //  event.preventDefault();
+        //  var x=event.pageX,y=event.pageY;
+        //  var offset = $('app-page').offset();
+        //  x -= offset.left;
+        //  y -= offset.top;
+
+        //   //Act on the event 
+        //  var r=that.viewer.ruler.getNearest({left:x,top:y,width:50,height:50});
+        //  logs.log('getNearest',r);
         // });
 
         this.AM = null; // 负责特性配置的管理模块
@@ -212,6 +217,8 @@ define(function(require) {
                         that.sortLayers(sortids);
                     } //排序
             });
+
+            // 防止结构不全的导入数据
             if (!!this.data.pages[this.idx] && this.data.pages[this.idx].elements) {
                 this.layer.init(this.data.pages[this.idx].elements);
             }
@@ -408,7 +415,6 @@ define(function(require) {
                 var newid = tools.uuid();
                 var group = Storage.get(el.id);
                 var newGroup = Group.prototype.cloneGroup(group, newid);
-                console.log('newGroup', newGroup);
                 Storage.set(newid, newGroup);
                 el.id = newid;
             });
@@ -437,7 +443,7 @@ define(function(require) {
             return this.layer.getActiveId();
         },
         getLastElementId: function() {
-            // 全局获取焦点元素ID的方法
+            // 全局获取最后一个元素ID的方法
             return this.layer.getLastElementId();
         },
         getPage: function(id) {
@@ -520,8 +526,6 @@ define(function(require) {
             var id = this.getLastElementId();
             id = !!id ? '#' + id : undefined;
 
-            console.log('data', data);
-            console.log('clonedLayer', clonedLayer);
             this.viewer.addElement(clonedLayer, id, true);
             this.layer.addElement(clonedLayer, id, true);
             this.pages.addElement(clonedLayer, id, true);

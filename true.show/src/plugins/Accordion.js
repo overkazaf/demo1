@@ -8,6 +8,7 @@ define(function(require) {
 	var $ = require('jquery');
     var tools = require('../tools/tools');
     var Base = require('../attributor/Base');
+    var animTpl = require('animTpl');
 
 
     var accordTpl = [
@@ -156,12 +157,35 @@ define(function(require) {
             var $animItem = $(this).find('.anim-item');
             $activeEl.removeClass().addClass('active');
 
-            var $subtitle = $(this).closest('.ui-accordion').find('.accordion-subtitle');
+            var $accordion = $(this).closest('.ui-accordion');
+            var $subtitle = $accordion.find('.accordion-subtitle');
             
 
             if (!$(this).hasClass('active')) {
+                // 将style加入到main-view中
+                var $mainView = $('.main-view'),
+                    clazz = $animItem.attr('data-class'),
+                    duration = $accordion.find('input[name="anim-duration"]').val(),
+                    delay = $accordion.find('input[name="anim-delay"]').val(),
+                    repeat = $accordion.find('input[name="anim-repeat"]').val(),
+                    elementId = $activeEl.attr('id'),
+                    tplOption = {
+                        class: clazz,
+                        duration: duration,
+                        delay: delay,
+                        repeat: repeat
+                    };
+
+                var style = animTpl.compile(elementId, tplOption);
+                var cls = animTpl.getAnimateClassNameByParam(tplOption);
+                var $style = $(style);
+                if (!$mainView.find('#'+$style.attr('id')).length) {
+                    $mainView.prepend($style);
+                }
+
+
                 $subtitle.html($animItem.attr('data-name'))
-                $activeEl.addClass($animItem.attr('data-class') + ' animated');
+                $activeEl.addClass(cls + ' ' + $animItem.attr('data-class') + ' animated');
 
                 $('.anim-item', accordContext).removeClass('active');
                 $animItem.addClass('active');
@@ -169,7 +193,6 @@ define(function(require) {
             } else {
                 $subtitle.html('无动画');
                 $activeEl.removeClass($animItem.attr('data-class') + ' animated');
-
                 $('.anim-item', accordContext).removeClass('active');
                 $(this).removeClass('active');
             }

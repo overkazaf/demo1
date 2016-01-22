@@ -90,7 +90,7 @@ define(function(require) {
             var duration = $(this).attr('data-duration');
             var sliderArray = [{
                 label: '持续时间',
-                value: 3,
+                value: 1,
                 css: 'duration',
                 name: 'anim-duration',
                 plugin: 'slider-duration',
@@ -167,29 +167,18 @@ define(function(require) {
                 repeat: repeat,
                 auto: 1
             };
-            // 生成特定的参数化class，直接塞进去
-            var style = animTpl.compile(elementId, {
-                class: clazz,
-                duration: duration,
-                delay: delay,
-                repeat: repeat
-            });
-            var $style = $(style);
-            if (!$mainView.find('#'+$style.attr('id')).length) {
-                $mainView.prepend($style);
-            }
 
             animList.push(animParam);
         });
 
         var element = {
             id: this.groupId,
-            animates: animList
+            animates: animList,
+            auto : 1
         };
 
         var elements = [];
         elements.push(element);
-
         // 这里可以借用player类的playSpriteLine方法
         var player = Storage.get('__PLAYER__');
 
@@ -211,7 +200,7 @@ define(function(require) {
             activeId: this.options.groupId,
             sliders: !!options? options['sliders']: [{
                 label: '持续时间',
-                value: 3,
+                value: 1,
                 css: 'duration',
                 name: 'anim-duration',
                 plugin: 'slider-duration',

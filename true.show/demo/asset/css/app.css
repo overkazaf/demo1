@@ -1212,11 +1212,19 @@ app-page {
 
 plugin-warp {
     position: absolute;
+
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    -o-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
+
     -webkit-transform-style: preserve-3d;
-    /*
-  background-color: orange;
-  opacity: 0.6;*/
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    
 }
 
 plugin-warp .ui-resizable-handle,

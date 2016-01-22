@@ -22,6 +22,8 @@
 		this.nearest=3;
 
 		this.init();
+
+		return this;
 	};
 	Ruler.prototype={
 		init:function(){

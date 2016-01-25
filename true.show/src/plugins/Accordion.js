@@ -9,6 +9,7 @@ define(function(require) {
     var tools = require('../tools/tools');
     var Base = require('../attributor/Base');
     var animTpl = require('animTpl');
+    var Storage = require('../tools/Storage');
 
 
     var accordTpl = [
@@ -181,6 +182,14 @@ define(function(require) {
                 var $style = $(style);
                 if (!$mainView.find('#'+$style.attr('id')).length) {
                     $mainView.prepend($style);
+
+                    if (!Storage.get('__AnimateCSS__')) {
+                        Storage.set('__AnimateCSS__', []);
+                    }
+
+                    var animCSSArray = Storage.get('__AnimateCSS__');
+                    animCSSArray.push(style);
+                    Storage.set('__AnimateCSS__', animCSSArray);
                 }
 
 

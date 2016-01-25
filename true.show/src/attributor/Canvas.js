@@ -12,6 +12,8 @@
 	var Storage = require('../tools/Storage');
 	var Crop = require('../plugins/Crop');
 
+	var appContext = $('app-page')[0];
+
 	var Canvas = function (options) {
 		Base.call(this, options);
 		this.constructor = Canvas;
@@ -37,6 +39,24 @@
 				list.push(crop);
 			}
 		});
+
+
+		var $form = $('#' + this.formid);
+        var $el = $('#' + this.groupId, appContext);
+        var $btnClear = $form.find('#clear-canvas');
+        var $btnSelect = $form.find('#select-canvas');
+        var AM = Storage.get('__AM__');
+
+
+        $btnClear.on('click', function () {
+
+        });
+
+        $btnSelect.on('click', function () {
+        	alert('select background');
+        });
+
+        
 	};
 
 	Canvas.prototype.initPlugins = function () {

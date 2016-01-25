@@ -115,12 +115,15 @@ define(function(require) {
     Marker.prototype = {
         init: function() {
             var that = this;
+            
             //tab选项卡
             this.taber = new taber();
+            
             //配置模板
             this.cper = new confPanel('#confpanel', '.sub-nav-item', function(t) {
                 that.taber.showTab(t);
             });
+
             //主操作视图
             this.viewer = new Viewer({
                 delLayerCallback: function(id) {
@@ -231,7 +234,14 @@ define(function(require) {
 
             this._buildChart();
 
+
+            this.loadAnimateCSS();
+
             this.test();
+        },
+        loadAnimateCSS : function () {
+            // 这里要将marker初始化的动画参数类加入view中
+
         },
         test : function () {
             var animTpl = require('animTpl');

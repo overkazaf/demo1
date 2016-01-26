@@ -1,0 +1,8 @@
+import java.io.IOException;
+
+public class FileStreamTest {
+	public static void main (String[] args) throws IOException {
+		OutputStream os = new FileOutputStream("./test.txt");
+		
+	}
+}

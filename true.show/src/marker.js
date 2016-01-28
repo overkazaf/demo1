@@ -269,7 +269,7 @@ define(function(require) {
                 // pageContext
                 if (el.type == 'chart') {
                     var instance = echarts.init($('#' + el.id, context)[0]);
-                    if (!el.id in that.chartInstancesMap) {
+                    if (!(el.id in that.chartInstancesMap)) {
                         that.chartInstancesArray.push(instance);
                         that.chartInstancesMap[el.id] = instance;
                     }

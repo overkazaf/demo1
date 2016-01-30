@@ -45,6 +45,12 @@
 		var $tab = $('#' + this.options.tabId);
 		var $contents = $('#confpanel').find('.tab-item').eq($tab.index());
 		var $el = $('#' + this.groupId, $('app-page')[0]);
+		var deg = $el.attr('data-deg');
+		if (deg) {
+			var $transform = $contents.find('input[name="transform"]');
+			$transform.val(deg);
+			$transform.next('input[name="result"]').val(deg);
+		}
 		$contents.find('input[name="width"]').val($el.width());
 		$contents.find('input[name="height"]').val($el.height());
 	};

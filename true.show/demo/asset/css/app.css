@@ -801,13 +801,13 @@ header {
 }
 
 .ui-rotate-bar-radius {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     display: block;
     border-radius: 50%;
     background: #44cb83;
     top: 15px;
-    margin-left: 4px;
+    margin-left: 5px;
     cursor: url(../img/mouserotate.ico) 10 10, default;
 }
 

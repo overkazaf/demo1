@@ -137,7 +137,6 @@ define(function(require) {
                 }
             });
 
-            console.log('dx,dy', dx+','+dy);
 
 
             return {
@@ -189,6 +188,63 @@ define(function(require) {
                 x: relativeX,
                 y: relativeY
             };
+        },
+        toStyleArrayByJson : function (json) {
+            var ret = [];
+            for (var attr in json) {
+                ret.push(attr);
+                ret.push(json[attr]);
+            }
+
+            return ret;
+        },
+        toStyleArray : function (style) {
+            if (!style) {
+                return [];
+            } else {
+                if (style.indexOf(";") > -1) {
+                    return style.split(';');
+                }
+                return [];
+            }
+        },
+
+        toStyleJson : function (jsonArray) {
+            var ret = {};
+            for (var i = 0, item; item = jsonArray[i++];) {
+                var kv = item.split(":");
+                var k = $.trim(kv[0]);
+                var v = $.trim(kv[1]);
+                ret[k] = v;
+            }
+
+            return ret;
+        },
+
+        setStyle : function (obj, array) {
+            if (obj) {
+                var styles = tools.toStyleArray($(obj).attr("style"));
+                var styleJSON = tools.toStyleJson(styles);
+
+                for (var i = 0, item; item = array[i];) {
+                    for (var attr in item) {
+                        styleJSON[attr] = item[attr];
+                    }
+                }
+
+                var targetStyle = tools.toStyleArrayByJson(styleJSON);
+                $(obj).attr({
+                    "style" : targetStyle.join(";")
+                });
+            }
+        },
+
+        getStyle : function (obj, key) {
+            if (obj) {
+                var styles = tools.toStyleArray($(obj).attr("style"));
+                var styleJSON = tools.toStyleJson(styles);
+                return styleJSON[key];
+            }
         }
     };
 

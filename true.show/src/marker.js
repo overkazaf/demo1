@@ -577,6 +577,7 @@ define(function(require) {
             $.extend(true, json[currentType].animates || (json[currentType].animates = []), json['animate'].animates);
             //$.extend(true, json[currentType].events || (json[currentType].events = {}), json['event'].events);
 
+            console.log(json[currentType].styles);
             var json = json[currentType];
 
             // 3. 在不同的容器内更新元素，后边拆分开来

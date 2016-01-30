@@ -172,13 +172,16 @@ define(function(require) {
                 }
             });
             this.dragger = new Dragger(null, null, function(t) {
-                var o = $(t).position();
+                var offsetX = parseFloat(tools.getStyle(t, "left"));
+                var offsetY = parseFloat(tools.getStyle(t, "top"));
+                var deg = tools.getRotationDegrees(t);
                 //tools.rotateEl(t[0], 0);
                 that.updateElement(t, {
                     width: t.width() + 'px',
                     height: t.height() + 'px',
-                    left: o.left + 'px',
-                    top: o.top + 'px'
+                    left: offsetX + 'px',
+                    top: offsetY + 'px',
+                    transform : 'rotate('+ deg +'deg)'
                 });
 
                 //tools.rotateEl(t[0], that.dragger.rotateDegree);

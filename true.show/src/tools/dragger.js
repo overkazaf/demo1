@@ -6,7 +6,7 @@
 
 
 		require('jqUI');
-		var rot = 30;
+
 	function dragger(boxid,cls,callback){
 		this.boxid=boxid||'app-page';
 		this.cls=cls||'.ui-draggable-handle';

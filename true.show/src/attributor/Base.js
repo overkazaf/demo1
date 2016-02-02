@@ -199,6 +199,9 @@ define(function(require) {
             case 'btngroup':
                 html = 'onclick="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
                 break;
+            case 'bgcolorpicker':
+                html = 'onchange="callFN(\'noticeUpdate\', \'' + groupId + '\', \'\');"';
+                break;
             case 'colorpicker':
             	// html = 'onblur="callFN(\'noticeUpdate\',\'' + groupId + '\');"';
             	// break;

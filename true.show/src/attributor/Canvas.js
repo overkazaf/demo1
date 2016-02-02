@@ -49,14 +49,12 @@
 
 
         $btnClear.on('click', function () {
-
+        	AM.getMarker().clearBackground();
         });
 
         $btnSelect.on('click', function () {
         	alert('select background');
         });
-
-        
 	};
 
 	Canvas.prototype.initPlugins = function () {

@@ -249,9 +249,13 @@ define(function(require) {
     };
 
     var timeout;
-    window.callFN = function(fnName, groupId) {
+    window.callFN = function(fnName, groupId, bg) {
 
         var strategy = {
+            'updateBackground' : function (bg) {
+                var AM = Storage.get('__AM__');
+                AM.getMarker().setBackground(bg);
+            },
             'noticeUpdate': function(groupId) {
                 var states = $('#' + groupId, $('app-page')[0]).attr('states');
                 var lock = JSON.parse(states)['lock'];
@@ -290,6 +294,8 @@ define(function(require) {
             },
             'showModal': function(groupId) {
                 var modal = Storage.get('__Modal__');
+
+                if (!modal) return;
                 // 这里用AOP去注入事件，并在onHide的时候还原， 重用一个Modal实例
                 var __old_onConfirm = modal.options.onConfirm;
                 var __old_onHide = modal.options.onHide;

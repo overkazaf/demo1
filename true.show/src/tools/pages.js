@@ -388,6 +388,19 @@
 			}else{
 				$(this.opts.id).find('#'+id).hide();
 			}
+		},
+		getBackground : function () {
+			return this.currpager.find(this.opts.thumb).css('background');
+		},
+		setBackground : function (bg) {
+			this.currpager.find(this.opts.thumb).css({
+				background : bg
+			});
+		},
+		clearBackground : function () {
+			this.currpager.find(this.opts.thumb).css({
+				background : 'none'
+			});
 		}
 	};
 

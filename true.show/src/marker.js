@@ -277,6 +277,15 @@ define(function(require) {
                 }
             });
         },
+        setBackground : function (bg) {
+            this.pages.setBackground(bg);
+            this.viewer.setBackground(bg);
+        },
+        clearBackground : function () {
+            this.setBackground('#baff00');
+            // this.pages.clearBackground();
+            // this.viewer.clearBackground();
+        },
         initAttributeManager: function() {
             // 1. 初始化构建属性管理对象
             var AM = new AttributeManager({
@@ -338,6 +347,8 @@ define(function(require) {
             this.layer.init(this.data.pages[page].elements, 0);
 
             this.renderChart(this.data.pages[page], appContext);
+
+            this.setBackground(this.pages.getBackground());
         },
         changeAnimates: function(id, animates) {
             var el = this.getElement(id);

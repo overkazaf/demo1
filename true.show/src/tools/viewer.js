@@ -291,6 +291,16 @@ define(function(require) {
                 that.ctmtid = null;
             });
         },
+        setBackground : function (bg) {
+            $(this.opts.id).css({
+                background: bg
+            });
+        },
+        clearBackground : function () {
+            $(this.opts.id).css({
+                background: 'none'
+            });
+        },
         addElement: function(data, target, after) {
             var el = tpler.generatePlugin(data);
             if (target != undefined) {

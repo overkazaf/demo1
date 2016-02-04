@@ -94,7 +94,7 @@ define(function(require) {
                 css: 'duration',
                 name: 'anim-duration',
                 plugin: 'slider-duration',
-                status: 'disabled',
+                status: '',
                 unit: 's'
             }, {
                 label: '延迟时间',

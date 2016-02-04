@@ -4,9 +4,6 @@
 	var logs=require('./loger');
 	var tools = require('./tools');
 
-
-		require('jqUI');
-
 	function dragger(boxid,cls,callback){
 		this.boxid=boxid||'app-page';
 		this.cls=cls||'.ui-draggable-handle';

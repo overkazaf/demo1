@@ -241,7 +241,37 @@ define(function(require) {
         },
         loadAnimateCSS : function () {
             // 这里要将marker初始化的动画参数类加入view中
+            var 
+                animTpl = require('animTpl'),
+                $mainView = $('.main-view'),
+                pages = this.data.pages;
 
+            for (var i = 0, page; page = pages[i++];) {
+                var elements = page.elements;
+
+                for (var j = 0, el; el = elements[j++];) {
+                    var animates = el.animates;
+                    var elId = el.id;
+                    
+                    for (var k = 0, anim; anim = animates[k++];) {
+                        var style = animTpl.compile(elId, anim);
+                        var $style = $(style);
+
+                        if (!$mainView.find('#'+$style.attr('id')).length) {
+                            $mainView.prepend($style);
+
+                            if (!Storage.get('__AnimateCSS__')) {
+                                Storage.set('__AnimateCSS__', []);
+                            }
+
+                            var animCSSArray = Storage.get('__AnimateCSS__');
+                            animCSSArray.push(style);
+                            Storage.set('__AnimateCSS__', animCSSArray);
+                        }
+
+                    }
+                }
+            }
         },
         test : function () {
             var animTpl = require('animTpl');

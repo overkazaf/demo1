@@ -179,7 +179,7 @@ define(function(require) {
             animates: [{
                 repeat: 0,
                 class: 'bounceInRight',
-                delay: 1.3
+                delay: 4.3
             }],
             auto: true
         }, {

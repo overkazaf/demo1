@@ -48,7 +48,6 @@ require.config({
     paths : {
     	'Jcrop' : 'jquery.Jcrop.min',
     	'slip' : 'slip',
-        'jqUI' : 'jquery-ui',
     	'AttributeManager' : '../../../src/manager/AttributeManager',
     	'Group' : '../../../src/manager/Group',
         'Player' : '../../../src/tools/Player',

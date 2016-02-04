@@ -82,7 +82,7 @@ define(function(require) {
                     }
                 }
             }
-
+    
             return -1;
         },
         // 极坐标系转直角坐标系

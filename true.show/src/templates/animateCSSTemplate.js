@@ -6,7 +6,7 @@
  * 
  */
 ;define(function (require) {
-	var tpl = '<style data-desc="anim-config-style" id="{{STYLEID}}" type="text/css">.device-view .{{CLASSNAME}}-{{DESC}} {\
+	var tpl = '<style data-desc="anim-config-style" id="{{STYLEID}}" type="text/css">{{ROOT}} .{{CLASSNAME}}-{{DESC}} {\
 			{{VENDOR1}}animation-duration: {{DURATION}}s;\
 			{{VENDOR1}}animation-delay: {{DELAY}}s;\
 			{{VENDOR1}}animation-iteration-count: {{REPEAT}};\
@@ -36,13 +36,14 @@
 	}
 
 	var template = {
-		compile : function (elementId, param) {
+		compile : function (elementId, param, prefix) {
 			var DESC = getAnimationDescription(param);
 			var style = 
 						tpl
-						.replace("{{STYLEID}}", elementId + '-' + param['class'] + '-' + DESC)
-						.replace("{{CLASSNAME}}", param['class'])
-						.replace("{{DESC}}", DESC)
+						.replace(/{{ROOT}}/g, prefix || '.device-view')
+						.replace(/{{STYLEID}}/g, elementId + '-' + param['class'] + '-' + DESC)
+						.replace(/{{CLASSNAME}}/g, param['class'])
+						.replace(/{{DESC}}/g, DESC)
 						.replace(/{{VENDOR1}}/g, "-webkit-")
 						.replace(/{{VENDOR2}}/g, "-moz-")
 						.replace(/{{VENDOR3}}/g, "-ms-")

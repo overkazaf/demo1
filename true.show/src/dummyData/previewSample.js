@@ -36,6 +36,7 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 5,
                 repeat: 1,
                 class: 'flip',
                 delay: 1
@@ -64,6 +65,7 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 30,
                 class: 'pulse',
                 delay: 2.5
@@ -100,6 +102,7 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'rubberBand',
                 delay: 4.2
@@ -143,6 +146,7 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInLeft',
                 delay: 1.1
@@ -177,6 +181,7 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInRight',
                 delay: 4.3
@@ -211,6 +216,7 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInUp',
                 delay: 1.5
@@ -244,10 +250,12 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInRight',
                 delay: 1.8
             }, {
+                duration : 1,
                 repeat: 20,
                 class: 'tada',
                 delay: 1.4
@@ -281,6 +289,7 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInRight',
                 delay: 2.2
@@ -318,10 +327,12 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInRight',
                 delay: 2.4
             }, {
+                duration : 1,
                 repeat: 20,
                 class: 'tada',
                 delay: 1.8
@@ -355,10 +366,12 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInRight',
                 delay: 2.6
             }, {
+                duration : 1,
                 repeat: 20,
                 class: 'tada',
                 delay: 2.0
@@ -392,10 +405,12 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInRight',
                 delay: 2.8
             }, {
+                duration : 1,
                 repeat: 20,
                 class: 'tada',
                 delay: 2.2
@@ -425,6 +440,7 @@ define(function(require) {
                 fontWeight: 'bold'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'lightSpeedIn',
                 delay: .5
@@ -458,6 +474,7 @@ define(function(require) {
                 "box-shadow": '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'flipInY',
                 delay: 1.5
@@ -491,6 +508,7 @@ define(function(require) {
                 "box-shadow": '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'fadeInRightBig',
                 delay: 2.5
@@ -524,6 +542,7 @@ define(function(require) {
                 "box-shadow": '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'rollIn',
                 delay: 3.5
@@ -557,6 +576,7 @@ define(function(require) {
                 fontWeight: 'bold'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'fadeInUp',
                 delay: .5
@@ -590,6 +610,7 @@ define(function(require) {
                 "box-shadow": '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 2,
                 class: 'flash',
                 delay: 2.5
@@ -616,6 +637,7 @@ define(function(require) {
                 fontWeight: 'bold'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'fadeIn',
                 delay: 2.5
@@ -651,6 +673,7 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'rotateInDownLeft',
                 delay: 1
@@ -682,6 +705,7 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'fadeInRight',
                 delay: 2
@@ -714,6 +738,7 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'rotateIn',
                 delay: 3
@@ -746,6 +771,7 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'flipInY',
                 delay: 4
@@ -783,6 +809,7 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'fadeInUp',
                 delay: 1
@@ -817,10 +844,12 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'flipInY',
                 delay: 2
             }, {
+                duration : 1,
                 repeat: 1,
                 class: 'tada',
                 delay: 6
@@ -852,6 +881,7 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'flipInY',
                 delay: 3
@@ -886,10 +916,12 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'flipInX',
                 delay: 4
             }, {
+                duration : 1,
                 repeat: 1,
                 class: 'tada',
                 delay: 5
@@ -919,6 +951,7 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'flipInX',
                 delay: 5
@@ -953,10 +986,12 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'slideInLeft',
                 delay: 7
             }, {
+                duration : 1,
                 repeat: 1,
                 class: 'tada',
                 delay: 3
@@ -986,6 +1021,7 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'fadeIn',
                 delay: 8
@@ -1022,6 +1058,7 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'fadeInLeft',
                 delay: 1
@@ -1060,6 +1097,7 @@ define(function(require) {
                 "box-shadow": '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInRight',
                 delay: 1.8
@@ -1098,6 +1136,7 @@ define(function(require) {
                 opacity: '1'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'fadeInUp',
                 delay: 1
@@ -1136,6 +1175,7 @@ define(function(require) {
                 "box-shadow": '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInUp',
                 delay: 1.8
@@ -1180,10 +1220,12 @@ define(function(require) {
                 boxShadow: ' 1px 1px 5px #222'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'flipInX',
                 delay: 1
             }, {
+                duration : 1,
                 repeat: 0,
                 class: 'bounceOut',
                 delay: 6
@@ -1215,10 +1257,12 @@ define(function(require) {
                 boxShadow: ' 1px 1px 5px #222'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'flipInX',
                 delay: 2
             }, {
+                duration : 1,
                 repeat: 0,
                 class: 'bounceOut',
                 delay: 5.0
@@ -1250,10 +1294,12 @@ define(function(require) {
                 boxShadow: ' 1px 1px 5px #222'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'flipInX',
                 delay: 3
             }, {
+                duration : 1,
                 repeat: 0,
                 class: 'bounceOut',
                 delay: 4.0
@@ -1286,6 +1332,7 @@ define(function(require) {
                 boxShadow: ' 1px 1px 20px #222'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'rotateIn',
                 delay: 7
@@ -1326,6 +1373,7 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInDown',
                 delay: 1
@@ -1357,6 +1405,7 @@ define(function(require) {
                 boxShadow: '0.0000px 0.0000px 0px #ffffff'
             },
             animates: [{
+                duration : 1,
                 repeat: 0,
                 class: 'bounceInDown',
                 delay: 1.5
@@ -1381,6 +1430,7 @@ define(function(require) {
                 color: '#fff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'bounceInLeft',
                 delay: 2
@@ -1405,6 +1455,7 @@ define(function(require) {
                 color: '#fff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'bounceInRight',
                 delay: 2.2
@@ -1429,6 +1480,7 @@ define(function(require) {
                 color: '#fff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'bounceInLeft',
                 delay: 2.5
@@ -1453,6 +1505,7 @@ define(function(require) {
                 color: '#fff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'bounceInRight',
                 delay: 2.7
@@ -1477,6 +1530,7 @@ define(function(require) {
                 color: '#fff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'bounceInLeft',
                 delay: 2.9
@@ -1501,6 +1555,7 @@ define(function(require) {
                 color: '#fff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'bounceInRight',
                 delay: 3.1
@@ -1525,6 +1580,7 @@ define(function(require) {
                 color: '#fff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'bounceInLeft',
                 delay: 3.1
@@ -1549,6 +1605,7 @@ define(function(require) {
                 color: '#fff'
             },
             animates: [{
+                duration : 1,
                 repeat: 1,
                 class: 'bounceInRight',
                 delay: 3.3

@@ -47,12 +47,48 @@ define(function(require) {
 
         this.displayStudio();
 
+        this.generateAnimClazz(pages);
+
         this.animating(0);
 
         this.initPlayer();
 
         this._buildChart();
     };
+
+    Player.prototype.generateAnimClazz = function (pages) {
+        var animTpl = require('animTpl');
+        var $mainView = $('#pptcontainer');
+        
+        for (var i = 0, page; page = pages[i++];) {
+            var elements = page.elements;
+            for (var j = 0, elem; elem = elements[j++];) {
+                var animates = elem.animates,
+                    elementId = elem.id;
+                for (var k = 0, anim; anim = animates[k++];) {
+                    var 
+                        clazz  = anim.class,
+                        delay  = anim.delay,
+                        repeat = anim.repeat,
+                        duration = anim.duration;
+
+                    var tplOption = {
+                        class: clazz,
+                        duration: duration,
+                        delay: delay,
+                        repeat: repeat
+                    };
+
+                    var style = animTpl.compile(elementId, tplOption, '#pptcontainer');
+                    var $style = $(style);
+                    if (!$mainView.find('#'+$style.attr('id')).length) { 
+                        $mainView.prepend($(style));
+                    }
+                }
+            }
+        }
+
+    }
 
     Player.prototype.displayStudio = function () {
         var $mask = $('#ppt-mask');
